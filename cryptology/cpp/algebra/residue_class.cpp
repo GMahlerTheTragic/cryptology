@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include <cryptology/modular_arithmetic/residue_class.hpp>
+#include <cryptology/algebra/residue_class.hpp>
 
 using namespace std;
 using namespace RC;

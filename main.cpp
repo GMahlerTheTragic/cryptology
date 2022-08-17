@@ -1,6 +1,7 @@
 #include <iostream>
 
-#include "cryptology/cpp/modular_arithmetic/residue_class.cpp"
+#include "cryptology/cpp/algebra/residue_class.cpp"
+#include "cryptology/cpp/algebra/matrix.cpp"
 
 using namespace std;
 using namespace RC;
@@ -13,4 +14,16 @@ int main() {
     cout << "a + b = " << a + b << endl;
     cout << "a - b = " << a - b << endl;
     cout << "a * b = " << a * b << endl;
+
+    Matrix<5> m = Matrix<5>({{1, 2, 2, 3},
+                             {1, 2, 2, 3},
+                             {1, 2, 2, 3},
+                             {1, 2, 2, 3}});
+
+    Matrix<5> n = Matrix<5>({{1, 2, 2, 3},
+                             {1, 2, 2, 3},
+                             {1, 2, 2, 3},
+                             {1, 2, 2, 3}});
+    n(0,0) = 8;
+    (n * m).print();
 }

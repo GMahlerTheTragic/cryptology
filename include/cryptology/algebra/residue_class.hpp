@@ -1,5 +1,5 @@
-#ifndef CRYPTOLOGY_MODULAR_ARITHMETIC_RESIDUE_CLASS_HPP_
-#define CRYPTOLOGY_MODULAR_ARITHMETIC_RESIDUE_CLASS_HPP_
+#ifndef CRYPTOLOGY_ALGEBRA_RESIDUE_CLASS_HPP_
+#define CRYPTOLOGY_ALGEBRA_RESIDUE_CLASS_HPP_
 
 #include <iostream>
 
@@ -7,7 +7,7 @@ namespace RC {
     template<int modulus>
     class ResidueClass final {
     private:
-        int residue = modulus;
+        int residue;
     public:
         ResidueClass<modulus>(int value);
         ~ResidueClass<modulus>() = default;
