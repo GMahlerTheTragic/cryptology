@@ -2,6 +2,7 @@
 
 #include "cryptology/cpp/algebra/residue_class.cpp"
 #include "cryptology/cpp/algebra/matrix.cpp"
+#include "cryptology/cpp/algebra/algorithms.cpp"
 
 using namespace std;
 using namespace RC;
@@ -26,4 +27,9 @@ int main() {
                              {1, 2, 2, 3}});
     n(0,0) = 8;
     (n * m).print();
+
+    long left = 513;
+    long right = 29;
+    struct gcd_decomposition res = extended_euklid(left, right);
+    cout << res.gcd << " " << res.factor_left << " " <<   res.factor_right  << endl;
 }
