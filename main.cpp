@@ -3,6 +3,7 @@
 #include "cryptology/cpp/algebra/residue_class.cpp"
 #include "cryptology/cpp/algebra/matrix.cpp"
 #include "cryptology/cpp/algebra/algorithms.cpp"
+#include "cryptology/cpp/ciphers/affine_cipher.cpp"
 
 using namespace std;
 using namespace RC;
@@ -32,4 +33,9 @@ int main() {
     long right = 29;
     struct gcd_decomposition res = extended_euklid(left, right);
     cout << res.gcd << " " << res.factor_left << " " <<   res.factor_right  << endl;
+
+    AffineCipher cipher = AffineCipher(8, 5);
+    string cipher_text = cipher.encrypt("Hallo Welt");
+    cout << "cipher text " << cipher_text << endl;
+    cout << "plain text " << cipher.decrypt(cipher_text) << endl;
 }

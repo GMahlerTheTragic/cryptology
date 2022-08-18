@@ -5,7 +5,15 @@
 
 using namespace std;
 
+int mod(int i, int n);
+
+long mod(long i, long n);
+
 struct gcd_decomposition {long gcd; long factor_left; long factor_right;} typedef gcd_decomposition;
+
+bool is_invertible(long a, long m);
+
+long inverse(long a, long m);
 
 long euklid(long a, long b);
 

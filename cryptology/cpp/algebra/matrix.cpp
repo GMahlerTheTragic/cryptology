@@ -1,12 +1,13 @@
 #include <iostream>
 
 #include <cryptology/algebra/matrix.hpp>
+#include <cryptology/algebra/algorithms.hpp>
 
 using namespace std;
 
 template<int modulus>
 Matrix<modulus>::Matrix(size_t ncols, size_t nrows, int default_value)
-    : ncols(ncols), nrows(nrows), values(ncols * nrows, default_value % modulus) {};
+    : ncols(ncols), nrows(nrows), values(ncols * nrows, mod(default_value, modulus)) {};
 
 
 template <int modulus>
@@ -15,7 +16,7 @@ Matrix<modulus>::Matrix(const std::vector<std::vector<int>> &values)
     size_t index = 0;
     for (const auto &row : values)
         for (const int val : row)
-            this->values[index++] = val % modulus;
+            this->values[index++] = mod(val, modulus);
 }
 
 template<int modulus>
@@ -35,7 +36,7 @@ Matrix<modulus> Matrix<modulus>::operator*(const Matrix<modulus> &rhs) const {
 
     for (size_t row = 0; row < result.rows(); ++row)
         for (size_t col = 0; col < result.cols(); ++col)
-            result(row, col) = dot(row, col) % modulus;
+            result(row, col) = mod(dot(row, col), modulus);
 
      return result;
 }
@@ -50,7 +51,7 @@ Matrix<modulus> Matrix<modulus>::operator+(const Matrix<modulus> &rhs) const {
 
     for (size_t row = 0; row < result.rows(); ++row)
         for (size_t col = 0; col < result.cols(); ++col)
-            result(row, col) = ((*this)(row, col) + rhs(row, col)) % modulus;
+            result(row, col) = mod(((*this)(row, col) + rhs(row, col)), modulus);
 
      return result;
 }
@@ -65,7 +66,7 @@ Matrix<modulus> Matrix<modulus>::operator-(const Matrix<modulus> &rhs) const {
 
     for (size_t row = 0; row < result.rows(); ++row)
         for (size_t col = 0; col < result.cols(); ++col)
-            result(row, col) = ((*this)(row, col) - rhs(row, col)) % modulus;
+            result(row, col) = mod(((*this)(row, col) - rhs(row, col)), modulus);
 
      return result;
 }

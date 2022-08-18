@@ -3,6 +3,28 @@
 
 using namespace std;
 
+int mod(int i, int n) {
+    return (i % n + n) % n;
+}
+
+long mod(long i, long n) {
+    return (i % n + n) % n;
+}
+
+bool is_invertible(long a, long m) {
+        if (euklid(a, m) == 1) {
+            return true;
+        }
+        return false;
+}
+
+long inverse(long a, long m) {
+    if (!is_invertible(a, m)) {
+        throw std::runtime_error("left side is not invertible modulo right side"); 
+    }
+    return mod(extended_euklid(a, m).factor_left, m);
+}
+
 long euklid(long a, long b) {
     if (a < b) {
         long temp = a;
@@ -11,7 +33,7 @@ long euklid(long a, long b) {
     }
     long r;
     do {
-        r = a % b;
+        r = mod(a, b);
         a = b;
         b = r;
     } while (r != 0);
@@ -50,7 +72,7 @@ struct gcd_decomposition extended_euklid(long a, long b) {
             q0 = q_temp;
         }
         d = a / b;
-        r = a % b;
+        r = mod(a, b);
         a = b;
         b = r;
     } while (r != 0);

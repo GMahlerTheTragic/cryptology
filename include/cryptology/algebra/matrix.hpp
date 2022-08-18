@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <cryptology/algebra/algorithms.hpp>
 
 using namespace std;
 
@@ -28,7 +29,7 @@ public:
     Matrix<modulus> operator-(const Matrix<modulus> &rhs) const;
 
     int &operator()(size_t row, size_t col) { return values[cols() * row + col]; }
-    const int &operator()(size_t row, size_t col) const { return values[cols() * row + col] % modulus; }
+    const int &operator()(size_t row, size_t col) const { return mod(values[cols() * row + col], modulus); }
 
     
     size_t rows() const { return this->nrows; }
