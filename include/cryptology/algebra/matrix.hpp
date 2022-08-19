@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <cryptology/algebra/algorithms.hpp>
+#include "cryptology/algebra/vector.hpp"
 
 using namespace std;
 
@@ -11,7 +12,6 @@ template<int modulus>
 class Matrix final {
 
 private:
-    int residue = modulus;
     size_t ncols;
     size_t nrows;
 
@@ -25,6 +25,8 @@ public:
     void print() const;
 
     Matrix<modulus> operator*(const Matrix<modulus> &rhs) const;
+    Vector<modulus> operator*(const Vector<modulus> &rhs) const;
+    Matrix<modulus> operator*(const long rhs) const;
     Matrix<modulus> operator+(const Matrix<modulus> &rhs) const;
     Matrix<modulus> operator-(const Matrix<modulus> &rhs) const;
 

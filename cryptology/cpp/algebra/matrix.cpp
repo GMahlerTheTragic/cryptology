@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include <cryptology/algebra/matrix.hpp>
+#include <cryptology/algebra/vector.hpp>
 #include <cryptology/algebra/algorithms.hpp>
 
 using namespace std;
@@ -38,7 +39,40 @@ Matrix<modulus> Matrix<modulus>::operator*(const Matrix<modulus> &rhs) const {
         for (size_t col = 0; col < result.cols(); ++col)
             result(row, col) = mod(dot(row, col), modulus);
 
-     return result;
+    return result;
+}
+
+template<int modulus>
+Matrix<modulus> Matrix<modulus>::operator*(const long rhs) const {
+
+     Matrix<modulus> result(rows(), cols());
+
+    for (size_t row = 0; row < result.rows(); ++row)
+        for (size_t col = 0; col < result.cols(); ++col)
+            result(row, col) = mod((*this)(row, col) * rhs, modulus);
+
+    return result;
+}
+
+template<int modulus>
+Vector<modulus> Matrix<modulus>::operator*(const Vector<modulus> &rhs) const {
+
+    if (rhs.size() != cols())
+        throw std::runtime_error("Sizes do not match");
+
+    Vector<modulus> result(rows());
+
+    auto dot = [&](size_t row) -> int {
+        int result = 0;
+        for (size_t i = 0; i < cols(); ++i)
+            result += (*this)(row, i) * rhs(i);
+        return result;
+    };
+
+    for (size_t row = 0; row < result.size(); ++row)
+        result(row) = mod(dot(row), modulus);
+
+    return result;
 }
 
 template<int modulus>
@@ -53,7 +87,7 @@ Matrix<modulus> Matrix<modulus>::operator+(const Matrix<modulus> &rhs) const {
         for (size_t col = 0; col < result.cols(); ++col)
             result(row, col) = mod(((*this)(row, col) + rhs(row, col)), modulus);
 
-     return result;
+    return result;
 }
 
 template<int modulus>
@@ -68,7 +102,7 @@ Matrix<modulus> Matrix<modulus>::operator-(const Matrix<modulus> &rhs) const {
         for (size_t col = 0; col < result.cols(); ++col)
             result(row, col) = mod(((*this)(row, col) - rhs(row, col)), modulus);
 
-     return result;
+    return result;
 }
 
 template<int modulus>

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cryptology/algebra/algorithms.hpp>
+#include <cryptology/algebra/matrix.hpp>
 
 using namespace std;
 
