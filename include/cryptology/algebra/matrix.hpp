@@ -4,9 +4,13 @@
 #include <iostream>
 #include <vector>
 #include <cryptology/algebra/algorithms.hpp>
-#include "cryptology/algebra/vector.hpp"
+#include <cryptology/algebra/vector.hpp>
 
 using namespace std;
+
+int mod(int i, int n);
+
+long mod(long i, long n);
 
 template<int modulus>
 class Matrix final {
@@ -18,7 +22,7 @@ private:
     vector<int> values;
     
 public:
-    Matrix<modulus>(size_t ncols, size_t nrows, int default_value = 0);
+    Matrix<modulus>(size_t nrows, size_t ncols, int default_value = 0);
     Matrix<modulus>(const std::vector<std::vector<int>> &values);
     ~Matrix<modulus>() = default;
 
@@ -33,11 +37,18 @@ public:
     int &operator()(size_t row, size_t col) { return values[cols() * row + col]; }
     const int &operator()(size_t row, size_t col) const { return mod(values[cols() * row + col], modulus); }
 
+    Vector<modulus> get_col(const size_t col) const;
+    Vector<modulus> get_row(const size_t row) const;
+
+    void set_col(const size_t col, Vector<modulus> values);
+    void set_row(const size_t row, Vector<modulus> values);
     
     size_t rows() const { return this->nrows; }
     size_t cols() const { return this->ncols; }
 
-};
+    static Matrix<modulus> concat(const Matrix<modulus> A, const Matrix<modulus> B, int axis=0);
+    static Matrix<modulus> eye(size_t dim);
 
+};
 
 #endif

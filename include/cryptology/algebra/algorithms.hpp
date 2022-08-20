@@ -3,6 +3,9 @@
 
 #include <iostream>
 
+#include <cryptology/algebra/matrix.hpp>
+#include <cryptology/algebra/vector.hpp>
+
 using namespace std;
 
 int mod(int i, int n);
@@ -18,5 +21,11 @@ long inverse(long a, long m);
 long euklid(long a, long b);
 
 struct gcd_decomposition extended_euklid(long a, long b);
+
+template<int modulus>
+long determinant(Matrix<modulus> A);
+
+template<int modulus>
+Matrix<modulus> inverse(Matrix<modulus> A, bool verbose=false);
 
 #endif

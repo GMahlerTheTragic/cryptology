@@ -45,6 +45,9 @@ int main() {
     hillH.print();
     Hhill.print();
 
+    Matrix<26> H_inv = inverse(H);
+    H_inv.print();
+
     long left = 513;
     long right = 29;
     struct gcd_decomposition res = extended_euklid(left, right);

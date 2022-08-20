@@ -4,9 +4,13 @@
 #include <iostream>
 #include <vector>
 #include <cryptology/algebra/algorithms.hpp>
-#include "cryptology/algebra/matrix.hpp"
+#include <cryptology/algebra/matrix.hpp>
 
 using namespace std;
+
+int mod(int i, int n);
+
+long mod(long i, long n);
 
 template<int modulus>
 class Matrix;

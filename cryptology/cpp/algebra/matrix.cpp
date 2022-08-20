@@ -7,7 +7,7 @@
 using namespace std;
 
 template<int modulus>
-Matrix<modulus>::Matrix(size_t ncols, size_t nrows, int default_value)
+Matrix<modulus>::Matrix(size_t nrows, size_t ncols, int default_value)
     : ncols(ncols), nrows(nrows), values(ncols * nrows, mod(default_value, modulus)) {};
 
 
@@ -102,6 +102,79 @@ Matrix<modulus> Matrix<modulus>::operator-(const Matrix<modulus> &rhs) const {
         for (size_t col = 0; col < result.cols(); ++col)
             result(row, col) = mod(((*this)(row, col) - rhs(row, col)), modulus);
 
+    return result;
+}
+
+template<int modulus>
+Vector<modulus> Matrix<modulus>::get_col(const size_t col) const {
+    Vector<modulus> result = Vector<modulus>(rows());
+    for (int i = 0; i < rows(); ++i)
+        result(i) = (*this)(i, col);
+    return result;
+}
+
+template<int modulus>
+Vector<modulus> Matrix<modulus>::get_row(const size_t row) const {
+    Vector<modulus> result = Vector<modulus>(cols());
+    for (int i = 0; i < cols(); ++i)
+        result(i) = (*this)(row, i);
+    return result;
+}
+
+template<int modulus>
+void Matrix<modulus>::set_col(const size_t col, Vector<modulus> values) {
+    if (values.size() != rows()) {
+        throw std::runtime_error("Sizes do not match");
+    }
+    for (int i = 0; i < rows(); ++i)
+        (*this)(i, col) = values(i);
+}
+
+template<int modulus>
+void Matrix<modulus>::set_row(const size_t row, Vector<modulus> values) {
+    if (values.size() != cols())
+        throw std::runtime_error("Sizes do not match");
+    for (int i = 0; i < cols(); ++i)
+        (*this)(row, i) = values(i);
+}
+
+template<int modulus>
+Matrix<modulus> Matrix<modulus>::concat(const Matrix<modulus> A, const Matrix<modulus> B, int axis) {
+    if (axis == 0) {
+        if (A.cols() != B.cols()) {
+            throw std::runtime_error("Column lengthts do not match");
+        }
+        Matrix<modulus> result = Matrix<modulus>(A.rows() + B.rows(), A.cols());
+        for (int i = 0; i < A.rows(); ++i)
+            result.set_row(i, A.get_row(i));
+        for (int i = A.rows(); i < A.rows() + B.rows(); ++i)
+            result.set_row(i, B.get_row(i));
+        return result;
+    }
+    else if (axis == 1) {
+        if (A.rows() != B.rows()) {
+            throw std::runtime_error("Row lengthts do not match");
+        }
+        Matrix<modulus> result = Matrix<modulus>(A.rows(), A.cols() + B.cols());
+        A.print();
+        B.print();
+        for (int i = 0; i < A.cols(); ++i)
+            result.set_col(i, A.get_col(i));
+        for (int i = 0; i < B.cols(); ++i)
+            result.set_col(A.cols() + i, B.get_col(i));
+        return result;
+    }
+    else {
+        throw std::runtime_error("Axis must be 0 or 1");
+    }
+}
+
+template<int modulus>
+Matrix<modulus> Matrix<modulus>::eye(size_t dim) {
+    Matrix<modulus> result = Matrix<modulus>(dim, dim);
+    for (size_t i = 0; i < dim; ++i) {
+        result(i, i) = 1;
+    }
     return result;
 }
 

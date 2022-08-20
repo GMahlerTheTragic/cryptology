@@ -74,7 +74,7 @@ Vector<modulus> Vector<modulus>::operator*(const long &rhs) const {
     Vector<modulus> result(size());
 
     for (size_t idx = 0; idx < result.size(); ++idx)
-        result(idx) = mod(((*this)(idx) * rhs), modulus);
+        result(idx) = mod(((*this)(idx) * rhs), (long) modulus);
 
     return result;
 }
