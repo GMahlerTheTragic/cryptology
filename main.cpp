@@ -6,7 +6,7 @@
 #include "cryptology/cpp/algebra/algorithms.cpp"
 #include "cryptology/cpp/utils.cpp"
 #include "cryptology/cpp/ciphers/affine_cipher.cpp"
-#include "cryptology/cpp/ciphers/vigenere_cipher.cpp"
+#include "cryptology/cpp/ciphers/stream_cipher.cpp"
 #include "cryptology/cpp/ciphers/hill_cipher.cpp"
 
 using namespace std;
@@ -59,10 +59,25 @@ int main() {
     cout << "cipher text " << cipher_text << endl;
     cout << "plain text " << affine_cipher.decrypt(cipher_text) << endl;
     
-    VigenereCipher vigenere_cipher = VigenereCipher("ASD");
+    VigenereCipher vigenere_cipher = VigenereCipher("WIE");
     cipher_text = vigenere_cipher.encrypt("VIGENERE");
     cout << "cipher text " << cipher_text << endl;
     cout << "plain text " << vigenere_cipher.decrypt(cipher_text) << endl;
+
+    BeaufortCipher beaufort_cipher = BeaufortCipher("WIE");
+    cipher_text = beaufort_cipher.encrypt("BEAUFORT");
+    cout << "cipher text " << cipher_text << endl;
+    cout << "plain text " << beaufort_cipher.decrypt(cipher_text) << endl;
+
+    AutoKeyPlainTextCipher autokeypt_cipher = AutoKeyPlainTextCipher("WIE");
+    cipher_text = autokeypt_cipher.encrypt("VIGENERE");
+    cout << "cipher text " << cipher_text << endl;
+    cout << "plain text " << autokeypt_cipher.decrypt(cipher_text) << endl;
+
+    AutoKeyCipherTextCipher autokeyct_cipher = AutoKeyCipherTextCipher("WIE");
+    cipher_text = autokeyct_cipher.encrypt("VIGENERE");
+    cout << "cipher text " << cipher_text << endl;
+    cout << "plain text " << autokeyct_cipher.decrypt(cipher_text) << endl;
     
     HillCipher hill_cipher = HillCipher(H);
     cipher_text = hill_cipher.encrypt("XIAOMEIW");
