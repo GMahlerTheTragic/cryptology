@@ -7,6 +7,7 @@
 #include "cryptology/cpp/utils.cpp"
 #include "cryptology/cpp/ciphers/affine_cipher.cpp"
 #include "cryptology/cpp/ciphers/vigenere_cipher.cpp"
+#include "cryptology/cpp/ciphers/hill_cipher.cpp"
 
 using namespace std;
 using namespace RC;
@@ -62,4 +63,9 @@ int main() {
     cipher_text = vigenere_cipher.encrypt("VIGENERE");
     cout << "cipher text " << cipher_text << endl;
     cout << "plain text " << vigenere_cipher.decrypt(cipher_text) << endl;
+    
+    HillCipher hill_cipher = HillCipher(H);
+    cipher_text = hill_cipher.encrypt("XIAOMEIW");
+    cout << "cipher text " << cipher_text << endl;
+    cout << "plain text " << hill_cipher.decrypt(cipher_text) << endl;
 }
