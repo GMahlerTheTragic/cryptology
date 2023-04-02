@@ -156,8 +156,6 @@ Matrix<modulus> Matrix<modulus>::concat(const Matrix<modulus> A, const Matrix<mo
             throw std::runtime_error("Row lengthts do not match");
         }
         Matrix<modulus> result = Matrix<modulus>(A.rows(), A.cols() + B.cols());
-        A.print();
-        B.print();
         for (int i = 0; i < A.cols(); ++i)
             result.set_col(i, A.get_col(i));
         for (int i = 0; i < B.cols(); ++i)

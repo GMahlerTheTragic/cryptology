@@ -8,6 +8,11 @@
 #include "cryptology/cpp/ciphers/affine_cipher.cpp"
 #include "cryptology/cpp/ciphers/stream_cipher.cpp"
 #include "cryptology/cpp/ciphers/hill_cipher.cpp"
+#include "cryptology/cpp/analysis/analysis.cpp"
+#include "cryptology/cpp/analysis/statistics.cpp"
+
+#include "cryptology/analysis/frequencies.hpp"
+
 
 using namespace std;
 using namespace RC;
@@ -83,4 +88,16 @@ int main() {
     cipher_text = hill_cipher.encrypt("XIAOMEIW");
     cout << "cipher text " << cipher_text << endl;
     cout << "plain text " << hill_cipher.decrypt(cipher_text) << endl;
+
+    AffineCipher additive_cipher = AffineCipher(8, 1);
+    cipher_text = additive_cipher.encrypt("xygrobo");
+    additive_brute_force(cipher_text);
+    additive_frequency_based(cipher_text);
+
+    // cipher_text = "lmqetxyeagtxctuiewnctxlzewuaispzyvapewlmgqwyaxftcjmsqcadagtxlmdxnxsnpjqsyvapriqsmhnocvaxfv";
+    // hill_frequency_attack(cipher_text, 2);
+
+    cipher_text = "hudskuaezgxravtfpgwswgwszhtppbillrtzpzhwloijvficvbthlugilgprkhwmyhtiuaxrbhtwucgxospwaochimcsyhwqhwcfyocgogtzlbilswbflohxzwsizvdsatgsthwissuxlmtsmhwikspxogwihrpflsamusuvvaillhgilhwvvivlavtwocijpticmstxvii";
+    // // cipher_text = "nejorkdemxddotrdenork";
+    vigenere_kasiki_attack(cipher_text);
 }

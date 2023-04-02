@@ -24,3 +24,30 @@ bool word_from_latin_alphabet(string input) {
     }
     return true;
 }
+
+vector<int> word_to_vec(string input) {
+    vector<int> result = vector<int>(input.length());
+    for (int i = 0; i < input.length(); ++i) {
+        result[i] = letter_to_pos(input[i]);
+    }
+    return result;
+}
+
+vector<vector<int>> tuples(int range, int tuple_size) {
+    vector<vector<int>> result;
+    int maxValue = 1;
+    for (int i = 0; i < tuple_size; i++) {
+        maxValue *= range;
+    }
+    for (int counter = 0; counter < maxValue; counter++) {
+        int current_value = counter;
+        vector<int> tuple(tuple_size);
+        for (int i = 0; i < tuple_size; i++) {
+            int digit = current_value % range;
+            tuple[tuple_size - i -1] = digit;
+            current_value /= range;
+        }
+        result.push_back(tuple);
+    }
+    return result; 
+}

@@ -168,10 +168,9 @@ Matrix<modulus> inverse(Matrix<modulus> A, bool verbose) {
             }
         }
         else {
-            throw new std::runtime_error("Not invertible");
+            throw std::runtime_error("Not invertible");
         }
     }
-    A.print();
 
     Matrix<modulus> inverse = Matrix<modulus>(n, n);
     

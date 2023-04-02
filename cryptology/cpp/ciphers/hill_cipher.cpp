@@ -48,7 +48,7 @@ string HillCipher::encrypt(string plain_text) {
         throw runtime_error("Currently the plain text length has to be a multiple of the block size");
     for (int i = 0; i < plain_text.length(); i+=this->block_size) {
         cout<<plain_text.substr(i, i + block_size)<<endl;
-        output += this->encrypt_block(plain_text.substr(i, i + block_size));
+        output += this->encrypt_block(plain_text.substr(i, block_size));
     }
     return output;
 }
@@ -58,7 +58,7 @@ string HillCipher::decrypt(string cipher_text) {
     if (cipher_text.size() % this->block_size != 0)
         throw runtime_error("Currently the plain text length has to be a multiple of the block size");
     for (int i = 0; i < cipher_text.length(); i+=this->block_size) {
-        output += this->decrypt_block(cipher_text.substr(i, i + block_size));
+        output += this->decrypt_block(cipher_text.substr(i, block_size));
     }
     return output;
 }
