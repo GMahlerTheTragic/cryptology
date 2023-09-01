@@ -1,13 +1,10 @@
 #include <iostream>
+
 #include <cryptology/algebra/algorithms.hpp>
 #include <cryptology/algebra/matrix.hpp>
 #include <cryptology/algebra/vector.hpp>
 
 using namespace std;
-
-int mod(int i, int n) {
-    return (i % n + n) % n;
-}
 
 long mod(long i, long n) {
     return (i % n + n) % n;
@@ -180,3 +177,5 @@ Matrix<modulus> inverse(Matrix<modulus> A, bool verbose) {
 
     return inverse;
 }
+
+template Matrix<26> inverse(Matrix<26> A, bool verbose);

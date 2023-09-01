@@ -2,6 +2,7 @@
 #define CRYPTOLOGY_ALGEBRA_RESIDUE_CLASS_HPP_
 
 #include <iostream>
+#include <string>
 
 namespace RC {
     template<int modulus>

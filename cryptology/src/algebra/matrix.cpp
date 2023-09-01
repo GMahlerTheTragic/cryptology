@@ -2,7 +2,6 @@
 
 #include <cryptology/algebra/matrix.hpp>
 #include <cryptology/algebra/vector.hpp>
-#include <cryptology/algebra/algorithms.hpp>
 
 using namespace std;
 
@@ -188,3 +187,7 @@ void Matrix<modulus>::print() const {
     }
     cout << "]" << endl;
 }
+
+template class Matrix<26>;
+template class Matrix<5>;
+

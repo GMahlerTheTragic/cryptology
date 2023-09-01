@@ -5,12 +5,15 @@
 #include <vector>
 #include <cryptology/algebra/algorithms.hpp>
 #include <cryptology/algebra/vector.hpp>
+#include <string>
 
 using namespace std;
 
-int mod(int i, int n);
-
 long mod(long i, long n);
+
+
+template<int modulus>
+class Vector;
 
 template<int modulus>
 class Matrix final {

@@ -2,6 +2,7 @@
 #define CRYPTOLOGY_CIPHERS_STREAM_CIPHER_HPP_
 
 #include <iostream>
+#include <string>
 
 using namespace std;
 

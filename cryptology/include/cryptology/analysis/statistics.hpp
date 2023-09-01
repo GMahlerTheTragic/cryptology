@@ -2,6 +2,8 @@
 #define CRYPTOLOGY_ANALYSIS_STATISTICS_HPP_
 
 #include <map>
+#include <queue>
+#include <string>
 
 using namespace std;
 

@@ -3,12 +3,10 @@
 
 #include <iostream>
 
-#include <cryptology/algebra/matrix.hpp>
 #include <cryptology/algebra/vector.hpp>
+#include <string>
 
 using namespace std;
-
-int mod(int i, int n);
 
 long mod(long i, long n);
 

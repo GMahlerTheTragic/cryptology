@@ -2,6 +2,7 @@
 #define CRYPTOLOGY_CIPHERS_HILL_CIPHER_HPP_
 
 #include <iostream>
+#include <string>
 #include <cryptology/algebra/matrix.hpp>
 #include <cryptology/algebra/vector.hpp>
 

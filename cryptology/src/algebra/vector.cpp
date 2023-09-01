@@ -87,3 +87,6 @@ void Vector<modulus>::print() const {
     }
     cout << "]" << endl;
 }
+
+template class Vector<26>;
+template class Vector<5>;

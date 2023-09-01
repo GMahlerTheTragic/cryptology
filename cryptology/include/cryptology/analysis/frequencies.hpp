@@ -2,8 +2,9 @@
 #define CRYPTOLOGY_ANALYSIS_FREQUENCIES_HPP_
 
 #include <map>
+#include <string>
 
-const map<std::string, double> ENGLISH_FREQUENCIES{
+const std::map<std::string, double> ENGLISH_FREQUENCIES{
     {"A", 0.0804},
     {"B", 0.0154},
     {"C", 0.0306},
@@ -31,7 +32,7 @@ const map<std::string, double> ENGLISH_FREQUENCIES{
     {"Y", 0.0173},
     {"Z", 0.0009}
 };
-const map<std::string, double> ENGLISH_BIGRAM_FREQUENCIES{
+const std::map<std::string, double> ENGLISH_BIGRAM_FREQUENCIES{
     {"TH", 0.0356},
     {"HE", 0.0307},
     {"IN", 0.0243},
@@ -84,7 +85,7 @@ const map<std::string, double> ENGLISH_BIGRAM_FREQUENCIES{
     {"UR", 0.0054},
 };
 
-const map<std::string, double> ENGLISH_TRIGRAM_FREQUENCIES{
+const std::map<std::string, double> ENGLISH_TRIGRAM_FREQUENCIES{
     {"THE", 0.0353},
     {"ING", 0.0111},
     {"AND", 0.0102},
@@ -108,7 +109,7 @@ const map<std::string, double> ENGLISH_TRIGRAM_FREQUENCIES{
 
 const double ENGLISH_INDEX_OF_COINCIDENCE = 0.0687;
 
-const map<std::string, double> GERMAN_FREQUENCIES{
+const std::map<std::string, double> GERMAN_FREQUENCIES{
     {"A", 0.0647},
     {"B", 0.0193},
     {"C", 0.0268},
@@ -136,7 +137,7 @@ const map<std::string, double> GERMAN_FREQUENCIES{
     {"Y", 0.0008},
     {"Z", 0.0114}
 };
-const map<std::string, double> GERMAN_BIGRAM_FREQUENCIES{
+const std::map<std::string, double> GERMAN_BIGRAM_FREQUENCIES{
     {"ER", 0.0409},
     {"EN", 0.0040},
     {"CH", 0.0242},
@@ -161,7 +162,7 @@ const map<std::string, double> GERMAN_BIGRAM_FREQUENCIES{
     {"SC", 0.0089}
 };
 
-const map<std::string, double> GERMAN_TRIGRAM_FREQUENCIES{
+const std::map<std::string, double> GERMAN_TRIGRAM_FREQUENCIES{
     {"EIN", 0.0122},
     {"ICH", 0.0111},
     {"NDE", 0.0089},

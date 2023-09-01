@@ -6,6 +6,9 @@
 #include <cryptology/algebra/vector.hpp>
 #include <cryptology/utils.hpp>
 
+template class Matrix<26>;
+template class Vector<26>;
+
 using namespace std;
 
 HillCipher::HillCipher(Matrix<26> key_matrix) : key_matrix(key_matrix), key_matrix_inv(Matrix<26>(key_matrix.rows(), key_matrix.cols())) {
