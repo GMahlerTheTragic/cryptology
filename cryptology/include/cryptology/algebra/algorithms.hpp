@@ -10,7 +10,11 @@ using namespace std;
 
 long mod(long i, long n);
 
-struct gcd_decomposition {long gcd; long factor_left; long factor_right;} typedef gcd_decomposition;
+struct gcd_decomposition {
+    long gcd;
+    long factor_left;
+    long factor_right;
+} typedef gcd_decomposition;
 
 bool is_invertible(long a, long m);
 
@@ -24,6 +28,6 @@ template<int modulus>
 long determinant(Matrix<modulus> A);
 
 template<int modulus>
-Matrix<modulus> inverse(Matrix<modulus> A, bool verbose=false);
+Matrix<modulus> inverse(Matrix<modulus> A, bool verbose = false);
 
 #endif

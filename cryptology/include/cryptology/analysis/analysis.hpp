@@ -7,9 +7,13 @@
 
 #include <string>
 
+
 void additive_brute_force(std::string ciphertext);
+
 std::vector<std::string> additive_frequency_based(std::string ciphertext);
+
 void hill_frequency_attack(std::string ciphertext, int n);
+
 void vigenere_kasiki_attack(std::string ciphertext);
 
 #endif //CRYPTOLOGY_ANALYSIS_HPP

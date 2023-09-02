@@ -2,7 +2,7 @@
 
 #include <cryptology/ciphers/affine_cipher.hpp>
 #include <cryptology/algebra/algorithms.hpp>
-#include <cryptology/utils.hpp>
+#include "cryptology/utils/utils.hpp"
 
 using namespace std;
 
@@ -13,7 +13,8 @@ char AffineCipher::encrypt(char input) {
         return input;
     }
     if (!is_letter(input)) {
-        throw runtime_error("Character to be encrypted is not part of the latin alphabet");
+        throw runtime_error(
+                "Character to be encrypted is not part of the latin alphabet");
     }
     int pos = letter_to_pos(input);
     char res = pos_to_letter(mod(((b * pos) + a), 26));
@@ -25,10 +26,11 @@ char AffineCipher::decrypt(char input) {
         return input;
     }
     if (!is_letter(input)) {
-        throw runtime_error("Character to be decrypted is not part of the latin alphabet");
+        throw runtime_error(
+                "Character to be decrypted is not part of the latin alphabet");
     }
     int pos = letter_to_pos(input);
-    char res = pos_to_letter(mod((b_inv * (pos - a)),26));
+    char res = pos_to_letter(mod((b_inv * (pos - a)), 26));
     return res;
 }
 

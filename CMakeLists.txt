@@ -22,14 +22,23 @@ add_library(CryptologyLib STATIC cryptology/src/algebra/algorithms.cpp
         cryptology/include/cryptology/ciphers/hill_cipher.hpp
         cryptology/src/ciphers/stream_cipher.cpp
         cryptology/include/cryptology/ciphers/stream_cipher.hpp
-        cryptology/src/utils.cpp
-        cryptology/include/cryptology/utils.hpp
-        cryptology/include/cryptology/analysis/analysis.hpp)
+        cryptology/src/utils/utils.cpp
+        cryptology/include/cryptology/utils/utils.hpp
+        cryptology/include/cryptology/analysis/analysis.hpp
+        cryptology/include/cryptology/ciphers/sp_network/sbox.hpp
+        cryptology/include/cryptology/ciphers/sp_network/pbox.hpp
+        cryptology/include/cryptology/ciphers/sp_network/sp_network.hpp
+        cryptology/include/cryptology/ciphers/key_schedules/key_schedules.hpp
+        cryptology/include/cryptology/utils/dynamic_bitset.hpp
+        cryptology/src/utils/dynamic_bitset.cpp
+        cryptology/src/ciphers/sp_network/pbox.cpp
+        cryptology/src/ciphers/sp_network/sbox.cpp
+        cryptology/src/ciphers/sp_network/sp_network.cpp)
 
 add_executable(Cryptology main.cpp
         cryptology/src/algebra/algorithms.cpp)
 
-target_include_directories (CryptologyLib PUBLIC cryptology/include)
-target_include_directories (Cryptology PUBLIC cryptology/include)
+target_include_directories(CryptologyLib PUBLIC cryptology/include)
+target_include_directories(Cryptology PUBLIC cryptology/include)
 
 target_link_libraries(Cryptology LINK_PUBLIC CryptologyLib)
