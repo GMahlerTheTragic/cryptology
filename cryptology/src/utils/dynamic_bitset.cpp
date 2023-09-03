@@ -129,3 +129,23 @@ DynamicBitset DynamicBitset::slice(size_t i, size_t j) const {
     return result;
 }
 
+bool DynamicBitset::operator*(const DynamicBitset &rhs) const {
+    if (rhs.size() != this->size_) {
+        throw std::length_error("size mismatch");
+    }
+    bool result = 0;
+    for (size_t i = 0; i < this->size_; ++i) {
+        result = result ^ (this->test(i) && rhs.test(i));
+    }
+    return result;
+}
+
+bool DynamicBitset::is_zero() {
+    for (size_t i = 0; i < this->size_; i++) {
+        if (this->bits_[i] != 0) {
+            return false;
+        }
+    }
+    return true;
+}
+

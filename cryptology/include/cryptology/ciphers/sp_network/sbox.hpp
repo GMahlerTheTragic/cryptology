@@ -27,6 +27,8 @@ public:
 
     DynamicBitset backward(DynamicBitset);
 
+    std::vector<std::vector<double>> compute_linear_approximation_table();
+
 };
 
 #endif

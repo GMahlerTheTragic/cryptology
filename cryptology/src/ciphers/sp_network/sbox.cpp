@@ -1,5 +1,6 @@
 #include <cryptology/ciphers/sp_network/sbox.hpp>
 #include <numeric>
+#include <iostream>
 
 using namespace std;
 
@@ -53,6 +54,33 @@ DynamicBitset SBox::backward(DynamicBitset input) {
                             "the output_size_ of its mapping inputs.");
     }
     return {this->inverse_mapping[input.to_uint64()], input_size_};
+}
+
+std::vector<std::vector<double>> SBox::compute_linear_approximation_table() {
+    std::vector<std::vector<double>> result_matrix;
+    for (uint64_t i = 0; i < std::pow(2, this->input_size_); i++) {
+        std::vector<double> temp = std::vector<double>(0.);
+        for (uint64_t j = 0; j < std::pow(2, this->output_size_); j++) {
+            DynamicBitset active_inputs = DynamicBitset(i, this->input_size_);
+            DynamicBitset active_outputs = DynamicBitset(j, this->output_size_);
+            double total_ones = 0.0;
+            for (uint64_t k = 0; k < this->mapping.size(); k++) {
+                DynamicBitset s_box_input = DynamicBitset(k,
+                                                          this->input_size_);
+                DynamicBitset s_box_output = DynamicBitset(this->mapping[k],
+                                                           this->output_size_);
+                total_ones += (s_box_input * active_inputs) ^
+                              (s_box_output * active_outputs);
+
+            }
+            double bias = std::abs(((16 - total_ones) / (std::pow(2,
+                                                                  this->input_size_))
+                                   ) - 0.5);
+            temp.push_back(bias);
+        }
+        result_matrix.push_back(temp);
+    }
+    return result_matrix;
 }
 
 size_t SBox::input_size() {

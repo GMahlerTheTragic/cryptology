@@ -97,7 +97,7 @@ int main() {
     vigenere_kasiki_attack(cipher_text);
 
     DynamicBitset bs = DynamicBitset(0xB, 4);
-    DynamicBitset bs1 = DynamicBitset("1011");
+    DynamicBitset bs1 = DynamicBitset("0011");
     SBox sbox = SBox(4, 4,
                      {
                              0xE, 0x4, 0xD, 0x1,
@@ -118,5 +118,18 @@ int main() {
     };
     SpNetwork spn = SpNetwork(pbox, sbox, 16, 5, round_keys);
     DynamicBitset input = DynamicBitset("0010011010110111");
+    input.print();
     spn.encrypt_block(input).print();
+
+    linear_attack(spn);
+    vector<vector<double>> t = sbox.compute_linear_approximation_table();
+    cout << "[" << endl;
+    for (size_t row = 0; row < 16; ++row) {
+        cout << "[ ";
+        for (size_t col = 0; col < 16; ++col) {
+            cout << t[row][col] << ", ";
+        }
+        cout << "]" << endl;
+    }
+    cout << "]" << endl;
 }

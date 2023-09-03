@@ -33,10 +33,16 @@ add_library(CryptologyLib STATIC cryptology/src/algebra/algorithms.cpp
         cryptology/src/utils/dynamic_bitset.cpp
         cryptology/src/ciphers/sp_network/pbox.cpp
         cryptology/src/ciphers/sp_network/sbox.cpp
-        cryptology/src/ciphers/sp_network/sp_network.cpp)
+        cryptology/src/ciphers/sp_network/sp_network.cpp
+        cryptology/include/cryptology/analysis/linear_attack/linear_trace.hpp
+        cryptology/include/cryptology/analysis/linear_attack/linear_approximation.hpp
+        cryptology/src/analysis/linear_attack/linear_trace.cpp
+        cryptology/src/analysis/linear_attack/linear_attack_worker.cpp
+        cryptology/include/cryptology/analysis/linear_attack/linear_attack_worker.hpp)
 
 add_executable(Cryptology main.cpp
-        cryptology/src/algebra/algorithms.cpp)
+        cryptology/src/algebra/algorithms.cpp
+        cryptology/include/cryptology/analysis/linear_attack/linear_trace.hpp)
 
 target_include_directories(CryptologyLib PUBLIC cryptology/include)
 target_include_directories(Cryptology PUBLIC cryptology/include)

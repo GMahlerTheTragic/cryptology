@@ -4,6 +4,7 @@
 #include <iostream>
 #include "cryptology/algebra/algorithms.hpp"
 #include "cryptology/algebra/vector.hpp"
+#include <cryptology/utils/dynamic_bitset.hpp>
 
 using namespace std;
 
@@ -19,5 +20,7 @@ vector<int> word_to_vec(string input);
 
 vector<vector<int>> tuples(int range, int tuple_size);
 
+vector<DynamicBitset> generateCombinations(const
+                                           vector<vector<DynamicBitset>> &lists);
 
 #endif

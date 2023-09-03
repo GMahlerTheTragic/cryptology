@@ -27,9 +27,13 @@ public:
 
     DynamicBitset operator+(const DynamicBitset &rhs) const;
 
+    bool operator*(const DynamicBitset &rhs) const;
+
     DynamicBitset concat(const DynamicBitset &rhs) const;
 
     DynamicBitset slice(size_t i, size_t j) const;
+
+    bool is_zero();
 
 private:
     std::vector<uint8_t> bits_;
