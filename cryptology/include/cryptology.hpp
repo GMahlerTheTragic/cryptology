@@ -9,6 +9,7 @@
 #include <cryptology/analysis/analysis.hpp>
 #include <cryptology/analysis/frequencies.hpp>
 #include <cryptology/analysis/statistics.hpp>
+#include <cryptology/analysis/linear_attack/linear_attack_worker.hpp>
 
 #include <cryptology/ciphers/affine_cipher.hpp>
 #include <cryptology/ciphers/hill_cipher.hpp>

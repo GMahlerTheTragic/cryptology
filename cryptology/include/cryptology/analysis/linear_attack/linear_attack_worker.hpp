@@ -22,6 +22,17 @@ public:
 
     vector<pair<DynamicBitset, DynamicBitset>>
     generate_random_plain_cipher_pairs(size_t count);
+
+    vector<pair<DynamicBitset, DynamicBitset>>
+    partial_decrypt_plain_cipher_pairs(vector<DynamicBitset> &round_keys,
+                                       vector<pair<DynamicBitset,
+                                               DynamicBitset>> pairs);
+
+    DynamicBitset estimate_best_round_key_candidate(vector<pair<DynamicBitset,
+            DynamicBitset>> &pairs, vector<DynamicBitset> &key_candidates,
+                                                    bool is_last_round,
+                                                    DynamicBitset active_inputs,
+                                                    DynamicBitset active_outputs);
 };
 
 

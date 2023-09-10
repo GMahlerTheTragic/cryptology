@@ -113,8 +113,8 @@ int main() {
             DynamicBitset("0011101010010100"),
             DynamicBitset("1010100101001101"),
             DynamicBitset("1001010011010110"),
-            DynamicBitset("0100110101100011"),
             DynamicBitset("1101011000111111"),
+            DynamicBitset("0100110101100011"),
     };
     SpNetwork spn = SpNetwork(pbox, sbox, 16, 5, round_keys);
     DynamicBitset input = DynamicBitset("0010011010110111");
@@ -122,14 +122,14 @@ int main() {
     spn.encrypt_block(input).print();
 
     linear_attack(spn);
-    vector<vector<double>> t = sbox.compute_linear_approximation_table();
-    cout << "[" << endl;
-    for (size_t row = 0; row < 16; ++row) {
-        cout << "[ ";
-        for (size_t col = 0; col < 16; ++col) {
-            cout << t[row][col] << ", ";
-        }
-        cout << "]" << endl;
-    }
-    cout << "]" << endl;
+//    vector<vector<double>> t = sbox.compute_linear_approximation_table();
+//    cout << "[" << endl;
+//    for (size_t row = 0; row < 16; ++row) {
+//        cout << "[ ";
+//        for (size_t col = 0; col < 16; ++col) {
+//            cout << t[row][col] << ", ";
+//        }
+//        cout << "]" << endl;
+//    }
+//    cout << "]" << endl;
 }
