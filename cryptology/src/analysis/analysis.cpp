@@ -204,112 +204,110 @@ void linear_attack(SpNetwork sp_network) {
             = attack_worker.generate_single_sbox_inputs_for_traces();
     multiset<LinearTrace> linear_traces = attack_worker
             .generate_linear_traces_from_inputs(inputs_for_trace_generation);
-    vector<DynamicBitset> round_keys;
+
     size_t sbox_size = sp_network.sbox_size();
 
-    for (size_t round = 0; round < sp_network.rounds(); round++) {
-        auto it = linear_traces.rbegin();
-        cout << "Starting round " << sp_network.rounds() - round << endl;
-        DynamicBitset round_key = DynamicBitset(sp_network.block_size());
+    auto it = linear_traces.rbegin();
+    cout << endl;
+    cout << "Starting linear attack on last round key..." << endl;
+    cout << "===========================================" << endl;
 
-        DynamicBitset numberSet = DynamicBitset(
-                pow(2, sp_network.sbox_size()) - 1,
-                sp_network.sbox_size()
-        );
-        numberSet.print();
-        while (it != linear_traces.rend() && !numberSet.is_zero()) {
-            cout << "number set: ";
-            numberSet.print();
-            LinearTrace best_trace = *it;
-            it++;
-            bool contains_more = false;
-            size_t n_act = 0;
-            for (size_t i = 0; i < sp_network.n_parallel_sboxes(); i++) {
+    DynamicBitset round_key = DynamicBitset(sp_network.block_size());
 
-                DynamicBitset slice = best_trace
-                        .get_active_output(2 - round)
-                        .slice(i * sbox_size, (i + 1) * sbox_size);
-                if (!slice.is_zero()) {
-                    n_act += 1;
-                }
-                if (numberSet.test(i) && !slice.is_zero()) {
-                    contains_more = true;
-                }
+    DynamicBitset numberSet = DynamicBitset(
+            pow(2, sp_network.sbox_size()) - 1,
+            sp_network.sbox_size()
+    );
+
+    while (it != linear_traces.rend() && !numberSet.is_zero()) {
+        LinearTrace best_trace = *it;
+        it++;
+        bool contains_more = false;
+        size_t n_act = 0;
+        cout << "Attacking SBoxes [";
+        for (size_t i = 0; i < sp_network.n_parallel_sboxes(); i++) {
+
+            DynamicBitset slice = best_trace
+                    .get_active_output(sp_network.rounds() - 3)
+                    .slice(i * sbox_size, (i + 1) * sbox_size);
+
+            if (!slice.is_zero()) {
+                n_act += 1;
             }
-            if (n_act > 2) {
-                continue;
+            if (numberSet.test(i) && !slice.is_zero()) {
+                contains_more = true;
+                cout << "_" << i << "_ ";
+            } else {
+                cout << "___ ";
             }
-            if (!contains_more) {
-                continue;
-            }
-            best_trace.print();
-            size_t count = std::pow(best_trace.get_bias(), -3);
-            count = 65536;
-            cout << "Generating " << count << " random pairs..." << endl;
-            vector<pair<DynamicBitset, DynamicBitset>> pairs = attack_worker
-                    .generate_random_plain_cipher_pairs(count);
-            cout << "Done." << endl;
-
-            pairs = attack_worker.partial_decrypt_plain_cipher_pairs
-                    (round_keys, pairs);
-
-            vector<vector<DynamicBitset>> prefixes_list;
-            DynamicBitset active_inputs = best_trace.get_input();
-            DynamicBitset active_outputs = best_trace.get_active_output(
-                    2 - round);
-            cout << "input: ";
-            active_inputs.print();
-            cout << "outputs: ";
-            active_outputs.print();
-            for (size_t i = 0; i < sp_network.n_parallel_sboxes(); i++) {
-                vector<DynamicBitset> prefixes;
-                DynamicBitset slice = active_outputs.slice(i * sbox_size,
-                                                           (i + 1) * sbox_size);
-                if (slice.is_zero()) {
-                    prefixes.push_back(
-                            DynamicBitset(0, sp_network.sbox_size()));
-                } else {
-                    for (uint64_t j = 0;
-                         j < pow(2, sp_network.sbox_size()); j++) {
-                        prefixes.push_back(
-                                DynamicBitset(j, sp_network.sbox_size()));
-                    }
-                }
-                prefixes_list.push_back(prefixes);
-            }
-
-            vector<DynamicBitset> possible_keys = generateCombinations(
-                    prefixes_list);
-
-            cout << "evaluating " << possible_keys.size()
-                 << " key candidates...";
-            bool is_last_round = (round == 0);
-            cout << "is last round:" << is_last_round << endl;
-            DynamicBitset max_key = attack_worker
-                    .estimate_best_round_key_candidate(pairs, possible_keys,
-                                                       is_last_round,
-                                                       active_inputs,
-                                                       active_outputs);
-            max_key.print();
-            for (size_t i = 0; i < sp_network.n_parallel_sboxes(); i++) {
-                size_t begin = i * sp_network.sbox_size();
-                size_t end = begin + sp_network.sbox_size();
-
-                if (numberSet.test(i) && !active_outputs.slice(begin, end).
-                        is_zero()) {
-                    numberSet.clear(i);
-                    DynamicBitset key_slice = max_key.slice(begin, end);
-                    for (size_t j = begin; j < end; j++) {
-                        if (key_slice.test(j - begin)) {
-                            round_key.set(j);
-                        }
-                    }
-                }
-            }
-            cout << "current round key: ";
-            round_key.print();
-            cout << "map stil includes" << numberSet.size() << endl;
         }
-        round_keys.push_back(round_key);
+        cout << "]" << endl;
+//        if (n_act > 2) {
+//            continue;
+//        }
+        if (!contains_more) {
+            continue;
+        }
+
+        size_t count = std::pow(best_trace.get_bias(), -3);
+
+        cout << "Generating " << count << " random pairs..." << endl;
+
+        vector<pair<DynamicBitset, DynamicBitset>> pairs = attack_worker
+                .generate_random_plain_cipher_pairs(count);
+
+        cout << "Done." << endl;
+
+        vector<vector<DynamicBitset>> prefixes_list;
+        DynamicBitset active_inputs = best_trace.get_input();
+        DynamicBitset active_outputs = best_trace.get_active_output(
+                sp_network.rounds() - 3);
+
+        for (size_t i = 0; i < sp_network.n_parallel_sboxes(); i++) {
+            vector<DynamicBitset> prefixes;
+            DynamicBitset slice = active_outputs.slice(i * sbox_size,
+                                                       (i + 1) * sbox_size);
+            if (slice.is_zero()) {
+                prefixes.push_back(
+                        DynamicBitset(0, sp_network.sbox_size()));
+            } else {
+                for (uint64_t j = 0;
+                     j < pow(2, sp_network.sbox_size()); j++) {
+                    prefixes.push_back(
+                            DynamicBitset(j, sp_network.sbox_size()));
+                }
+            }
+            prefixes_list.push_back(prefixes);
+        }
+
+        vector<DynamicBitset> possible_keys = generateCombinations(
+                prefixes_list);
+
+        cout << "evaluating " << possible_keys.size()
+             << " key candidates..." << endl;
+
+        DynamicBitset max_key = attack_worker
+                .estimate_best_round_key_candidate(pairs, possible_keys,
+                                                   true,
+                                                   active_inputs,
+                                                   active_outputs);
+        for (size_t i = 0; i < sp_network.n_parallel_sboxes(); i++) {
+            size_t begin = i * sp_network.sbox_size();
+            size_t end = begin + sp_network.sbox_size();
+
+            if (numberSet.test(i) && !active_outputs.slice(begin, end).
+                    is_zero()) {
+                numberSet.clear(i);
+                DynamicBitset key_slice = max_key.slice(begin, end);
+                for (size_t j = begin; j < end; j++) {
+                    if (key_slice.test(j - begin)) {
+                        round_key.set(j);
+                    }
+                }
+            }
+        }
     }
+    cout << "Finished." << endl;
+    cout << "Found the following guess for the last round key: ";
+    round_key.print();
 }

@@ -122,14 +122,4 @@ int main() {
     spn.encrypt_block(input).print();
 
     linear_attack(spn);
-//    vector<vector<double>> t = sbox.compute_linear_approximation_table();
-//    cout << "[" << endl;
-//    for (size_t row = 0; row < 16; ++row) {
-//        cout << "[ ";
-//        for (size_t col = 0; col < 16; ++col) {
-//            cout << t[row][col] << ", ";
-//        }
-//        cout << "]" << endl;
-//    }
-//    cout << "]" << endl;
 }
