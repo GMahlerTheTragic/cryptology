@@ -88,38 +88,38 @@ int main() {
     cipher_text = additive_cipher.encrypt("xygrobo");
     additive_brute_force(cipher_text);
     additive_frequency_based(cipher_text);
+//
+//    cipher_text = "lmqetxyeagtxctuiewnctxlzewuaispzyvapewlmgqwyaxftcjmsqcadagtxlmdxnxsnpjqsyvapriqsmhnocvaxfv";
+//    hill_frequency_attack(cipher_text, 3);
 
-    cipher_text = "lmqetxyeagtxctuiewnctxlzewuaispzyvapewlmgqwyaxftcjmsqcadagtxlmdxnxsnpjqsyvapriqsmhnocvaxfv";
-    hill_frequency_attack(cipher_text, 3);
+    cipher_text = "HUDSKUAEZGXRAVTFPGWSWGWSZHTPPBILLRTZPZHWLOIJVFICVBTHLUGILGPRKHWMYHTIUAXRBHTWUCGXOSPWAOCHIMCSYHWQHWCFYOCGOGTZLBILSWBFLOHXZWSIZVDSATGSTHWISSUXLMTSMHWIKSPXOGWIHRPFLSAMUSUVVAILLHGILHWVVIVLAVTWOCIJPTICMSTXVII";
+//    cipher_text = "KCCPKBGUFDPHQTYAVINRRTMVGRKDNBVFDETDGILTXRGUDDKOTFMBPVGEGLTGCKQRACQCWDNAWCRXIZAKFTLEWRPTYCQKYVXCHKFTPONCQQRHJVAJUWETMCMSPKQDYHJVDAHCTRLSVSKCGCZQQDZXGSFRLSWCWSJTBHAFSIASPRJAHKJRJUMVGKMITZHFPDISPZLVLGWTFPLKKEBDPGCEBSHCTJRWXBAFSPEZQNRWXCVYCGAONWDDKACKAWBBIKFTIOVKCGGHJVLNHIFFSQESVYCLACNVRWBBIREPBBVFEXOSCDYGZWPFDTKFQIYCWHJVLNHIQIBTKHJVNPIST";
+    vigenere_attack(cipher_text);
 
-    cipher_text = "hudskuaezgxravtfpgwswgwszhtppbillrtzpzhwloijvficvbthlugilgprkhwmyhtiuaxrbhtwucgxospwaochimcsyhwqhwcfyocgogtzlbilswbflohxzwsizvdsatgsthwissuxlmtsmhwikspxogwihrpflsamusuvvaillhgilhwvvivlavtwocijpticmstxvii";
-    cipher_text = "nejorkdemxddotrdenork";
-    vigenere_kasiki_attack(cipher_text);
+//    DynamicBitset bs = DynamicBitset(0xB, 4);
+//    DynamicBitset bs1 = DynamicBitset("0011");
+//    SBox sbox = SBox(4, 4,
+//                     {
+//                             0xE, 0x4, 0xD, 0x1,
+//                             0x2, 0xF, 0xB, 0x8,
+//                             0x3, 0xA, 0x6, 0xC,
+//                             0x5, 0x9, 0x0, 0x7});
+//    PBox pbox = PBox({
+//                             0, 4, 8, 12,
+//                             1, 5, 9, 13,
+//                             2, 6, 10, 14,
+//                             3, 7, 11, 15});
+//    vector<DynamicBitset> round_keys = {
+//            DynamicBitset("0011101010010100"),
+//            DynamicBitset("1010100101001101"),
+//            DynamicBitset("1001010011010110"),
+//            DynamicBitset("1101011000111111"),
+//            DynamicBitset("0100110101100011"),
+//    };
+//    SpNetwork spn = SpNetwork(pbox, sbox, 16, 5, round_keys);
+//    DynamicBitset input = DynamicBitset("0010011010110111");
+//    input.print();
+//    spn.encrypt_block(input).print();
 
-    DynamicBitset bs = DynamicBitset(0xB, 4);
-    DynamicBitset bs1 = DynamicBitset("0011");
-    SBox sbox = SBox(4, 4,
-                     {
-                             0xE, 0x4, 0xD, 0x1,
-                             0x2, 0xF, 0xB, 0x8,
-                             0x3, 0xA, 0x6, 0xC,
-                             0x5, 0x9, 0x0, 0x7});
-    PBox pbox = PBox({
-                             0, 4, 8, 12,
-                             1, 5, 9, 13,
-                             2, 6, 10, 14,
-                             3, 7, 11, 15});
-    vector<DynamicBitset> round_keys = {
-            DynamicBitset("0011101010010100"),
-            DynamicBitset("1010100101001101"),
-            DynamicBitset("1001010011010110"),
-            DynamicBitset("1101011000111111"),
-            DynamicBitset("0100110101100011"),
-    };
-    SpNetwork spn = SpNetwork(pbox, sbox, 16, 5, round_keys);
-    DynamicBitset input = DynamicBitset("0010011010110111");
-    input.print();
-    spn.encrypt_block(input).print();
-
-    linear_attack(spn);
+//    linear_attack(spn);
 }

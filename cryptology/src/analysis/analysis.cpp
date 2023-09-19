@@ -29,12 +29,12 @@ void additive_brute_force(string ciphertext) {
     cout << endl;
     cout << "Starting brute force attack against additive cipher" << endl;
     cout << line << endl;
-    map<string, double> result = compute_letter_frequencies(ciphertext);
+    map<string, int> result = compute_letter_counts(ciphertext);
     for (int i = 0; i < 26; ++i) {
         AffineCipher affine_cipher = AffineCipher(i, 1);
         string candidate = affine_cipher.decrypt(ciphertext);
-        double ioc = index_of_coincidence(candidate);
-        result_pq.push(make_pair(ioc, candidate));
+        double ios = index_of_similarity(candidate);
+        result_pq.push(make_pair(ios, candidate));
     }
     cout << endl;
     cout << "Listing possible plain text sorted by ioc:" << endl;
@@ -55,12 +55,12 @@ vector<string> additive_frequency_based(string ciphertext) {
     for (int i = 0; i < 26; i++) {
         AffineCipher affine_cipher = AffineCipher(i, 1);
         string plain_text_candidate = affine_cipher.decrypt(ciphertext);
-        double ioc = index_of_coincidence(plain_text_candidate);
+        double ios = index_of_similarity(plain_text_candidate);
         string key = {pos_to_letter(i)};
-        result_pq.push(make_pair(ioc, key));
+        result_pq.push(make_pair(ios, key));
     }
     vector<string> result = vector<string>(2);
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 2; i++) {
         result[i] = result_pq.top().second;
         result_pq.pop();
     }
@@ -128,27 +128,18 @@ void hill_frequency_attack(string ciphertext, int n) {
     }
 }
 
-void vigenere_kasiki_attack(string ciphertext) {
+void vigenere_attack(string ciphertext) {
     int n = ciphertext.length();
-    priority_queue<pair<int, string>> ngram_freqs = compute_ngramm_frequencies(
-            ciphertext, 1);
-    double ioc = 0;
-    while (!ngram_freqs.empty()) {
-        pair<int, string> next = ngram_freqs.top();
-        cout << next.second << ": " << next.first << endl;
-        ioc += next.first * (next.first - 1);
-        ngram_freqs.pop();
-    }
-    ioc = ioc / (ciphertext.length() * (ciphertext.length() - 1));
+    double ioc = index_of_coincidence(ciphertext);
     cout << "ioc is: " << ioc << endl;
-    cout << expected_ioc(10, ciphertext.length()) << endl;
+    cout << expected_ioc(4, ciphertext.length()) << endl;
     priority_queue<pair<double, int>> possible_periods = priority_queue<pair<double, int>>();
     for (int d = 1; d <= n; d++) {
         double delta = -abs(expected_ioc(d, n) - ioc);
         possible_periods.push(make_pair(delta, d));
     }
     priority_queue<pair<double, string>> result = priority_queue<pair<double, string>>();
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 3; i++) {
         double delta = possible_periods.top().first;
         int d = possible_periods.top().second;
         possible_periods.pop();
@@ -172,29 +163,25 @@ void vigenere_kasiki_attack(string ciphertext) {
         for (int j = 0; j < idx_combs.size(); j++) {
             string key_candidate = "";
             for (int l = 0; l < d; l++) {
-
                 key_candidate += letter_combinations[l][idx_combs[j][l]];
             }
             VigenereCipher vigenere_cipher = VigenereCipher(key_candidate);
             string plain_text_candidate = vigenere_cipher.decrypt(ciphertext);
             result.push(
-                    make_pair(-abs(index_of_coincidence(plain_text_candidate) -
-                                   ENGLISH_INDEX_OF_COINCIDENCE),
-                              plain_text_candidate + key_candidate));
+                    make_pair(index_of_similarity(plain_text_candidate),
+                              plain_text_candidate + " key: " + key_candidate));
         }
     }
-// while(!result.empty()) {
-//         pair<double, string> result_pair= result.top();
-//         cout<<result_pair.second <<" " << result_pair.first << endl;
-//         result.pop();
-//     }
+
+
     for (int q = 0; q < 100; q++) {
+        if (result.empty()) {
+            break;
+        }
         pair<double, string> result_pair = result.top();
         cout << result_pair.second << " " << result_pair.first << endl;
         result.pop();
     }
-//     // for (int d = 1; d <= n; d++) {
-
 
 }
 
@@ -242,9 +229,9 @@ void linear_attack(SpNetwork sp_network) {
             }
         }
         cout << "]" << endl;
-//        if (n_act > 2) {
-//            continue;
-//        }
+        if (n_act > 2) {
+            continue;
+        }
         if (!contains_more) {
             continue;
         }
