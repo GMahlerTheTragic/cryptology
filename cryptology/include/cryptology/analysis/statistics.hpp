@@ -7,7 +7,6 @@
 
 using namespace std;
 
-
 map<string, int> compute_letter_counts(string text);
 
 double index_of_coincidence(string test);

@@ -6,23 +6,22 @@
 
 using namespace std;
 
-
 class AffineCipher {
-private:
-    const int a;
-    const int b;
-    const int b_inv;
+ private:
+  const int a;
+  const int b;
+  const int b_inv;
 
-    char encrypt(char input);
+  char encrypt(char input);
 
-    char decrypt(char input);
+  char decrypt(char input);
 
-public:
-    AffineCipher(int a, int b);
+ public:
+  AffineCipher(int a, int b);
 
-    string encrypt(string plain_text);
+  string encrypt(string plain_text);
 
-    string decrypt(string cipher_text);
+  string decrypt(string cipher_text);
 };
 
 #endif

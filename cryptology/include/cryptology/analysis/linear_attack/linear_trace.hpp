@@ -7,28 +7,29 @@
 using namespace std;
 
 class LinearTrace {
-private:
-    double bias = 0.5;
-    vector<RoundLinearApproximation> data;
-    DynamicBitset input;
-public:
-    LinearTrace(DynamicBitset input);
+ private:
+  double bias = 0.5;
+  vector<RoundLinearApproximation> data;
+  DynamicBitset input;
 
-    void add(RoundLinearApproximation round_linear_approximation);
+ public:
+  LinearTrace(DynamicBitset input);
 
-    double get_bias();
+  void add(RoundLinearApproximation round_linear_approximation);
 
-    double get_necessary_pairs();
+  double get_bias();
 
-    DynamicBitset get_active_output(size_t round);
+  double get_necessary_pairs();
 
-    void print();
+  DynamicBitset get_active_output(size_t round);
 
-    DynamicBitset get_input();
+  void print();
 
-    bool operator<(const LinearTrace &other) const {
-        return this->bias < other.bias;
-    }
+  DynamicBitset get_input();
+
+  bool operator<(const LinearTrace &other) const {
+    return this->bias < other.bias;
+  }
 };
 
 #endif //CRYPTOLOGY_LINEAR_TRACE_HPP

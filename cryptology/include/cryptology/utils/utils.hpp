@@ -20,7 +20,6 @@ vector<int> word_to_vec(string input);
 
 vector<vector<int>> tuples(int range, int tuple_size);
 
-vector<DynamicBitset> generateCombinations(const
-                                           vector<vector<DynamicBitset>> &lists);
+vector<DynamicBitset> generateCombinations(const vector<vector<DynamicBitset>> &lists);
 
 #endif

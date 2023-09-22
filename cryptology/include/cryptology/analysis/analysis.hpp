@@ -13,6 +13,6 @@ void hill_frequency_attack(std::string ciphertext, int n);
 void vigenere_attack(std::string ciphertext);
 
 void linear_attack(
-        SpNetwork sp_network);
+    SpNetwork sp_network);
 
 #endif //CRYPTOLOGY_ANALYSIS_HPP

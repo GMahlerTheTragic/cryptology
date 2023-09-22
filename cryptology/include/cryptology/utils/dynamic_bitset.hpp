@@ -6,38 +6,38 @@
 #include <iterator>
 
 class DynamicBitset {
-public:
-    DynamicBitset(size_t size);
+ public:
+  DynamicBitset(size_t size);
 
-    DynamicBitset(const std::string &binaryString);
+  DynamicBitset(const std::string &binaryString);
 
-    DynamicBitset(uint64_t value, size_t size);
+  DynamicBitset(uint64_t value, size_t size);
 
-    void set(size_t index);
+  void set(size_t index);
 
-    void clear(size_t index);
+  void clear(size_t index);
 
-    bool test(size_t index) const;
+  bool test(size_t index) const;
 
-    size_t size() const;
+  size_t size() const;
 
-    uint64_t to_uint64() const;
+  uint64_t to_uint64() const;
 
-    void print() const;
+  void print() const;
 
-    DynamicBitset operator+(const DynamicBitset &rhs) const;
+  DynamicBitset operator+(const DynamicBitset &rhs) const;
 
-    bool operator*(const DynamicBitset &rhs) const;
+  bool operator*(const DynamicBitset &rhs) const;
 
-    DynamicBitset concat(const DynamicBitset &rhs) const;
+  DynamicBitset concat(const DynamicBitset &rhs) const;
 
-    DynamicBitset slice(size_t i, size_t j) const;
+  DynamicBitset slice(size_t i, size_t j) const;
 
-    bool is_zero();
+  bool is_zero();
 
-private:
-    std::vector<uint8_t> bits_;
-    size_t size_;
+ private:
+  std::vector<uint8_t> bits_;
+  size_t size_;
 };
 
 #endif //CRYPTOLOGY_DYNAMIC_BITSET_HPP
