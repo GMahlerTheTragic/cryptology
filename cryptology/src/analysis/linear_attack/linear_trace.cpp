@@ -1,6 +1,7 @@
 #include <cryptology/analysis/linear_attack/linear_trace.hpp>
 #include <cryptology/analysis/linear_attack/linear_approximation.hpp>
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
