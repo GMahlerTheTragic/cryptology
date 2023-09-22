@@ -65,7 +65,6 @@ double index_of_similarity(string text) {
     size_t n = text.length();
     map<string, int> letter_counts = compute_letter_counts(text);
     double result = 0.;
-    int sum = 0;
     for (const auto &letter: letters) {
         int count = letter_counts.at(letter);
         double letter_probability = (double) count / n;

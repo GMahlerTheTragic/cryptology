@@ -6,7 +6,7 @@
 
 using namespace std;
 
-AffineCipher::AffineCipher(int a, int b) : a(a), b(b), b_inv(inverse(b, 26)) {};
+AffineCipher::AffineCipher(int a, int b) : a(a), b(b), b_inv(inverse(b, 26)) {}
 
 char AffineCipher::encrypt(char input) {
     if ((input & 0xFF) == 0x20) {

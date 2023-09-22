@@ -15,11 +15,11 @@ PBox::PBox(std::vector<unsigned int> permutation) {
         throw runtime_error("The passed vector is not a permutation");
     }
     this->permutation = permutation;
-    std::vector<unsigned int> inverse_permutation(permutation.size(), 0);
+    std::vector<unsigned int> inverse_permutation_values(permutation.size(), 0);
     for (size_t i = 0; i < permutation.size(); i++) {
-        inverse_permutation[permutation[i]] = i;
+        inverse_permutation_values[permutation[i]] = i;
     }
-    this->inverse_permutation = inverse_permutation;
+    this->inverse_permutation = inverse_permutation_values;
 }
 
 DynamicBitset PBox::forward(DynamicBitset input) {

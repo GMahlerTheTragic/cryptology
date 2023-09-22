@@ -10,7 +10,7 @@ StreamCipher::StreamCipher(string keyword) : keyword(keyword) {
     if (!word_from_latin_alphabet(keyword)) {
         throw runtime_error("The keyword has to come from the latin alphabet");
     }
-};
+}
 
 string StreamCipher::encrypt(string plain_text) {
     int l = this->keyword.length();

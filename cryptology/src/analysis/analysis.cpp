@@ -1,14 +1,10 @@
 #include <iostream>
 #include <map>
 #include <queue>
-#include <random>
 #include <unordered_set>
 #include <set>
-
-#include <iostream>
 #include <cryptology/algebra/algorithms.hpp>
 #include <cryptology/algebra/matrix.hpp>
-#include <cryptology/algebra/vector.hpp>
 #include <cryptology/ciphers/affine_cipher.hpp>
 #include <cryptology/ciphers/hill_cipher.hpp>
 #include <cryptology/ciphers/stream_cipher.hpp>

@@ -17,17 +17,6 @@ LinearAttackWorker::LinearAttackWorker(SpNetwork sp_network) : sp_network(
 vector<DynamicBitset>
 LinearAttackWorker::generate_single_sbox_inputs_for_traces() {
     vector<DynamicBitset> inputs_for_trace_generation;
-//    for (size_t i = 0; i < this->sp_network.n_parallel_sboxes(); i++) {
-//        for (uint64_t sbox_input = 1;
-//             sbox_input < pow(2, this->sp_network.sbox_size());
-//             sbox_input++) {
-//            DynamicBitset input_vector =
-//                    DynamicBitset(
-//                            sbox_input << (i * this->sp_network.sbox_size()),
-//                            16);
-//            inputs_for_trace_generation.push_back(input_vector);
-//        }
-//    }
     for (size_t i = 0; i < pow(2, 16); i++) {
         inputs_for_trace_generation.push_back(DynamicBitset(i, 16));
     }

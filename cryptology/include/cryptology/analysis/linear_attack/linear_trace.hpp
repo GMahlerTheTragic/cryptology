@@ -9,7 +9,6 @@ using namespace std;
 class LinearTrace {
 private:
     double bias = 0.5;
-    double length = 0;
     vector<RoundLinearApproximation> data;
     DynamicBitset input;
 public:

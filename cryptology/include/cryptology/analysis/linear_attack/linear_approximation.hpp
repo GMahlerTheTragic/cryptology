@@ -7,8 +7,6 @@
 
 struct LinearApproximation {
     double bias;
-    size_t s_box_position;
-    uint64_t active_inputs;
     uint64_t active_outputs;
 };
 

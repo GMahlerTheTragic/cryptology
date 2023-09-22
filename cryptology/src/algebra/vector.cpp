@@ -8,7 +8,7 @@ using namespace std;
 
 template<int modulus>
 Vector<modulus>::Vector(size_t size, int default_value)
-        : _size(size), values(size, mod(default_value, modulus)) {};
+        : _size(size), values(size, mod(default_value, modulus)) {}
 
 
 template<int modulus>

@@ -20,9 +20,9 @@ bool is_invertible(long a, long m);
 
 long inverse(long a, long m);
 
-long euklid(long a, long b);
+long euclid(long a, long b);
 
-struct gcd_decomposition extended_euklid(long a, long b);
+struct gcd_decomposition extended_euclid(long a, long b);
 
 template<int modulus>
 long determinant(Matrix<modulus> A);

@@ -11,20 +11,21 @@ long mod(long i, long n) {
 }
 
 bool is_invertible(long a, long m) {
-        if (euklid(a, m) == 1) {
-            return true;
-        }
-        return false;
+    if (euclid(a, m) == 1) {
+        return true;
+    }
+    return false;
 }
 
 long inverse(long a, long m) {
     if (!is_invertible(a, m)) {
-        throw std::runtime_error("left side is not invertible modulo right side"); 
+        throw std::runtime_error(
+                "left side is not invertible modulo right side");
     }
-    return mod(extended_euklid(a, m).factor_left, m);
+    return mod(extended_euclid(a, m).factor_left, m);
 }
 
-long euklid(long a, long b) {
+long euclid(long a, long b) {
     if (a < b) {
         long temp = a;
         a = b;
@@ -40,18 +41,17 @@ long euklid(long a, long b) {
     return a;
 }
 
-struct gcd_decomposition extended_euklid(long a, long b) {
+struct gcd_decomposition extended_euclid(long a, long b) {
     struct gcd_decomposition result;
-    long* smaller_p;
-    long* larger_p;
+    long *smaller_p;
+    long *larger_p;
     if (a < b) {
         long temp = a;
         a = b;
         b = temp;
         smaller_p = &result.factor_left;
         larger_p = &result.factor_right;
-    }
-    else {
+    } else {
         smaller_p = &result.factor_right;
         larger_p = &result.factor_left;
     }
@@ -65,8 +65,8 @@ struct gcd_decomposition extended_euklid(long a, long b) {
         if (i++ != 0) {
             p_temp = p1;
             q_temp = q1;
-            p1 = p0 - d*p1;
-            q1 = q0 - d*q1;
+            p1 = p0 - d * p1;
+            q1 = q0 - d * q1;
             p0 = p_temp;
             q0 = q_temp;
         }
@@ -83,7 +83,8 @@ struct gcd_decomposition extended_euklid(long a, long b) {
 }
 
 template<int modulus>
-long elim(Matrix<modulus> &A, size_t i, size_t i_prime, size_t j, bool verbose=false) {
+void elim(Matrix<modulus> &A, size_t i, size_t i_prime, size_t j,
+          bool verbose = false) {
     if (A(i, j) > A(i_prime, j)) {
         size_t temp = i;
         i = i_prime;
@@ -93,7 +94,8 @@ long elim(Matrix<modulus> &A, size_t i, size_t i_prime, size_t j, bool verbose=f
     while (A(i, j) != 0) {
         d = A(i_prime, j) / A(i, j);
         if (verbose)
-            cout << "d = " << A(i_prime, j) << " div " << A(i, j) << " = " << d << endl;
+            cout << "d = " << A(i_prime, j) << " div " << A(i, j) << " = " << d
+                 << endl;
         A.set_row(i_prime, A.get_row(i_prime) - (A.get_row(i) * d));
         size_t temp = i;
         i = i_prime;
@@ -101,7 +103,7 @@ long elim(Matrix<modulus> &A, size_t i, size_t i_prime, size_t j, bool verbose=f
         if (verbose)
             A.print();
     }
-    
+
 }
 
 template<int modulus>
@@ -111,10 +113,10 @@ long determinant(Matrix<modulus> A) {
     }
     size_t n = A.cols();
 
-    
+
     for (size_t j = 0; j < n; ++j) {
         for (size_t i = n - 1; i > j; --i) {
-            if ((A(j, j) =! 0) && (A(i, j) =! 0)) {
+            if ((A(j, j) = true) && (A(i, j) = true)) {
                 elim(A, j, i, j);
             }
             if (A(i, j) > 0) {
@@ -127,7 +129,7 @@ long determinant(Matrix<modulus> A) {
 
     int det = 1;
     for (size_t j = 0; j < n; ++j) {
-        det = mod(det * A(j,j), modulus);
+        det = mod(det * A(j, j), modulus);
     }
     return det;
 }
@@ -145,7 +147,8 @@ Matrix<modulus> inverse(Matrix<modulus> A, bool verbose) {
             if ((A(j, j) != 0) && (A(i, j) != 0)) {
                 if (verbose) {
                     A.print();
-                    cout << "j=" << j << ",i="<<i<<": Calling elim(A,"<<j<<","<<i<<","<<j<<")"<<endl;
+                    cout << "j=" << j << ",i=" << i << ": Calling elim(A," << j
+                         << "," << i << "," << j << ")" << endl;
                 }
                 elim(A, j, i, j, verbose);
             }
@@ -155,7 +158,7 @@ Matrix<modulus> inverse(Matrix<modulus> A, bool verbose) {
                 A.set_row(i, temp * (-1));
             }
         }
-        long gcd = euklid(A(j, j), modulus);
+        long gcd = euclid(A(j, j), modulus);
         if (gcd == 1) {
             A.set_row(j, A.get_row(j) * inverse(A(j, j), modulus));
             for (int i = j - 1; i >= 0; i--) {
@@ -163,14 +166,13 @@ Matrix<modulus> inverse(Matrix<modulus> A, bool verbose) {
                 if (verbose)
                     A.print();
             }
-        }
-        else {
+        } else {
             throw std::runtime_error("Not invertible");
         }
     }
 
     Matrix<modulus> inverse = Matrix<modulus>(n, n);
-    
+
     for (size_t j = 0; j < n; ++j) {
         inverse.set_col(j, A.get_col(n + j));
     }

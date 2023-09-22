@@ -1,6 +1,4 @@
 #include <cryptology/ciphers/sp_network/sp_network.hpp>
-#include <iostream>
-#include <map>
 #include <cmath>
 #include "cryptology/analysis/linear_attack/linear_approximation.hpp"
 #include "cryptology/analysis/linear_attack/linear_trace.hpp"
@@ -165,8 +163,6 @@ LinearApproximation SpNetwork::find_best_approximation(uint64_t active_i,
     }
     return {
             best_bias,
-            sbox_pos,
-            active_i,
             best_active_o
     };
 }

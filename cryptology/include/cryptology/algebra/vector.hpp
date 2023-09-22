@@ -39,7 +39,7 @@ public:
 
     int &operator()(size_t idx) { return values[idx]; }
 
-    const int &operator()(size_t idx) const {
+    long operator()(size_t idx) const {
         return mod(values[idx], modulus);
     }
 

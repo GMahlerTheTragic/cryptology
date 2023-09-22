@@ -1,5 +1,4 @@
 #include <cryptology/ciphers/sp_network/sbox.hpp>
-#include <numeric>
 #include <iostream>
 #include <map>
 #include <cmath>

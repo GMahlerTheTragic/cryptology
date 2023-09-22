@@ -1,7 +1,3 @@
-//
-// Created by asf12fd3 on 01.09.23.
-//
-
 #ifndef CRYPTOLOGY_ANALYSIS_HPP
 #define CRYPTOLOGY_ANALYSIS_HPP
 
