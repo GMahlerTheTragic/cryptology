@@ -3,6 +3,7 @@
 #include <queue>
 #include <unordered_set>
 #include <set>
+#include <cmath>
 #include <cryptology/algebra/algorithms.hpp>
 #include <cryptology/algebra/matrix.hpp>
 #include <cryptology/ciphers/affine_cipher.hpp>
