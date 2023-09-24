@@ -34,5 +34,12 @@
 # Apple
 .DS_STORE
 
+# JetBrains
 .idea/*
+
+# Build folders
+build/*
 cmake-build-debug/*
+
+# VSCode
+.vscode/*
