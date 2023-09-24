@@ -1,0 +1,15 @@
+# .clang-format configuration file
+
+# Use Google style as a base
+BasedOnStyle: Google
+
+# Indentation
+IndentWidth: 4
+UseTab: Never
+TabWidth: 4
+
+# Column limit
+ColumnLimit: 100
+
+
+SortIncludes: true

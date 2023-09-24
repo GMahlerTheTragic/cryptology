@@ -1,35 +1,33 @@
 #ifndef CRYPTOLOGY_LINEAR_TRACE_HPP
 #define CRYPTOLOGY_LINEAR_TRACE_HPP
 
-#include <vector>
 #include <cryptology/analysis/linear_attack/linear_approximation.hpp>
+#include <vector>
 
 using namespace std;
 
 class LinearTrace {
- private:
-  double bias = 0.5;
-  vector<RoundLinearApproximation> data;
-  DynamicBitset input;
+   private:
+    double bias = 0.5;
+    vector<RoundLinearApproximation> data;
+    DynamicBitset input;
 
- public:
-  LinearTrace(DynamicBitset input);
+   public:
+    LinearTrace(DynamicBitset input);
 
-  void add(RoundLinearApproximation round_linear_approximation);
+    void add(RoundLinearApproximation round_linear_approximation);
 
-  double get_bias();
+    double GetBias() const;
 
-  double get_necessary_pairs();
+    double GetNecessaryPairs() const;
 
-  DynamicBitset get_active_output(size_t round);
+    DynamicBitset GetActiveOuput(size_t round) const;
 
-  void print();
+    void print() const;
 
-  DynamicBitset get_input();
+    DynamicBitset GetInput() const;
 
-  bool operator<(const LinearTrace &other) const {
-    return this->bias < other.bias;
-  }
+    bool operator<(const LinearTrace &other) const { return this->bias < other.bias; }
 };
 
-#endif //CRYPTOLOGY_LINEAR_TRACE_HPP
+#endif  // CRYPTOLOGY_LINEAR_TRACE_HPP

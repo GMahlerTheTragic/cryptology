@@ -1,18 +1,19 @@
 #ifndef CRYPTOLOGY_UTILS_HPP_
 #define CRYPTOLOGY_UTILS_HPP_
 
+#include <cryptology/utils/dynamic_bitset.hpp>
 #include <iostream>
+
 #include "cryptology/algebra/algorithms.hpp"
 #include "cryptology/algebra/vector.hpp"
-#include <cryptology/utils/dynamic_bitset.hpp>
 
 using namespace std;
 
 bool is_letter(char);
 
-int letter_to_pos(char input);
+uint8_t letter_to_pos(char input);
 
-char pos_to_letter(int pos);
+char pos_to_letter(uint8_t pos);
 
 bool word_from_latin_alphabet(string input);
 

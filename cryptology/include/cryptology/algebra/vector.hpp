@@ -2,49 +2,46 @@
 #define CRYPTOLOGY_ALGEBRA_VECTOR_HPP_
 
 #include <iostream>
-#include <vector>
-#include <cryptology/algebra/algorithms.hpp>
 #include <string>
+#include <vector>
+
+#include "cryptology/algebra/algorithms.hpp"
 
 using namespace std;
 
-long mod(long i, long n);
+int64_t Mod(int64_t i, int64_t modulus);
 
-template<int modulus>
+template <int modulus>
 class Matrix;
 
-template<int modulus>
+template <int modulus>
 class Vector final {
+   private:
+    size_t _size{};
+    vector<int> values;
 
- private:
-  size_t _size;
-  vector<int> values;
+   public:
+    Vector<modulus>(size_t size, int default_value = 0);
 
- public:
-  Vector<modulus>(size_t size, int default_value = 0);
+    Vector<modulus>(const std::vector<int> &values);
 
-  Vector<modulus>(const std::vector<int> &values);
+    ~Vector<modulus>() = default;
 
-  ~Vector<modulus>() = default;
+    void print() const;
 
-  void print() const;
+    Vector<modulus> operator*(const Matrix<modulus> &rhs) const;
 
-  Vector<modulus> operator*(const Matrix<modulus> &rhs) const;
+    Vector<modulus> operator+(const Vector<modulus> &rhs) const;
 
-  Vector<modulus> operator+(const Vector<modulus> &rhs) const;
+    Vector<modulus> operator*(const int64_t &rhs) const;
 
-  Vector<modulus> operator*(const long &rhs) const;
+    Vector<modulus> operator-(const Vector<modulus> &rhs) const;
 
-  Vector<modulus> operator-(const Vector<modulus> &rhs) const;
+    int &operator()(size_t idx) { return values[idx]; }
 
-  int &operator()(size_t idx) { return values[idx]; }
+    int64_t operator()(size_t idx) const { return Mod(values[idx], modulus); }
 
-  long operator()(size_t idx) const {
-    return mod(values[idx], modulus);
-  }
-
-  size_t size() const { return this->_size; }
-
+    size_t size() const { return this->_size; }
 };
 
 #endif

@@ -5,6 +5,9 @@ project(Cryptology)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+
+
+
 add_library(CryptologyLib STATIC cryptology/src/algebra/algorithms.cpp
         cryptology/include/cryptology/algebra/algorithms.hpp
         cryptology/src/algebra/matrix.cpp

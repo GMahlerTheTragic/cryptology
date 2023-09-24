@@ -4,30 +4,31 @@
 #include <iostream>
 #include <string>
 
+#include "cryptology/algebra/matrix.hpp"
 #include "cryptology/algebra/vector.hpp"
 
 using namespace std;
 
-long mod(long i, long n);
+int64_t Mod(int64_t input, int64_t modulus);
 
-struct gcd_decomposition {
-  long gcd;
-  long factor_left;
-  long factor_right;
-} typedef gcd_decomposition;
+struct GcdDecomposition {
+    int64_t gcd;
+    int64_t factor_left;
+    int64_t factor_right;
+} typedef GcdDecomposition;
 
-bool is_invertible(long a, long m);
+bool IsInvertible(int64_t input, int64_t m);
 
-long inverse(long a, long m);
+int64_t Inverse(int64_t input, int64_t m);
 
-long euclid(long a, long b);
+int64_t Euclid(int64_t first, int64_t second);
 
-struct gcd_decomposition extended_euclid(long a, long b);
+struct GcdDecomposition ExtendedEuclid(int64_t first, int64_t second);
 
-template<int modulus>
-long determinant(Matrix<modulus> A);
+template <int modulus>
+int64_t Determinant(Matrix<modulus> input);
 
-template<int modulus>
-Matrix<modulus> inverse(Matrix<modulus> A, bool verbose = false);
+template <int modulus>
+Matrix<modulus> Inverse(Matrix<modulus> input, bool verbose = false);
 
 #endif

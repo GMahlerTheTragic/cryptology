@@ -5,24 +5,24 @@
 #include <string>
 
 namespace RC {
-template<int modulus>
+template <int modulus>
 class ResidueClass final {
- private:
-  int residue;
- public:
-  ResidueClass<modulus>(int value);
-  ~ResidueClass<modulus>() = default;
+   private:
+    int residue{};
 
-  ResidueClass<modulus> operator+(const ResidueClass<modulus> &other) const;
-  ResidueClass<modulus> operator-(const ResidueClass<modulus> &other) const;
-  ResidueClass<modulus> operator*(const ResidueClass<modulus> &other) const;
+   public:
+    ResidueClass<modulus>(int value);
+    ~ResidueClass<modulus>() = default;
 
-  friend std::ostream &operator<<(std::ostream &os, const ResidueClass<modulus> &rc) {
-    os << rc.residue << "_mod_" << modulus;
-    return os;
-  }
+    ResidueClass<modulus> operator+(const ResidueClass<modulus> &other) const;
+    ResidueClass<modulus> operator-(const ResidueClass<modulus> &other) const;
+    ResidueClass<modulus> operator*(const ResidueClass<modulus> &other) const;
 
+    friend std::ostream &operator<<(std::ostream &os, const ResidueClass<modulus> &rc) {
+        os << rc.residue << "_mod_" << modulus;
+        return os;
+    }
 };
-}
+}  // namespace RC
 
 #endif

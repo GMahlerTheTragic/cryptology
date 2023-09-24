@@ -1,28 +1,25 @@
-#include <cryptology/algebra/residue_class.hpp>
-#include <cryptology/algebra/algorithms.hpp>
+#include "cryptology/algebra/residue_class.hpp"
 
-using namespace std;
-using namespace RC;
+#include "cryptology/algebra/algorithms.hpp"
 
-template<int modulus>
+using RC::ResidueClass;
+
+template <int modulus>
 ResidueClass<modulus>::ResidueClass(int value) {
-  this->residue = mod(value, modulus);
+    this->residue = Mod(value, modulus);
 }
 
-template<int modulus>
-ResidueClass<modulus>
-ResidueClass<modulus>::operator+(const ResidueClass<modulus> &other) const {
-  return ResidueClass<modulus>(mod((other.residue + this->residue), modulus));
+template <int modulus>
+ResidueClass<modulus> ResidueClass<modulus>::operator+(const ResidueClass<modulus> &other) const {
+    return ResidueClass<modulus>(Mod((other.residue + this->residue), modulus));
 }
 
-template<int modulus>
-ResidueClass<modulus>
-ResidueClass<modulus>::operator-(const ResidueClass<modulus> &other) const {
-  return ResidueClass<modulus>(mod((other.residue - this->residue), modulus));
+template <int modulus>
+ResidueClass<modulus> ResidueClass<modulus>::operator-(const ResidueClass<modulus> &other) const {
+    return ResidueClass<modulus>(Mod((other.residue - this->residue), modulus));
 }
 
-template<int modulus>
-ResidueClass<modulus>
-ResidueClass<modulus>::operator*(const ResidueClass<modulus> &other) const {
-  return ResidueClass<modulus>(mod((other.residue * this->residue), modulus));
+template <int modulus>
+ResidueClass<modulus> ResidueClass<modulus>::operator*(const ResidueClass<modulus> &other) const {
+    return ResidueClass<modulus>(Mod((other.residue * this->residue), modulus));
 }

@@ -7,21 +7,21 @@
 using namespace std;
 
 class AffineCipher {
- private:
-  const int a;
-  const int b;
-  const int b_inv;
+   private:
+    const uint8_t shift;
+    const uint8_t slope;
+    const uint8_t slope_inv;
 
-  char encrypt(char input);
+    char encrypt(char input) const;
 
-  char decrypt(char input);
+    char decrypt(char input) const;
 
- public:
-  AffineCipher(int a, int b);
+   public:
+    AffineCipher(int shift, int slope);
 
-  string encrypt(string plain_text);
+    string encrypt(string plain_text) const;
 
-  string decrypt(string cipher_text);
+    string decrypt(string cipher_text) const;
 };
 
 #endif

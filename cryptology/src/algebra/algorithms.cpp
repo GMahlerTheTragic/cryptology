@@ -1,182 +1,189 @@
+#include "cryptology/algebra/algorithms.hpp"
+
 #include <iostream>
 
-#include <cryptology/algebra/algorithms.hpp>
-#include <cryptology/algebra/matrix.hpp>
-#include <cryptology/algebra/vector.hpp>
+#include "cryptology/algebra/matrix.hpp"
+#include "cryptology/algebra/vector.hpp"
 
-using namespace std;
+using std::cout;
+using std::runtime_error;
+using std::string;
 
-long mod(long i, long n) {
-  return (i % n + n) % n;
-}
+int64_t Mod(int64_t input, int64_t modulus) { return (input % modulus + modulus) % modulus; }
 
-bool is_invertible(long a, long m) {
-  if (euclid(a, m) == 1) {
-    return true;
-  }
-  return false;
-}
+bool IsInvertible(int64_t input, int64_t modulus) { return Euclid(input, modulus) == 1; }
 
-long inverse(long a, long m) {
-  if (!is_invertible(a, m)) {
-    throw std::runtime_error(
-        "left side is not invertible modulo right side");
-  }
-  return mod(extended_euclid(a, m).factor_left, m);
-}
-
-long euclid(long a, long b) {
-  if (a < b) {
-    long temp = a;
-    a = b;
-    b = temp;
-  }
-  long r;
-  do {
-    r = mod(a, b);
-    a = b;
-    b = r;
-  } while (r != 0);
-
-  return a;
-}
-
-struct gcd_decomposition extended_euclid(long a, long b) {
-  struct gcd_decomposition result;
-  long *smaller_p;
-  long *larger_p;
-  if (a < b) {
-    long temp = a;
-    a = b;
-    b = temp;
-    smaller_p = &result.factor_left;
-    larger_p = &result.factor_right;
-  } else {
-    smaller_p = &result.factor_right;
-    larger_p = &result.factor_left;
-  }
-  long r, d, p_temp, q_temp;
-  long p0 = 1;
-  long p1 = 0;
-  long q0 = 0;
-  long q1 = 1;
-  long i = 0;
-  do {
-    if (i++ != 0) {
-      p_temp = p1;
-      q_temp = q1;
-      p1 = p0 - d * p1;
-      q1 = q0 - d * q1;
-      p0 = p_temp;
-      q0 = q_temp;
+int64_t Inverse(int64_t input, int64_t modulus) {
+    if (!IsInvertible(input, modulus)) {
+        throw runtime_error("left side is not invertible modulo right side");
     }
-    d = a / b;
-    r = mod(a, b);
-    a = b;
-    b = r;
-  } while (r != 0);
-
-  result.gcd = a;
-  *larger_p = p1;
-  *smaller_p = q1;
-  return result;
+    return Mod(ExtendedEuclid(input, modulus).factor_left, modulus);
 }
 
-template<int modulus>
-void elim(Matrix<modulus> &A, size_t i, size_t i_prime, size_t j,
-          bool verbose = false) {
-  if (A(i, j) > A(i_prime, j)) {
-    size_t temp = i;
-    i = i_prime;
-    i_prime = temp;
-  }
-  int d;
-  while (A(i, j) != 0) {
-    d = A(i_prime, j) / A(i, j);
-    if (verbose)
-      cout << "d = " << A(i_prime, j) << " div " << A(i, j) << " = " << d
-           << endl;
-    A.set_row(i_prime, A.get_row(i_prime) - (A.get_row(i) * d));
-    size_t temp = i;
-    i = i_prime;
-    i_prime = temp;
-    if (verbose)
-      A.print();
-  }
-
-}
-
-template<int modulus>
-long determinant(Matrix<modulus> A) {
-  if (A.cols() != A.rows()) {
-    throw std::runtime_error("Only implemented for square matrices");
-  }
-  size_t n = A.cols();
-
-  for (size_t j = 0; j < n; ++j) {
-    for (size_t i = n - 1; i > j; --i) {
-      if ((A(j, j) = true) && (A(i, j) = true)) {
-        elim(A, j, i, j);
-      }
-      if (A(i, j) > 0) {
-        Vector<modulus> temp = A.get_row(i);
-        A.set_row(i, A.get_row(j));
-        A.set_row(j, temp * (-1));
-      }
+int64_t Euclid(int64_t first, int64_t second) {
+    if (first < second) {
+        int64_t temp = first;
+        first = second;
+        second = temp;
     }
-  }
 
-  int det = 1;
-  for (size_t j = 0; j < n; ++j) {
-    det = mod(det * A(j, j), modulus);
-  }
-  return det;
+    int64_t rest = -1;
+
+    while (rest != 0) {
+        rest = Mod(first, second);
+        first = second;
+        second = rest;
+    }
+
+    return first;
 }
 
-template<int modulus>
-Matrix<modulus> inverse(Matrix<modulus> A, bool verbose) {
-  if (A.cols() != A.rows()) {
-    throw std::runtime_error("Not invertible - not a square matrix");
-  }
-  size_t n = A.cols();
-
-  A = Matrix<modulus>::concat(A, Matrix<modulus>::eye(n), 1);
-  for (size_t j = 0; j < n; ++j) {
-    for (size_t i = n - 1; i > j; --i) {
-      if ((A(j, j) != 0) && (A(i, j) != 0)) {
-        if (verbose) {
-          A.print();
-          cout << "j=" << j << ",i=" << i << ": Calling elim(A," << j
-               << "," << i << "," << j << ")" << endl;
-        }
-        elim(A, j, i, j, verbose);
-      }
-      if (A(i, j) > 0) {
-        Vector<modulus> temp = A.get_row(j);
-        A.set_row(j, A.get_row(i));
-        A.set_row(i, temp * (-1));
-      }
-    }
-    long gcd = euclid(A(j, j), modulus);
-    if (gcd == 1) {
-      A.set_row(j, A.get_row(j) * inverse(A(j, j), modulus));
-      for (int i = j - 1; i >= 0; i--) {
-        A.set_row(i, A.get_row(i) - (A.get_row(j) * A(i, j)));
-        if (verbose)
-          A.print();
-      }
+struct GcdDecomposition ExtendedEuclid(int64_t first, int64_t second) {
+    struct GcdDecomposition result {};
+    int64_t *smaller_p = nullptr;
+    int64_t *larger_p = nullptr;
+    if (first < second) {
+        int64_t temp = first;
+        first = second;
+        second = temp;
+        smaller_p = &result.factor_left;
+        larger_p = &result.factor_right;
     } else {
-      throw std::runtime_error("Not invertible");
+        smaller_p = &result.factor_right;
+        larger_p = &result.factor_left;
     }
-  }
+    int64_t rest = -1;
+    int64_t rest_factor = -1;
+    int64_t p_temp = 0;
+    int64_t q_temp = 0;
+    int64_t p_zero = 1;
+    int64_t p_one = 0;
+    int64_t q_zero = 0;
+    int64_t q_one = 1;
+    int64_t interations_counter = 0;
+    while (rest != 0) {
+        if (interations_counter++ != 0) {
+            p_temp = p_one;
+            q_temp = q_one;
+            p_one = p_zero - rest_factor * p_one;
+            q_one = q_zero - rest_factor * q_one;
+            p_zero = p_temp;
+            q_zero = q_temp;
+        }
+        rest_factor = first / second;
+        rest = Mod(first, second);
+        first = second;
+        second = rest;
+    }
 
-  Matrix<modulus> inverse = Matrix<modulus>(n, n);
-
-  for (size_t j = 0; j < n; ++j) {
-    inverse.set_col(j, A.get_col(n + j));
-  }
-
-  return inverse;
+    result.gcd = first;
+    *larger_p = p_one;
+    *smaller_p = q_one;
+    return result;
 }
 
-template Matrix<26> inverse(Matrix<26> A, bool verbose);
+template <int modulus>
+void Elim(Matrix<modulus> &input, size_t row, size_t row_prime, size_t col, bool verbose = false) {
+    if (input(row, col) > input(row_prime, col)) {
+        size_t temp = row;
+        row = row_prime;
+        row_prime = temp;
+    }
+    int rest_factor = 0;
+    while (input(row, col) != 0) {
+        rest_factor = input(row_prime, col) / input(row, col);
+        if (verbose) {
+            cout << "rest_factor = " << input(row_prime, col) << " div " << input(row, col) << " = "
+                 << rest_factor << endl;
+        }
+        input.set_row(row_prime, input.get_row(row_prime) - (input.get_row(row) * rest_factor));
+        size_t temp = row;
+        row = row_prime;
+        row_prime = temp;
+        if (verbose) {
+            input.print();
+        }
+    }
+}
+
+template <int modulus>
+int64_t Determinant(Matrix<modulus> input) {
+    if (input.cols() != input.rows()) {
+        throw std::runtime_error("Only implemented for square matrices");
+    }
+    size_t n_cols = input.cols();
+
+    for (size_t j = 0; j < n_cols; ++j) {
+        for (size_t i = n_cols - 1; i > j; --i) {
+            if ((input(j, j) = true) && (input(i, j) = true)) {
+                Elim(input, j, i, j);
+            }
+            if (input(i, j) > 0) {
+                Vector<modulus> temp = input.get_row(i);
+                input.set_row(i, input.get_row(j));
+                input.set_row(j, temp * (-1));
+            }
+        }
+    }
+
+    int det = 1;
+    for (size_t j = 0; j < n_cols; ++j) {
+        det = Mod(det * input(j, j), modulus);
+    }
+    return det;
+}
+
+template <int modulus>
+Matrix<modulus> Inverse(Matrix<modulus> input, bool verbose) {
+    if (input.cols() != input.rows()) {
+        throw std::runtime_error("Not invertible - not a square matrix");
+    }
+    size_t n_cols = input.cols();
+
+    input = Matrix<modulus>::concat(input, Matrix<modulus>::eye(n_cols), 1);
+    for (size_t j = 0; j < n_cols; ++j) {
+        for (size_t i = n_cols - 1; i > j; --i) {
+            if ((input(j, j) != 0) && (input(i, j) != 0)) {
+                if (verbose) {
+                    input.print();
+                    cout << "j=" << j << ",i=" << i << ": Calling elim(A," << j << "," << i << ","
+                         << j << ")" << endl;
+                }
+                Elim(input, j, i, j, verbose);
+            }
+            if (input(i, j) > 0) {
+                Vector<modulus> temp = input.get_row(j);
+                input.set_row(j, input.get_row(i));
+                input.set_row(i, temp * (-1));
+            }
+        }
+        int64_t gcd = Euclid(input(j, j), modulus);
+        if (!(gcd == 1)) {
+            throw std::runtime_error("Not invertible");
+        }
+
+        input.set_row(j, input.get_row(j) * Inverse(input(j, j), modulus));
+        for (int i = static_cast<int>(j) - 1; i >= 0; i--) {
+            input.set_row(i, input.get_row(i) - (input.get_row(j) * input(i, j)));
+            if (verbose) {
+                input.print();
+            }
+        }
+    }
+
+    Matrix<modulus> inverse = Matrix<modulus>(n_cols, n_cols);
+
+    for (size_t j = 0; j < n_cols; ++j) {
+        inverse.set_col(j, input.get_col(n_cols + j));
+    }
+
+    return inverse;
+}
+
+template int64_t Determinant(Matrix<26> input);
+
+template Matrix<26> Inverse(Matrix<26> A, bool verbose);
+
+template int64_t Determinant(Matrix<5> input);
+
+template Matrix<5> Inverse(Matrix<5> A, bool verbose);
