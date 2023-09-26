@@ -48,6 +48,8 @@ class Matrix final {
         return Mod(values[cols() * row + col], modulus);
     }
 
+    bool operator==(const Matrix<modulus> &rhs) const;
+
     Vector<modulus> get_col(const size_t col) const;
 
     Vector<modulus> get_row(const size_t row) const;

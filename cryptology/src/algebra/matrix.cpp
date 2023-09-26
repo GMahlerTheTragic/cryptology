@@ -119,6 +119,25 @@ Matrix<modulus> Matrix<modulus>::operator-(const Matrix<modulus> &rhs) const {
 }
 
 template <int modulus>
+bool Matrix<modulus>::operator==(const Matrix<modulus> &rhs) const {
+    if ((rhs.rows() != rows()) || (rhs.cols() != cols())) {
+        return false;
+    }
+
+    Matrix<modulus> result(rows(), cols());
+
+    for (size_t row = 0; row < this->rows(); ++row) {
+        for (size_t col = 0; col < this->cols(); ++col) {
+            if ((*this)(row, col) != rhs(row, col)) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+template <int modulus>
 Vector<modulus> Matrix<modulus>::get_col(const size_t kcol) const {
     Vector<modulus> result = Vector<modulus>(rows());
     for (int i = 0; i < rows(); ++i) {

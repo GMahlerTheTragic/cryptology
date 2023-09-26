@@ -12,7 +12,7 @@ constexpr uint8_t kwhite_space = 0x20;
 constexpr uint8_t knumber_of_letter = 26;
 
 AffineCipher::AffineCipher(int shift, int slope)
-    : shift(shift), slope(slope), slope_inv(Inverse(shift, knumber_of_letter)) {}
+    : shift(shift), slope(slope), slope_inv(Inverse(slope, knumber_of_letter)) {}
 
 char AffineCipher::encrypt(char input) const {
     if ((input & k8ones) == kwhite_space) {

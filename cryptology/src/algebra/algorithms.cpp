@@ -9,9 +9,19 @@ using std::cout;
 using std::runtime_error;
 using std::string;
 
-int64_t Mod(int64_t input, int64_t modulus) { return (input % modulus + modulus) % modulus; }
+int64_t Mod(int64_t input, int64_t modulus) {
+    if (modulus == 0) {
+        throw runtime_error("Modulus should not be zero.");
+    }
+    return (input % modulus + modulus) % modulus;
+}
 
-bool IsInvertible(int64_t input, int64_t modulus) { return Euclid(input, modulus) == 1; }
+bool IsInvertible(int64_t input, int64_t modulus) {
+    if (input == 0) {
+        return false;
+    }
+    return Euclid(input, modulus) == 1;
+}
 
 int64_t Inverse(int64_t input, int64_t modulus) {
     if (!IsInvertible(input, modulus)) {
@@ -115,7 +125,7 @@ int64_t Determinant(Matrix<modulus> input) {
 
     for (size_t j = 0; j < n_cols; ++j) {
         for (size_t i = n_cols - 1; i > j; --i) {
-            if ((input(j, j) = true) && (input(i, j) = true)) {
+            if ((input(j, j) != 0) && (input(i, j) != 0)) {
                 Elim(input, j, i, j);
             }
             if (input(i, j) > 0) {
