@@ -42,6 +42,8 @@ class Vector final {
     int64_t operator()(size_t idx) const { return Mod(values[idx], modulus); }
 
     size_t size() const { return this->_size; }
+
+    bool operator==(const Vector<modulus> &rhs) const;
 };
 
 #endif

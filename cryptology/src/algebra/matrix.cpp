@@ -186,9 +186,10 @@ Matrix<modulus> Matrix<modulus>::concat(const Matrix<modulus> left, const Matrix
         for (int i = 0; i < left.rows(); ++i) {
             result.set_row(i, left.get_row(i));
         }
-        for (int i = left.rows(); i < left.rows() + right.rows(); ++i) {
-            result.set_row(i, right.get_row(i));
+        for (int i = 0; i < right.rows(); ++i) {
+            result.set_row(left.rows() + i, right.get_row(i));
         }
+
         return result;
     }
     if (axis == 1) {

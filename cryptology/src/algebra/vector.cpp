@@ -94,6 +94,24 @@ void Vector<modulus>::print() const {
     }
     cout << "]" << endl;
 }
+
+template <int modulus>
+bool Vector<modulus>::operator==(const Vector<modulus> &rhs) const {
+    if (rhs.size() != size()) {
+        return false;
+    }
+
+    Vector<modulus> result(size());
+
+    for (size_t row = 0; row < this->size(); ++row) {
+        if ((*this)(row) != rhs(row)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 constexpr uint8_t knumber_of_letters_in_alphabet = 26;
 template class Vector<knumber_of_letters_in_alphabet>;
 

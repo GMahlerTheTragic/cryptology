@@ -9,8 +9,6 @@ add_library(CryptologyLib STATIC cryptology/src/algebra/algorithms.cpp
         cryptology/include/cryptology/algebra/algorithms.hpp
         cryptology/src/algebra/matrix.cpp
         cryptology/include/cryptology/algebra/matrix.hpp
-        cryptology/src/algebra/residue_class.cpp
-        cryptology/include/cryptology/algebra/residue_class.hpp
         cryptology/src/algebra/vector.cpp
         cryptology/include/cryptology/algebra/vector.hpp
         cryptology/src/analysis/analysis.cpp
@@ -99,6 +97,16 @@ target_link_libraries(
   GTest::gtest_main CryptologyLib
 )
 
+add_executable(
+  test_matrix
+  cryptology/tests/algebra/test_matrix.cpp
+)
+
+target_link_libraries(
+  test_matrix
+  GTest::gtest_main CryptologyLib
+)
+
 include(GoogleTest)
 gtest_discover_tests(test_algorithms)
 
@@ -106,3 +114,4 @@ target_include_directories(test_algorithms PUBLIC cryptology/include)
 target_include_directories(test_stream_cipher PUBLIC cryptology/include)
 target_include_directories(test_affine_cipher PUBLIC cryptology/include)
 target_include_directories(test_hill_cipher PUBLIC cryptology/include)
+target_include_directories(test_matrix PUBLIC cryptology/include)
