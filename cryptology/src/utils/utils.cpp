@@ -7,7 +7,7 @@ bool is_letter(char input) {
 }
 
 uint8_t letter_to_pos(char input) {
-    int pos = (input & 0x1F) - 1;
+    uint8_t pos = (input & 0x1F) - 1;
     return pos;
 }
 

@@ -32,7 +32,7 @@ class BeaufortCipher : public StreamCipher {
    public:
     BeaufortCipher(string keyword) : StreamCipher(keyword){};
     string encrypt(string plain_text);
-    string decrypt(string plain_text);
+    string decrypt(string cipher_text);
 };
 
 class AutoKeyPlainTextCipher : public StreamCipher {
