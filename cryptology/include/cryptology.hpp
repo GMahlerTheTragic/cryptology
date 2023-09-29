@@ -3,7 +3,6 @@
 
 #include "cryptology/algebra/algorithms.hpp"
 #include "cryptology/algebra/matrix.hpp"
-#include "cryptology/algebra/residue_class.hpp"
 #include "cryptology/algebra/vector.hpp"
 #include "cryptology/analysis/analysis.hpp"
 #include "cryptology/analysis/frequencies.hpp"

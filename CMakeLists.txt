@@ -127,6 +127,16 @@ target_link_libraries(
   GTest::gtest_main CryptologyLib
 )
 
+add_executable(
+  test_utils
+  cryptology/tests/utils/test_utils.cpp
+)
+
+target_link_libraries(
+  test_utils
+  GTest::gtest_main CryptologyLib
+)
+
 include(GoogleTest)
 gtest_discover_tests(test_algorithms)
 
@@ -137,3 +147,4 @@ target_include_directories(test_hill_cipher PUBLIC cryptology/include)
 target_include_directories(test_matrix PUBLIC cryptology/include)
 target_include_directories(test_vector PUBLIC cryptology/include)
 target_include_directories(test_dynamic_bitset PUBLIC cryptology/include)
+target_include_directories(test_utils PUBLIC cryptology/include)

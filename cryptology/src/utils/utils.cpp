@@ -7,11 +7,19 @@ bool is_letter(char input) {
 }
 
 uint8_t letter_to_pos(char input) {
+    if (!is_letter(input)) {
+        throw std::runtime_error("input is not a letter");
+    }
     uint8_t pos = (input & 0x1F) - 1;
     return pos;
 }
 
-char pos_to_letter(uint8_t pos) { return 0x41 + pos; }
+char pos_to_letter(uint8_t pos) {
+    if (pos > 26) {
+        throw std::runtime_error("Position must be between zero and 25");
+    }
+    return 0x41 + pos;
+}
 
 bool word_from_latin_alphabet(string input) {
     for (int i = 0; i < input.size(); ++i) {

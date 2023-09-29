@@ -76,7 +76,7 @@ uint64_t DynamicBitset::to_uint64() const {
 }
 
 void DynamicBitset::print() const {
-    for (size_t i = size_ - 1; i >= 0; --i) {
+    for (int i = size_ - 1; i >= 0; --i) {
         std::cout << (test(i) ? '1' : '0');
     }
     std::cout << std::endl;
@@ -140,6 +140,18 @@ bool DynamicBitset::operator*(const DynamicBitset &rhs) const {
 bool DynamicBitset::is_zero() {
     for (size_t i = 0; i < this->size_; i++) {
         if (this->bits_[i] != 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool DynamicBitset::operator==(const DynamicBitset &rhs) const {
+    if (this->size() != rhs.size()) {
+        return false;
+    }
+    for (size_t i = 0; i < this->size(); ++i) {
+        if (this->bits_[i] != rhs.bits_[i]) {
             return false;
         }
     }
