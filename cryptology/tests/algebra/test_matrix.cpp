@@ -108,12 +108,12 @@ TEST(MatrixTest, Indexing) {
 
 TEST(MatrixTest, IndexingOutofBoundI) {
     Matrix<26> left = Matrix<26>({{11, 13, 8}, {12, 17, 3}, {18, 12, 11}});
-    EXPECT_THROW(left(4, 0), std::runtime_error);
+    EXPECT_THROW(left(3, 0), std::runtime_error);
 }
 
 TEST(MatrixTest, IndexingOutofBoundII) {
     Matrix<26> left = Matrix<26>({{11, 13, 8}, {12, 17, 3}, {18, 12, 11}});
-    EXPECT_THROW(left(0, 4), std::runtime_error);
+    EXPECT_THROW(left(0, 3), std::runtime_error);
 }
 
 TEST(MatrixTest, IndexingOutofBoundIII) {
@@ -142,7 +142,7 @@ TEST(MatrixTest, GetCol) {
 
 TEST(MatrixTest, GetColOutOfBoundsI) {
     Matrix<26> left = Matrix<26>({{11, 13, 8}, {12, 17, 3}, {18, 12, 11}});
-    EXPECT_THROW(left.get_col(4), std::runtime_error);
+    EXPECT_THROW(left.get_col(3), std::runtime_error);
 }
 
 TEST(MatrixTest, GetColOutOfBoundsII) {
@@ -159,7 +159,7 @@ TEST(MatrixTest, GetRow) {
 
 TEST(MatrixTest, GetRowOutOfBoundsI) {
     Matrix<26> left = Matrix<26>({{11, 13, 8}, {12, 17, 3}, {18, 12, 11}});
-    EXPECT_THROW(left.get_row(4), std::runtime_error);
+    EXPECT_THROW(left.get_row(3), std::runtime_error);
 }
 
 TEST(MatrixTest, GetRowOutOfBoundsII) {
@@ -179,7 +179,7 @@ TEST(MatrixTest, SetRow) {
 
 TEST(MatrixTest, SetRowOutOfBoundsI) {
     Matrix<26> left = Matrix<26>({{11, 13, 8}, {12, 17, 3}, {18, 12, 11}});
-    EXPECT_THROW(left.set_row(4, Vector<26>({1, 1, 1}));, std::runtime_error);
+    EXPECT_THROW(left.set_row(3, Vector<26>({1, 1, 1}));, std::runtime_error);
 }
 
 TEST(MatrixTest, SetRowOutOfBoundsII) {
@@ -204,7 +204,7 @@ TEST(MatrixTest, SetCol) {
 
 TEST(MatrixTest, SetColOutOfBoundsI) {
     Matrix<26> left = Matrix<26>({{11, 13, 8}, {12, 17, 3}, {18, 12, 11}});
-    EXPECT_THROW(left.set_col(4, Vector<26>({1, 1, 1}));, std::runtime_error);
+    EXPECT_THROW(left.set_col(3, Vector<26>({1, 1, 1}));, std::runtime_error);
 }
 
 TEST(MatrixTest, SetColOutOfBoundsII) {

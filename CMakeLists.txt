@@ -107,6 +107,16 @@ target_link_libraries(
   GTest::gtest_main CryptologyLib
 )
 
+add_executable(
+  test_vector
+  cryptology/tests/algebra/test_vector.cpp
+)
+
+target_link_libraries(
+  test_vector
+  GTest::gtest_main CryptologyLib
+)
+
 include(GoogleTest)
 gtest_discover_tests(test_algorithms)
 
@@ -115,3 +125,4 @@ target_include_directories(test_stream_cipher PUBLIC cryptology/include)
 target_include_directories(test_affine_cipher PUBLIC cryptology/include)
 target_include_directories(test_hill_cipher PUBLIC cryptology/include)
 target_include_directories(test_matrix PUBLIC cryptology/include)
+target_include_directories(test_vector PUBLIC cryptology/include)

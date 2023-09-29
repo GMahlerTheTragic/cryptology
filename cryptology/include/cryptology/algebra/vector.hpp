@@ -37,9 +37,19 @@ class Vector final {
 
     Vector<modulus> operator-(const Vector<modulus> &rhs) const;
 
-    int &operator()(size_t idx) { return values[idx]; }
+    int &operator()(size_t idx) {
+        if (idx >= size() || idx < 0) {
+            throw std::runtime_error("Index out of bounds");
+        }
+        return values[idx];
+    }
 
-    int64_t operator()(size_t idx) const { return Mod(values[idx], modulus); }
+    int64_t operator()(size_t idx) const {
+        if (idx >= size() || idx < 0) {
+            throw std::runtime_error("Index out of bounds");
+        }
+        return Mod(values[idx], modulus);
+    }
 
     size_t size() const { return this->_size; }
 

@@ -43,14 +43,14 @@ class Matrix final {
     Matrix<modulus> operator-(const Matrix<modulus> &rhs) const;
 
     int &operator()(size_t row, size_t col) {
-        if (row > rows() || col > cols() || row < 0 || col < 0) {
+        if (row >= rows() || col >= cols() || row < 0 || col < 0) {
             throw std::runtime_error("Index out of bounds");
         }
         return values[cols() * row + col];
     }
 
     int64_t operator()(size_t row, size_t col) const {
-        if (row > rows() || col > cols() || row < 0 || col < 0) {
+        if (row >= rows() || col >= cols() || row < 0 || col < 0) {
             throw std::runtime_error("Index out of bounds");
         }
         return Mod(values[cols() * row + col], modulus);
