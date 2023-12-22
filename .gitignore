@@ -43,3 +43,10 @@ cmake-build-debug/*
 
 # VSCode
 .vscode/*
+
+CMakeCache.txt
+CMakeFiles/
+CTestTestfile.cmake
+Makefile
+_deps/
+cmake_install.cmake

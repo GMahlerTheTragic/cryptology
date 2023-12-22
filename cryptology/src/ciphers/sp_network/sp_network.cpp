@@ -1,6 +1,7 @@
 #include "cryptology/ciphers/sp_network/sp_network.hpp"
 
 #include <cmath>
+#include <stdint.h>
 
 #include "cryptology/analysis/linear_attack/linear_approximation.hpp"
 #include "cryptology/analysis/linear_attack/linear_trace.hpp"

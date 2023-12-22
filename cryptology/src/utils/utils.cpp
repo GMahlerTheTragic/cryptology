@@ -1,6 +1,7 @@
 #include "cryptology/utils/utils.hpp"
 
 #include <iostream>
+#include <stdint.h>
 
 bool is_letter(char input) {
     return input >= 0x41 && (input < 0x5B || input >= 0x61) && input <= 0x7A;
