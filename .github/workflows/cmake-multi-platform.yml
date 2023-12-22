@@ -31,10 +31,10 @@ jobs:
         include:
           - os: ubuntu-latest
             c_compiler: clang
-            cpp_compiler: clang++
+            cpp_compiler: g++
           - os: macos-latest
             c_compiler: clang
-            cpp_compiler: clang++
+            cpp_compiler: g++
 
     steps:
     - uses: actions/checkout@v3
