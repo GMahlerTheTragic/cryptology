@@ -1,7 +1,9 @@
-#include "cryptology/utils/dynamic_bitset.hpp"
+
 
 #include <iostream>
 #include <stdint.h>
+
+#include "cryptology/utils/dynamic_bitset.hpp"
 
 constexpr uint8_t kblock_size = 8;
 
