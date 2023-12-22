@@ -63,7 +63,7 @@ jobs:
       uses: SonarSource/sonarcloud-github-c-cpp@v2
     
     - name: Build
-      # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
+      # Build yourprogram with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       run: |
         build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
       
