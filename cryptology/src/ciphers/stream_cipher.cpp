@@ -1,8 +1,8 @@
-#include "cryptology/ciphers/stream_cipher.hpp"
+
 
 #include <iostream>
 #include <stdint.h>
-
+#include "cryptology/ciphers/stream_cipher.hpp"
 #include "cryptology/algebra/algorithms.hpp"
 #include "cryptology/utils/utils.hpp"
 
