@@ -1,10 +1,10 @@
 #include <cmath>
-#include <cryptology/ciphers/sp_network/sbox.hpp>
+
 #include <iostream>
 #include <map>
 #include <unordered_map>
 #include <stdint.h>
-
+#include <cryptology/ciphers/sp_network/sbox.hpp>
 using std::runtime_error;
 
 constexpr uint8_t kmax_uint_size = 64;
