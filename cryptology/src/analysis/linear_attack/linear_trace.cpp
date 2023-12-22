@@ -1,9 +1,9 @@
-#include "cryptology/analysis/linear_attack/linear_trace.hpp"
+
 
 #include <cmath>
 #include <iostream>
 #include <stdint.h>
-
+#include "cryptology/analysis/linear_attack/linear_trace.hpp"
 #include "cryptology/analysis/linear_attack/linear_approximation.hpp"
 using std::cout;
 
