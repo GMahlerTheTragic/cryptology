@@ -1,8 +1,9 @@
-#include "cryptology/ciphers/affine_cipher.hpp"
+
 
 #include <iostream>
 #include <stdint.h>
 
+#include "cryptology/ciphers/affine_cipher.hpp"
 #include "cryptology/algebra/algorithms.hpp"
 #include "cryptology/utils/utils.hpp"
 
