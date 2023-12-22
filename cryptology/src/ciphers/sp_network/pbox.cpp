@@ -1,7 +1,8 @@
-#include "cryptology/ciphers/sp_network/pbox.hpp"
+
 
 #include <stdint.h>
 #include <numeric>
+#include "cryptology/ciphers/sp_network/pbox.hpp"
 
 using std::runtime_error;
 
