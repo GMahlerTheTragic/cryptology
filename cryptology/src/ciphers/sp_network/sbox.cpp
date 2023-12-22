@@ -3,6 +3,7 @@
 #include <iostream>
 #include <map>
 #include <unordered_map>
+#include <stdint.h>
 
 using std::runtime_error;
 

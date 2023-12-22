@@ -13,7 +13,7 @@ int64_t Mod(int64_t input, int64_t modulus) {
     if (modulus == 0) {
         throw runtime_error("Modulus should not be zero.");
     }
-    return (input % modulus + modulus) % modulus;
+return (input % modulus + modulus) % modulus;
 }
 
 bool IsInvertible(int64_t input, int64_t modulus) {

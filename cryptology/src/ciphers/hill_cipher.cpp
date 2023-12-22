@@ -1,6 +1,7 @@
 #include "cryptology/ciphers/hill_cipher.hpp"
 
 #include <iostream>
+#include <stdint.h>
 
 #include "cryptology/algebra/algorithms.hpp"
 #include "cryptology/algebra/matrix.hpp"

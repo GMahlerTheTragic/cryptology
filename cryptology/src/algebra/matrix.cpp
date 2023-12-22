@@ -1,6 +1,7 @@
 #include "cryptology/algebra/matrix.hpp"
 
 #include <iostream>
+#include <stdint.h>
 
 #include "cryptology/algebra/vector.hpp"
 

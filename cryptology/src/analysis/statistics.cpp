@@ -3,6 +3,7 @@
 #include <iostream>
 #include <map>
 #include <queue>
+#include <stdint.h>
 
 #include "cryptology/analysis/frequencies.hpp"
 

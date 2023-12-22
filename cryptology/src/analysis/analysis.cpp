@@ -4,6 +4,7 @@
 #include <queue>
 #include <set>
 #include <unordered_set>
+#include <stdint.h>
 
 #include "cryptology/algebra/algorithms.hpp"
 #include "cryptology/algebra/matrix.hpp"
