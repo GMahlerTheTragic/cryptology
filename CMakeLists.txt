@@ -139,6 +139,13 @@ target_link_libraries(
 
 include(GoogleTest)
 gtest_discover_tests(test_algorithms)
+gtest_discover_tests(test_stream_cipher)
+gtest_discover_tests(test_affine_cipher)
+gtest_discover_tests(test_hill_cipher)
+gtest_discover_tests(test_matrix)
+gtest_discover_tests(test_vector)
+gtest_discover_tests(test_dynamic_bitset)
+gtest_discover_tests(test_utils)
 
 target_include_directories(test_algorithms PUBLIC cryptology/include)
 target_include_directories(test_stream_cipher PUBLIC cryptology/include)
