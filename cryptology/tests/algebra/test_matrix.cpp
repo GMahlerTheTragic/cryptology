@@ -267,7 +267,8 @@ TEST(MatrixTest, InvalidAxis) {
 
 TEST(MatrixTest, InvalidColumnLengths) {
     Matrix<5> left({{2, 3}});
-    Matrix<5> right({{3}});
+    vector<vector<int>> vals = {{3}};
+    Matrix<5> right(vals);
 
     EXPECT_THROW({ Matrix<5> result = Matrix<5>::concat(left, right, 0); }, std::runtime_error);
 }
