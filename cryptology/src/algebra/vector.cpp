@@ -28,7 +28,7 @@ Vector<modulus> Vector<modulus>::operator*(const Matrix<modulus> &rhs) const {
     if (rhs.rows() != size()) {
         throw std::runtime_error("Sizes do not match");
     }
-
+    
     Vector<modulus> result(rhs.cols());
 
     auto dot = [&](size_t col) -> int {
