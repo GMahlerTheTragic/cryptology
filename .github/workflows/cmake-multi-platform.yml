@@ -30,10 +30,6 @@ jobs:
             build_type: Release
             c_compiler: gcc
             cpp_compiler: g++
-          - os: ubuntu-latest
-            build_type: Release
-            c_compiler: gcc
-            cpp_compiler: gcc
           - os: macos-latest
             build_type: Release
             c_compiler: clang

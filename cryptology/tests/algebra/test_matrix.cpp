@@ -8,10 +8,10 @@
 TEST(MatrixTest, PrintTest) {
     std::stringstream buffer;
     std::streambuf* oldCout = std::cout.rdbuf(buffer.rdbuf());
-    Matrix<26> h = Matrix<26>({{11, 13, 8, 21}, {24, 17, 3, 25}, {18, 12, 23, 17}, {6, 15, 2, 15}});
+    const auto h = Matrix<26>({{11, 13, 8, 21}, {24, 17, 3, 25}, {18, 12, 23, 17}, {6, 15, 2, 15}});
     h.print();
     std::cout.rdbuf(oldCout);
-    std::string output = buffer.str();
+    const std::string output = buffer.str();
     EXPECT_EQ(
         output,
         "[\n[ 11, 13, 8, 21, ]\n[ 24, 17, 3, 25, ]\n[ 18, 12, 23, 17, ]\n[ 6, 15, 2, 15, ]\n]\n");

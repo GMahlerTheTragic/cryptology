@@ -21,7 +21,7 @@ class Matrix final {
    public:
     Matrix(size_t nrows, size_t ncols, int default_value = 0);
 
-    explicit Matrix(const std::vector<std::vector<int>> &values);
+    Matrix(const std::vector<std::vector<int>> &values);
 
     ~Matrix() = default;
 
