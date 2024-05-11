@@ -15,25 +15,25 @@ class Vector final {
     vector<int> values;
 
    public:
-    explicit Vector<modulus>(size_t size, int default_value = 0);
+    explicit Vector(size_t size, int default_value = 0);
 
-    explicit Vector<modulus>(const std::vector<int> &values);
+    explicit Vector(const std::vector<int> &values);
 
-    ~Vector<modulus>() = default;
+    ~Vector() = default;
 
     void print() const;
 
-    Vector<modulus> operator*(const Matrix<modulus> &rhs) const;
+    Vector operator*(const Matrix<modulus> &rhs) const;
 
-    Vector<modulus> operator+(const Vector<modulus> &rhs) const;
+    Vector operator+(const Vector &rhs) const;
 
-    Vector<modulus> operator*(const int64_t &rhs) const;
+    Vector operator*(const int64_t &rhs) const;
 
-    Vector<modulus> operator-(const Vector<modulus> &rhs) const;
+    Vector operator-(const Vector &rhs) const;
 
     [[nodiscard]] size_t size() const { return this->_size; }
 
-    bool operator==(const Vector<modulus> &rhs) const;
+    bool operator==(const Vector &rhs) const;
 
     int64_t operator()(size_t idx) const;
 

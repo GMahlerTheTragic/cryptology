@@ -19,29 +19,29 @@ class Matrix final {
     vector<int> values;
 
    public:
-    Matrix<modulus>(size_t nrows, size_t ncols, int default_value = 0);
+    Matrix(size_t nrows, size_t ncols, int default_value = 0);
 
-    explicit Matrix<modulus>(const std::vector<std::vector<int>> &values);
+    explicit Matrix(const std::vector<std::vector<int>> &values);
 
-    ~Matrix<modulus>() = default;
+    ~Matrix() = default;
 
     void print() const;
 
-    Matrix<modulus> operator*(const Matrix<modulus> &rhs) const;
+    Matrix operator*(const Matrix &rhs) const;
 
     Vector<modulus> operator*(const Vector<modulus> &rhs) const;
 
-    Matrix<modulus> operator*(const int64_t rhs) const;
+    Matrix operator*(const int64_t rhs) const;
 
-    Matrix<modulus> operator+(const Matrix<modulus> &rhs) const;
+    Matrix operator+(const Matrix &rhs) const;
 
-    Matrix<modulus> operator-(const Matrix<modulus> &rhs) const;
+    Matrix operator-(const Matrix &rhs) const;
 
     int &operator()(size_t row, size_t col);
 
     int64_t operator()(size_t row, size_t col) const;
 
-    bool operator==(const Matrix<modulus> &rhs) const;
+    bool operator==(const Matrix &rhs) const;
 
     Vector<modulus> get_col(const size_t col) const;
 
@@ -55,10 +55,10 @@ class Matrix final {
 
     size_t cols() const { return this->ncols; }
 
-    static Matrix<modulus> concat(const Matrix<modulus> left, const Matrix<modulus> right,
+    static Matrix concat(const Matrix left, const Matrix right,
                                   int axis = 0);
 
-    static Matrix<modulus> eye(size_t dim);
+    static Matrix eye(size_t dim);
 };
 
 #endif
