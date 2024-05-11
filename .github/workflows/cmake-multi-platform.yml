@@ -30,7 +30,7 @@ jobs:
         c_compiler: [clang]
         include:
           - os: ubuntu-latest
-            c_compiler: g++
+            c_compiler: gcc
             cpp_compiler: g++
           - os: ubuntu-latest
             c_compiler: gcc
