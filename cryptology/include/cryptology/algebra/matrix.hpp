@@ -1,16 +1,11 @@
 #ifndef CRYPTOLOGY_ALGEBRA_MATRIX_HPP_
 #define CRYPTOLOGY_ALGEBRA_MATRIX_HPP_
 
-#include <iostream>
-#include <string>
 #include <vector>
 
-#include "cryptology/algebra/algorithms.hpp"
 #include "cryptology/algebra/vector.hpp"
 
 using namespace std;
-
-int64_t Mod(int64_t i, int64_t modulus);
 
 template <int modulus>
 class Vector;
@@ -26,7 +21,7 @@ class Matrix final {
    public:
     Matrix<modulus>(size_t nrows, size_t ncols, int default_value = 0);
 
-    Matrix<modulus>(const std::vector<std::vector<int>> &values);
+    explicit Matrix<modulus>(const std::vector<std::vector<int>> &values);
 
     ~Matrix<modulus>() = default;
 
@@ -42,19 +37,9 @@ class Matrix final {
 
     Matrix<modulus> operator-(const Matrix<modulus> &rhs) const;
 
-    int &operator()(size_t row, size_t col) {
-        if (row >= rows() || col >= cols() || row < 0 || col < 0) {
-            throw std::runtime_error("Index out of bounds");
-        }
-        return values[cols() * row + col];
-    }
+    int &operator()(size_t row, size_t col);
 
-    int64_t operator()(size_t row, size_t col) const {
-        if (row >= rows() || col >= cols() || row < 0 || col < 0) {
-            throw std::runtime_error("Index out of bounds");
-        }
-        return Mod(values[cols() * row + col], modulus);
-    }
+    int64_t operator()(size_t row, size_t col) const;
 
     bool operator==(const Matrix<modulus> &rhs) const;
 

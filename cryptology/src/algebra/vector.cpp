@@ -1,7 +1,7 @@
 #include "cryptology/algebra/vector.hpp"
 
 #include <iostream>
-#include <stdint.h>
+#include <cstdint>
 
 #include "cryptology/algebra/algorithms.hpp"
 #include "cryptology/algebra/matrix.hpp"
@@ -111,6 +111,22 @@ bool Vector<modulus>::operator==(const Vector<modulus> &rhs) const {
     }
 
     return true;
+}
+
+template <int modulus>
+int& Vector<modulus>::operator()(size_t idx) {
+    if (idx >= size() || idx < 0) {
+        throw std::runtime_error("Index out of bounds");
+    }
+    return values[idx];
+}
+
+template <int modulus>
+int64_t Vector<modulus>::operator()(size_t idx) const {
+    if (idx >= size() || idx < 0) {
+        throw std::runtime_error("Index out of bounds");
+    }
+    return Mod(this->values[idx], modulus);
 }
 
 constexpr uint8_t knumber_of_letters_in_alphabet = 26;

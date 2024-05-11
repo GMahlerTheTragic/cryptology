@@ -1,9 +1,10 @@
 #include "cryptology/algebra/matrix.hpp"
 
 #include <iostream>
-#include <stdint.h>
+#include <cstdint>
 
 #include "cryptology/algebra/vector.hpp"
+#include "cryptology/algebra/algorithms.hpp"
 
 using std::cout;
 using std::runtime_error;
@@ -229,6 +230,22 @@ void Matrix<modulus>::print() const {
         cout << "]" << endl;
     }
     cout << "]" << endl;
+}
+
+template <int modulus>
+int& Matrix<modulus>::operator()(size_t row, size_t col) {
+    if (row >= rows() || col >= cols() || row < 0 || col < 0) {
+        throw std::runtime_error("Index out of bounds");
+    }
+    return values[cols() * row + col];
+}
+
+template <int modulus>
+int64_t Matrix<modulus>::operator()(size_t row, size_t col) const {
+    if (row >= rows() || col >= cols() || row < 0 || col < 0) {
+        throw std::runtime_error("Index out of bounds");
+    }
+    return Mod(values[cols() * row + col], modulus);
 }
 
 constexpr uint8_t knumber_of_letters_in_alphabet = 26;
