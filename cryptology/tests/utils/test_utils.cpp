@@ -1,4 +1,5 @@
 #include "cryptology/utils/utils.hpp"
+#include <stdexcept>
 #include "gtest/gtest.h"
 
 TEST(UtilsTest, IsLetter) {

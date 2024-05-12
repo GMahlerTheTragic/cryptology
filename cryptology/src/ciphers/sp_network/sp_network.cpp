@@ -1,5 +1,6 @@
 #include <cmath>
 #include <cstdint>
+#include <stdexcept>
 #include "cryptology/ciphers/sp_network/sp_network.hpp"
 #include "cryptology/analysis/linear_attack/linear_approximation.hpp"
 #include "cryptology/analysis/linear_attack/linear_trace.hpp"

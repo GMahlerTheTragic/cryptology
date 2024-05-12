@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdint>
+#include <stdexcept>
 #include "cryptology/ciphers/hill_cipher.hpp"
 
 #include "cryptology/algebra/algorithms.hpp"

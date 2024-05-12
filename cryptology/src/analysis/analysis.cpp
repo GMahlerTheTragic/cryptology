@@ -4,6 +4,7 @@
 #include <queue>
 #include <set>
 #include <cstdint>
+#include <stdexcept>
 
 #include "cryptology/algebra/algorithms.hpp"
 #include "cryptology/algebra/matrix.hpp"

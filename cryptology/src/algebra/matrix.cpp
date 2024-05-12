@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cstdint>
+#include <stdexcept>
 
 #include "cryptology/algebra/vector.hpp"
 #include "cryptology/algebra/algorithms.hpp"
