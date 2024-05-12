@@ -74,12 +74,12 @@ TEST(UtilsTest, GenerateCombinations) {
         {DynamicBitset("0101"), DynamicBitset("0011")},
         {DynamicBitset("1100"), DynamicBitset("1010")}};
 
-    const std::vector<DynamicBitset> combinations = generateCombinations(lists);
+    const std::vector combinations = generateCombinations(lists);
 
     const std::vector result = {DynamicBitset("11000101"), DynamicBitset("10100101"),
         DynamicBitset("11000011"), DynamicBitset("10100011")};
 
-    EXPECT_EQ(combinations, result);
+    EXPECT_TRUE(combinations == result);
 }
 
 int main(int argc, char **argv) {

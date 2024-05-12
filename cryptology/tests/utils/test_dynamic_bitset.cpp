@@ -97,15 +97,16 @@ TEST_F(DynamicBitsetTest, OperatorMultiply) {
 }
 
 TEST_F(DynamicBitsetTest, IsZero) {
+    DynamicBitset bitset1 = DynamicBitset("1010101010");
     EXPECT_TRUE(bitset.is_zero());
     bitset.set(5);
     EXPECT_FALSE(bitset.is_zero());
 }
 
 TEST_F(DynamicBitsetTest, EqulityI) {
-    DynamicBitset bitset1 = DynamicBitset("1010101010");
-    DynamicBitset bitset2 = DynamicBitset("1010101010");
-    EXPECT_TRUE(bitset1 == bitset2);
+    const auto bitset1 = DynamicBitset("1010101010");
+    const auto bitset2 = DynamicBitset("1010101010");
+    EXPECT_EQ(bitset1, bitset2);
 }
 
 TEST_F(DynamicBitsetTest, EqulityII) {
