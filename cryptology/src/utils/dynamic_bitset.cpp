@@ -153,8 +153,8 @@ bool DynamicBitset::operator==(const DynamicBitset &rhs) const {
         std::cout << "sizes differ returning false";
         return false;
     }
-    for (size_t i = 0; i < this->size(); ++i) {
-        std::cout << "bit left is " << this->bits_[i] << "bit right is " << rhs.bits_[i];
+    for (size_t i = 0; i < bits_.size(); ++i) {
+        std::cout << "bit left is " << unsigned(this->bits_[i]) << "bit right is " << unsigned(rhs.bits_[i]);
         if (this->bits_[i] != rhs.bits_[i]) {
             return false;
         }
