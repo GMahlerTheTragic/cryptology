@@ -11,10 +11,12 @@ intended for production use but are meant to enhance understanding of cryptology
 1. [Prerequisites](#prerequisites)
 2. [Running the code](#running-the-code)
 3. [Running the tests](#running-the-tests)
-4. [Affine Cipher](#affine-cipher)
-5. [Vigenere Cipher & Other Stream Ciphers (Beaufort and Autokey)](#vigenere-cipher)
-6. [Hill Cipher](#hill-cipher)
-7. [Substitution Permutation Networks](#substitution-permutation-networks)
+4. [Substitution Permutation Networks](#substitution-permutation-networks)
+5. [Affine Cipher](#affine-cipher)
+6. [Vigenere Cipher & Other Stream Ciphers (Beaufort and Autokey)](#vigenere-cipher)
+7. [Hill Cipher](#hill-cipher)
+8. [Disclaimer](#disclaimer)
+
 
 ## Prerequisites
 This library uses the c++20 standard.
@@ -82,36 +84,33 @@ To build the Cryptology library and run the examples, follow these steps:
    cd build
    ctest --build-config Release --output-on-failure
    ```
-
-### Affine Cipher
-The Affine Cipher is a type of substitution cipher that combines the Caesar Cipher with modular arithmetic. Discover how
-the Affine Cipher works and how to perform encryption and decryption using its unique mathematical formula.
-We implement a Brute Force attack on the Affine cipher. See example below.
-Example: `examples/affine_cipher_examples.cpp`
----
-
-### Vigenere Cipher
-The Vigenère Cipher is a poly-alphabetic substitution cipher that builds upon the Caesar Cipher. Unlike the Caesar
-Cipher, which uses a fixed shift value for each character, the Vigenère Cipher employs a keyword or passphrase to
-determine the shift value for each character in the plaintext. This makes it significantly more secure than the simple
-Caesar Cipher. We implement an Index of Coincidence based attack on the Vigenere cipher. See example below.
-Example: `examples/vigenere_cipher_examples.cpp`
----
-
-### Hill Cipher
-The Hill Cipher is a holographic substitution cipher that operates on multiple letters at once. Explore the mathematical
-operations behind the Hill Cipher and practice encrypting and decrypting text.
-We are yet to implement the well-known n-gram frequency based attack on the Hill Cipher.
-Example: `examples/hill_cipher_example.cpp`
----
-
-### Substitution Permutation Networks
+## Substitution Permutation Networks
 Substitution Permutation Networks (SPN) represent a modern approach to block ciphers and symmetric-key encryption.
 We implement linear cryptanalysis and demonstrate a successful linear attack on the last round key of an example SPN.
 The SPN works on 16 bit inputs and has insecure SBoxes (allowing for linear traces with high bias).
 In addition, we assume only 5 rounds with an easy key schedule...
 Example: `examples/spn_cipher_example.cpp`
----
+
+## Affine Cipher
+The Affine Cipher is a type of substitution cipher that combines the Caesar Cipher with modular arithmetic. Discover how
+the Affine Cipher works and how to perform encryption and decryption using its unique mathematical formula.
+We implement a Brute Force attack on the Affine cipher. See example below.
+Example: `examples/affine_cipher_example.cpp`
+
+## Vigenere Cipher
+The Vigenère Cipher is a poly-alphabetic substitution cipher that builds upon the Caesar Cipher. Unlike the Caesar
+Cipher, which uses a fixed shift value for each character, the Vigenère Cipher employs a keyword or passphrase to
+determine the shift value for each character in the plaintext. This makes it significantly more secure than the simple
+Caesar Cipher. We implement an Index of Coincidence based attack on the Vigenere cipher. See example below.
+Examples:
+`examples/vigenere_cipher_example.cpp`
+`examples/stream_cipher_example.cpp`
+
+## Hill Cipher
+The Hill Cipher is a holographic substitution cipher that operates on multiple letters at once. Explore the mathematical
+operations behind the Hill Cipher and practice encrypting and decrypting text.
+We are yet to implement the well-known n-gram frequency based attack on the Hill Cipher.
+Example: `examples/hill_cipher_example.cpp`
 
 ## Disclaimer
 This Cryptology Learning and Teaching Library is solely for educational purposes and is not intended for use in
