@@ -6,12 +6,8 @@
 constexpr uint8_t kblock_size = 8;
 
 DynamicBitset::DynamicBitset(size_t size) {
-    if (size >= 0) {
-        size_ = size;
-        bits_.resize((size_ + kblock_size - 1) / kblock_size, 0);
-    } else {
-        throw std::invalid_argument("Size must be greater than 0");
-    }
+    size_ = size;
+    bits_.resize((size_ + kblock_size - 1) / kblock_size, 0);
 }
 
 DynamicBitset::DynamicBitset(const std::string &binary_string) : size_(binary_string.size()) {
@@ -140,21 +136,17 @@ bool DynamicBitset::operator*(const DynamicBitset &rhs) const {
 bool DynamicBitset::is_zero() const {
     for (size_t i = 0; i < bits_.size(); i++) {
         if (this->bits_[i] != 0) {
-            std::cout << "bit" << i << "is positive";
             return false;
         }
     }
-    std::cout << "no bit positive returning true";
     return true;
 }
 
 bool DynamicBitset::operator==(const DynamicBitset &rhs) const {
     if (this->size() != rhs.size()) {
-        std::cout << "sizes differ returning false";
         return false;
     }
     for (size_t i = 0; i < bits_.size(); ++i) {
-        std::cout << "bit left is " << unsigned(this->bits_[i]) << "bit right is " << unsigned(rhs.bits_[i]);
         if (this->bits_[i] != rhs.bits_[i]) {
             return false;
         }
