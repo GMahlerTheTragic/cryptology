@@ -138,7 +138,7 @@ bool DynamicBitset::operator*(const DynamicBitset &rhs) const {
 }
 
 bool DynamicBitset::is_zero() const {
-    for (size_t i = 0; i < this->size_; i++) {
+    for (size_t i = 0; i < bits_.size(); i++) {
         if (this->bits_[i] != 0) {
             std::cout << "bit" << i << "is positive";
             return false;
