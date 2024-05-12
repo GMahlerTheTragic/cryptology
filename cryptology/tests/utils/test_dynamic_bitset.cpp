@@ -97,10 +97,10 @@ TEST_F(DynamicBitsetTest, OperatorMultiply) {
 }
 
 TEST_F(DynamicBitsetTest, IsZero) {
-    DynamicBitset bitset1 = DynamicBitset("1010101010");
-    EXPECT_TRUE(bitset.is_zero());
-    bitset.set(5);
-    EXPECT_FALSE(bitset.is_zero());
+    auto bitset1 = DynamicBitset("0000000000");
+    EXPECT_TRUE(bitset1.is_zero());
+    bitset1.set(5);
+    EXPECT_FALSE(bitset1.is_zero());
 }
 
 TEST_F(DynamicBitsetTest, EqulityI) {
