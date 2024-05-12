@@ -27,12 +27,10 @@ TEST(EuclidTest, EuclidTest) {
 
 TEST(ExtendedEuclidTest, ExtendedEuclidTest) {
     GcdDecomposition result = ExtendedEuclid(10, 3);
-    std::cout << "gcd " << result.gcd << "fl: " << result.factor_left << "fr: " << result.factor_right << std::endl;
     EXPECT_EQ(result.gcd, 1);
     EXPECT_EQ(result.factor_left, 1);
     EXPECT_EQ(result.factor_right, -3);
     result = ExtendedEuclid(693, 147);
-    std::cout << "gcd " << result.gcd << "fl: " << result.factor_left << "fr: " << result.factor_right << std::endl;
     EXPECT_EQ(result.gcd, 21);
     EXPECT_EQ(result.factor_left, 3);
     EXPECT_EQ(result.factor_right, -14);

@@ -32,6 +32,9 @@ int64_t Inverse(int64_t input, int64_t modulus) {
 }
 
 int64_t Euclid(int64_t first, int64_t second) {
+    if (first == 0 || second == 0) {
+        throw std::runtime_error("arguments cannot be 0");
+    }
     if (first < second) {
         int64_t temp = first;
         first = second;
@@ -50,6 +53,9 @@ int64_t Euclid(int64_t first, int64_t second) {
 }
 
 struct GcdDecomposition ExtendedEuclid(int64_t first, int64_t second) {
+    if (first == 0 || second == 0) {
+        throw std::runtime_error("arguments cannot be 0");
+    }
     struct GcdDecomposition result {};
     int64_t *smaller_p;
     int64_t *larger_p;
