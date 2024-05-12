@@ -2,6 +2,8 @@
 #define CRYPTOLOGY_DYNAMIC_BITSET_HPP
 
 #include <vector>
+#include <iostream>
+
 
 class DynamicBitset {
    public:
@@ -31,7 +33,7 @@ class DynamicBitset {
 
     [[nodiscard]] DynamicBitset slice(size_t i, size_t j) const;
 
-    bool is_zero() const;
+    [[nodiscard]] bool is_zero() const;
 
     bool operator==(const DynamicBitset &rhs) const;
 
