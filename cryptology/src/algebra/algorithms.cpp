@@ -16,7 +16,7 @@ int64_t Mod(int64_t input, int64_t modulus) {
 return (input % modulus + modulus) % modulus;
 }
 
-bool IsInvertible(int64_t input, int64_t modulus) {
+bool IsInvertible(const int64_t input, int64_t modulus) {
     if (input == 0) {
         return false;
     }
@@ -50,8 +50,8 @@ int64_t Euclid(int64_t first, int64_t second) {
 
 struct GcdDecomposition ExtendedEuclid(int64_t first, int64_t second) {
     struct GcdDecomposition result {};
-    int64_t *smaller_p = nullptr;
-    int64_t *larger_p = nullptr;
+    int64_t *smaller_p;
+    int64_t *larger_p;
     if (first < second) {
         int64_t temp = first;
         first = second;
@@ -64,8 +64,6 @@ struct GcdDecomposition ExtendedEuclid(int64_t first, int64_t second) {
     }
     int64_t rest = -1;
     int64_t rest_factor = -1;
-    int64_t p_temp = 0;
-    int64_t q_temp = 0;
     int64_t p_zero = 1;
     int64_t p_one = 0;
     int64_t q_zero = 0;
@@ -73,8 +71,8 @@ struct GcdDecomposition ExtendedEuclid(int64_t first, int64_t second) {
     int64_t interations_counter = 0;
     while (rest != 0) {
         if (interations_counter++ != 0) {
-            p_temp = p_one;
-            q_temp = q_one;
+            int64_t p_temp = p_one;
+            int64_t q_temp = q_one;
             p_one = p_zero - rest_factor * p_one;
             q_one = q_zero - rest_factor * q_one;
             p_zero = p_temp;
@@ -168,7 +166,7 @@ Matrix<modulus> Inverse(Matrix<modulus> input, bool verbose) {
             }
         }
         int64_t gcd = Euclid(input(j, j), modulus);
-        if (!(gcd == 1)) {
+        if (gcd != 1) {
             throw std::runtime_error("Not invertible");
         }
 

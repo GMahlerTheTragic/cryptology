@@ -1,15 +1,13 @@
 #ifndef CRYPTOLOGY_DYNAMIC_BITSET_HPP
 #define CRYPTOLOGY_DYNAMIC_BITSET_HPP
 
-#include <iterator>
-#include <stdexcept>
 #include <vector>
 
 class DynamicBitset {
    public:
-    DynamicBitset(size_t size);
+    explicit DynamicBitset(size_t size);
 
-    DynamicBitset(const std::string &binaryString);
+    explicit DynamicBitset(const std::string &binaryString);
 
     DynamicBitset(uint64_t value, size_t size);
 
@@ -17,11 +15,11 @@ class DynamicBitset {
 
     void clear(size_t index);
 
-    bool test(size_t index) const;
+    [[nodiscard]] bool test(size_t index) const;
 
-    size_t size() const;
+    [[nodiscard]] size_t size() const;
 
-    uint64_t to_uint64() const;
+    [[nodiscard]] uint64_t to_uint64() const;
 
     void print() const;
 
@@ -29,11 +27,11 @@ class DynamicBitset {
 
     bool operator*(const DynamicBitset &rhs) const;
 
-    DynamicBitset concat(const DynamicBitset &rhs) const;
+    [[nodiscard]] DynamicBitset concat(const DynamicBitset &rhs) const;
 
-    DynamicBitset slice(size_t i, size_t j) const;
+    [[nodiscard]] DynamicBitset slice(size_t i, size_t j) const;
 
-    bool is_zero();
+    bool is_zero() const;
 
     bool operator==(const DynamicBitset &rhs) const;
 

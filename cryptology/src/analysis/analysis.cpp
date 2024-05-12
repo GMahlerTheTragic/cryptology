@@ -3,8 +3,7 @@
 #include <map>
 #include <queue>
 #include <set>
-#include <unordered_set>
-#include <stdint.h>
+#include <cstdint>
 
 #include "cryptology/algebra/algorithms.hpp"
 #include "cryptology/algebra/matrix.hpp"
@@ -27,7 +26,7 @@ constexpr uint8_t ktop_results_to_disply = 100;
 constexpr char kfill_character = '-';
 const string kline(kline_length, kfill_character);
 
-void AdditiveBruteForce(string ciphertext) {
+void AdditiveBruteForce(const string &ciphertext) {
     priority_queue<pair<double, string>> result_pq = priority_queue<pair<double, string>>();
     cout << endl;
     cout << "Starting brute force attack against additive cipher" << endl;
@@ -37,7 +36,7 @@ void AdditiveBruteForce(string ciphertext) {
         AffineCipher affine_cipher = AffineCipher(i, 1);
         string candidate = affine_cipher.decrypt(ciphertext);
         double ios = index_of_similarity(candidate);
-        result_pq.push(make_pair(ios, candidate));
+        result_pq.emplace(ios, candidate);
     }
     cout << endl;
     cout << "Listing possible plain text sorted by ioc:" << endl;
@@ -52,14 +51,14 @@ void AdditiveBruteForce(string ciphertext) {
     cout << endl;
 }
 
-vector<string> AdditiveFrequencyBased(string ciphertext) {
+vector<string> AdditiveFrequencyBased(const string &ciphertext) {
     priority_queue<pair<double, string>> result_pq = priority_queue<pair<double, string>>();
     for (int i = 0; i < knumber_of_letters; i++) {
         AffineCipher affine_cipher = AffineCipher(i, 1);
         string plain_text_candidate = affine_cipher.decrypt(ciphertext);
         double ios = index_of_similarity(plain_text_candidate);
         string key = {pos_to_letter(i)};
-        result_pq.push(make_pair(ios, key));
+        result_pq.emplace(ios, key);
     }
     vector<string> result = vector<string>(2);
     for (int i = 0; i < 2; i++) {
@@ -69,7 +68,7 @@ vector<string> AdditiveFrequencyBased(string ciphertext) {
     return result;
 }
 
-void HillFrequencyAttack(string ciphertext, int n) {
+void HillFrequencyAttack(const string& ciphertext, int n) {
     priority_queue<pair<int, string>> ngram_freqs = compute_ngramm_frequencies(ciphertext, n);
 
     vector<vector<int>> y_vals = vector<vector<int>>(n);
@@ -83,8 +82,8 @@ void HillFrequencyAttack(string ciphertext, int n) {
 
     priority_queue<pair<double, string>> ngram_freqs_language;
 
-    for (auto [key, val] : ENGLISH_BIGRAM_FREQUENCIES) {
-        ngram_freqs_language.push(make_pair(val, key));
+    for (const auto& [key, val] : ENGLISH_BIGRAM_FREQUENCIES) {
+        ngram_freqs_language.emplace(val, key);
     }
 
     vector<string> ngram_freqs_language_vec = vector<string>(ENGLISH_BIGRAM_FREQUENCIES.size());
@@ -107,8 +106,7 @@ void HillFrequencyAttack(string ciphertext, int n) {
                 Matrix<knumber_of_letters> key_matrix = x_matrix_inverse * y_matrix;
                 HillCipher hill_cipher = HillCipher(key_matrix);
                 string plain_text_candidate = hill_cipher.decrypt(ciphertext);
-                result.push(
-                    make_pair(index_of_coincidence(plain_text_candidate), plain_text_candidate));
+                result.emplace(index_of_coincidence(plain_text_candidate), plain_text_candidate);
                 cout << j << l << "plain text candidate: " << plain_text_candidate << endl;
             } catch (const runtime_error &e) {
                 continue;
@@ -131,7 +129,7 @@ void VigenereAttack(string ciphertext) {
     priority_queue<pair<double, int>> possible_periods = priority_queue<pair<double, int>>();
     for (int assumed_period_length = 1; assumed_period_length <= ct_len; assumed_period_length++) {
         double delta = -abs(expected_ioc(assumed_period_length, ct_len) - ioc);
-        possible_periods.push(make_pair(delta, assumed_period_length));
+        possible_periods.emplace(delta, assumed_period_length);
     }
     priority_queue<pair<double, string>> result = priority_queue<pair<double, string>>();
     for (int i = 0; i < 3; i++) {
@@ -154,15 +152,15 @@ void VigenereAttack(string ciphertext) {
 
         vector<vector<int>> idx_combs = tuples(2, assumed_key_period);
 
-        for (int j = 0; j < idx_combs.size(); j++) {
+        for (auto & idx_comb : idx_combs) {
             string key_candidate;
             for (int idx = 0; idx < assumed_key_period; idx++) {
-                key_candidate += letter_combinations[idx][idx_combs[j][idx]];
+                key_candidate += letter_combinations[idx][idx_comb[idx]];
             }
             VigenereCipher vigenere_cipher = VigenereCipher(key_candidate);
             string plain_text_candidate = vigenere_cipher.decrypt(ciphertext);
-            result.push(make_pair(index_of_similarity(plain_text_candidate),
-                                  plain_text_candidate + " key: " + key_candidate));
+            result.emplace(index_of_similarity(plain_text_candidate),
+                                  plain_text_candidate + " key: " + key_candidate);
         }
     }
 
@@ -176,7 +174,7 @@ void VigenereAttack(string ciphertext) {
     }
 }
 
-void LinearAttack(SpNetwork sp_network) {
+void LinearAttack(const SpNetwork& sp_network) {
     LinearAttackWorker attack_worker = LinearAttackWorker(sp_network);
     vector<DynamicBitset> inputs_for_trace_generation =
         attack_worker.generate_single_sbox_inputs_for_traces();
@@ -197,7 +195,7 @@ void LinearAttack(SpNetwork sp_network) {
 
     while (traces_iterator != linear_traces.rend() && !number_set.is_zero()) {
         LinearTrace best_trace = *traces_iterator;
-        traces_iterator++;
+        ++traces_iterator;
         bool contains_more = false;
         size_t n_act = 0;
         cout << "Attacking SBoxes [";
@@ -223,7 +221,7 @@ void LinearAttack(SpNetwork sp_network) {
             continue;
         }
 
-        size_t count = static_cast<size_t>(pow(best_trace.GetBias(), -3));
+        auto count = static_cast<size_t>(pow(best_trace.GetBias(), -3));
 
         cout << "Generating " << count << " random pairs..." << endl;
 
@@ -240,11 +238,11 @@ void LinearAttack(SpNetwork sp_network) {
             vector<DynamicBitset> prefixes;
             DynamicBitset slice = active_outputs.slice(i * sbox_size, (i + 1) * sbox_size);
             if (slice.is_zero()) {
-                prefixes.push_back(DynamicBitset(0, sp_network.sbox_size()));
+                prefixes.emplace_back(0, sp_network.sbox_size());
             } else {
                 for (uint64_t j = 0; j < static_cast<uint64_t>(pow(2, sp_network.sbox_size()));
                      j++) {
-                    prefixes.push_back(DynamicBitset(j, sp_network.sbox_size()));
+                    prefixes.emplace_back(j, sp_network.sbox_size());
                 }
             }
             prefixes_list.push_back(prefixes);

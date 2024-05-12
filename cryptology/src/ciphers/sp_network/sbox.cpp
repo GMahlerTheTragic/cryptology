@@ -3,13 +3,13 @@
 #include <iostream>
 #include <map>
 #include <unordered_map>
-#include <stdint.h>
+#include <cstdint>
 #include <cryptology/ciphers/sp_network/sbox.hpp>
 using std::runtime_error;
 
 constexpr uint8_t kmax_uint_size = 64;
 
-bool SBox::has_duplicates(std::vector<uint64_t> permutation) {
+bool SBox::has_duplicates(const std::vector<uint64_t>& permutation) {
     std::unordered_map<uint64_t, size_t> map;
     for (const auto &entry : permutation) {
         ++map[entry];
@@ -20,7 +20,7 @@ bool SBox::has_duplicates(std::vector<uint64_t> permutation) {
     return false;
 }
 
-SBox::SBox(size_t input_size, size_t output_size, std::vector<uint64_t> permutation) {
+SBox::SBox(size_t input_size, size_t output_size, const std::vector<uint64_t> &permutation) {
     if (permutation.size() != static_cast<size_t>(std::pow(2, input_size))) {
         throw runtime_error(
             "The size of the mapping must be 2 to the power "
@@ -47,7 +47,7 @@ SBox::SBox(size_t input_size, size_t output_size, std::vector<uint64_t> permutat
     }
 }
 
-DynamicBitset SBox::forward(DynamicBitset input) {
+DynamicBitset SBox::forward(const DynamicBitset &input) {
     if (input.size() != this->input_size_) {
         throw runtime_error(
             "the input size to the SBox does not match the "
@@ -56,7 +56,7 @@ DynamicBitset SBox::forward(DynamicBitset input) {
     return {this->mapping[input.to_uint64()], output_size_};
 }
 
-DynamicBitset SBox::backward(DynamicBitset input) {
+DynamicBitset SBox::backward(const DynamicBitset &input) {
     if (input.size() != this->output_size_) {
         throw runtime_error(
             "the input size to the Inverse SBox does not match "
@@ -65,7 +65,7 @@ DynamicBitset SBox::backward(DynamicBitset input) {
     return {this->inverse_mapping[input.to_uint64()], input_size_};
 }
 
-std::vector<std::vector<double>> SBox::compute_linear_approximation_table() {
+std::vector<std::vector<double>> SBox::compute_linear_approximation_table() const {
     std::vector<std::vector<double>> result_matrix;
     for (uint64_t i = 0; i < std::pow(2, this->input_size_); i++) {
         std::vector<double> temp = std::vector<double>(0.);

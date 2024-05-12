@@ -1,5 +1,5 @@
 #include <cmath>
-#include <stdint.h>
+#include <cstdint>
 #include <cryptology/analysis/linear_attack/linear_attack_worker.hpp>
 #include <cryptology/utils/utils.hpp>
 #include <random>
@@ -11,20 +11,20 @@
 using std::cout;
 using std::vector;
 
-LinearAttackWorker::LinearAttackWorker(SpNetwork sp_network) : sp_network(sp_network) {}
+LinearAttackWorker::LinearAttackWorker(SpNetwork sp_network) : sp_network(std::move(sp_network)) {}
 
-vector<DynamicBitset> LinearAttackWorker::generate_single_sbox_inputs_for_traces() {
+vector<DynamicBitset> LinearAttackWorker::generate_single_sbox_inputs_for_traces() const {
     vector<DynamicBitset> inputs_for_trace_generation;
     for (size_t i = 0; i < static_cast<size_t>(std::pow(2, this->sp_network.block_size())); i++) {
-        inputs_for_trace_generation.push_back(DynamicBitset(i, this->sp_network.block_size()));
+        inputs_for_trace_generation.emplace_back(i, this->sp_network.block_size());
     }
     return inputs_for_trace_generation;
 }
 
 multiset<LinearTrace> LinearAttackWorker::generate_linear_traces_from_inputs(
-    vector<DynamicBitset> inputs_for_trace_generation) {
+    const vector<DynamicBitset> &inputs_for_trace_generation) {
     multiset<LinearTrace> linear_traces;
-    for (auto input : inputs_for_trace_generation) {
+    for (const auto& input : inputs_for_trace_generation) {
         LinearTrace trace = sp_network.generate_trace(input);
         linear_traces.insert(trace);
     }
@@ -58,7 +58,7 @@ vector<pair<DynamicBitset, DynamicBitset>> LinearAttackWorker::generate_random_p
 }
 
 vector<pair<DynamicBitset, DynamicBitset>> LinearAttackWorker::partial_decrypt_plain_cipher_pairs(
-    vector<DynamicBitset> &round_keys, vector<pair<DynamicBitset, DynamicBitset>> pairs) {
+    const vector<DynamicBitset> &round_keys, vector<pair<DynamicBitset, DynamicBitset>> pairs) {
     if (round_keys.empty()) {
         return pairs;
     }
@@ -75,8 +75,9 @@ vector<pair<DynamicBitset, DynamicBitset>> LinearAttackWorker::partial_decrypt_p
 }
 
 DynamicBitset LinearAttackWorker::estimate_best_round_key_candidate(
-    vector<pair<DynamicBitset, DynamicBitset>> &pairs, vector<DynamicBitset> &key_candidates,
-    bool is_last_round, DynamicBitset active_inputs, DynamicBitset active_outputs) {
+    const vector<pair<DynamicBitset, DynamicBitset>> &pairs,
+    const vector<DynamicBitset> &key_candidates,
+    bool is_last_round, const DynamicBitset &active_inputs, const DynamicBitset &active_outputs) {
     double max = -1;
     DynamicBitset max_key = DynamicBitset(0, this->sp_network.block_size());
 

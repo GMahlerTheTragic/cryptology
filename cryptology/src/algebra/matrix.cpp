@@ -34,11 +34,11 @@ Matrix<modulus> Matrix<modulus>::operator*(const Matrix<modulus> &rhs) const {
     Matrix<modulus> result(rows(), rhs.cols());
 
     auto dot = [&](size_t row, size_t col) -> int {
-        int result = 0;
+        int result_dot = 0;
         for (size_t i = 0; i < cols(); ++i) {
-            result += (*this)(row, i) * rhs(i, col);
+            result_dot += (*this)(row, i) * rhs(i, col);
         }
-        return result;
+        return result_dot;
     };
 
     for (size_t row = 0; row < result.rows(); ++row) {
@@ -72,11 +72,11 @@ Vector<modulus> Matrix<modulus>::operator*(const Vector<modulus> &rhs) const {
     Vector<modulus> result(rows());
 
     auto dot = [&](size_t row) -> int {
-        int result = 0;
+        int result_dot = 0;
         for (size_t i = 0; i < cols(); ++i) {
-            result += (*this)(row, i) * rhs(i);
+            result_dot += (*this)(row, i) * rhs(i);
         }
-        return result;
+        return result_dot;
     };
 
     for (size_t row = 0; row < result.size(); ++row) {

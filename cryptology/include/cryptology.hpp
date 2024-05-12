@@ -19,4 +19,4 @@
 
 namespace cryptology {}
 
-#endif  // CRYPTOLOGY_CRYPTOLOGY_HPP
+#endif

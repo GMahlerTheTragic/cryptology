@@ -1,7 +1,5 @@
-
-
 #include <iostream>
-#include <stdint.h>
+#include <cstdint>
 #include "cryptology/ciphers/hill_cipher.hpp"
 
 #include "cryptology/algebra/algorithms.hpp"
@@ -17,7 +15,7 @@ template class Vector<knumber_of_letters>;
 
 using std::runtime_error;
 
-HillCipher::HillCipher(Matrix<knumber_of_letters> key_matrix)
+HillCipher::HillCipher(const Matrix<knumber_of_letters> &key_matrix)
     : key_matrix(key_matrix),
       key_matrix_inv(Matrix<knumber_of_letters>(key_matrix.rows(), key_matrix.cols())) {
     if (key_matrix.cols() != key_matrix.rows()) {
@@ -27,7 +25,7 @@ HillCipher::HillCipher(Matrix<knumber_of_letters> key_matrix)
     this->key_matrix_inv = Inverse(key_matrix);
 }
 
-string HillCipher::encrypt_block(string plain_text) {
+string HillCipher::encrypt_block(const string &plain_text) const {
     Vector<knumber_of_letters> block = Vector<knumber_of_letters>(this->block_size);
     string output = plain_text;
     for (int i = 0; i < plain_text.length(); ++i) {
@@ -40,7 +38,7 @@ string HillCipher::encrypt_block(string plain_text) {
     return output;
 }
 
-string HillCipher::decrypt_block(string cipher_text) {
+string HillCipher::decrypt_block(const string &cipher_text) const {
     Vector<knumber_of_letters> block = Vector<knumber_of_letters>(this->block_size);
     string output = cipher_text;
     for (int i = 0; i < cipher_text.length(); ++i) {
@@ -53,7 +51,7 @@ string HillCipher::decrypt_block(string cipher_text) {
     return output;
 }
 
-string HillCipher::encrypt(string plain_text) {
+string HillCipher::encrypt(const string &plain_text) const {
     string output;
     if (plain_text.size() % this->block_size != 0) {
         throw runtime_error(
@@ -66,7 +64,7 @@ string HillCipher::encrypt(string plain_text) {
     return output;
 }
 
-string HillCipher::decrypt(string cipher_text) {
+string HillCipher::decrypt(const string &cipher_text) const {
     string output;
     if (cipher_text.size() % this->block_size != 0) {
         throw runtime_error(

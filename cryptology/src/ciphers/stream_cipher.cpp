@@ -1,7 +1,5 @@
-
-
 #include <iostream>
-#include <stdint.h>
+#include <cstdint>
 #include "cryptology/ciphers/stream_cipher.hpp"
 #include "cryptology/algebra/algorithms.hpp"
 #include "cryptology/utils/utils.hpp"
@@ -10,7 +8,7 @@ using std::runtime_error;
 
 constexpr uint8_t knumber_of_letters = 26;
 
-StreamCipher::StreamCipher(string keyword) : keyword(keyword) {
+StreamCipher::StreamCipher(const string &keyword) : keyword(keyword) {
     if (!word_from_latin_alphabet(keyword)) {
         throw runtime_error("The keyword has to come from the latin alphabet");
     }

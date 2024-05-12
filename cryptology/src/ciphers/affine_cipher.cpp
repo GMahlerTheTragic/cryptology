@@ -1,7 +1,5 @@
-
-
 #include <iostream>
-#include <stdint.h>
+#include <cstdint>
 
 #include "cryptology/ciphers/affine_cipher.hpp"
 #include "cryptology/algebra/algorithms.hpp"
@@ -40,7 +38,7 @@ char AffineCipher::decrypt(char input) const {
     return res;
 }
 
-string AffineCipher::encrypt(string plain_text) const {
+string AffineCipher::encrypt(const string &plain_text) const {
     string output = plain_text;
     for (int i = 0; i < plain_text.length(); ++i) {
         output[i] = this->encrypt(output[i]);
@@ -48,7 +46,7 @@ string AffineCipher::encrypt(string plain_text) const {
     return output;
 }
 
-string AffineCipher::decrypt(string cipher_text) const {
+string AffineCipher::decrypt(const string &cipher_text) const {
     string output = cipher_text;
     for (int i = 0; i < cipher_text.length(); ++i) {
         output[i] = this->decrypt(output[i]);

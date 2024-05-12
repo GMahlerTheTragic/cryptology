@@ -15,9 +15,9 @@ class Vector final {
     vector<int> values;
 
    public:
-    Vector(size_t size, int default_value = 0);
+    explicit Vector(size_t size, int default_value = 0);
 
-    Vector(const std::vector<int> &values);
+    explicit Vector(const std::vector<int> &values);
 
     ~Vector() = default;
 

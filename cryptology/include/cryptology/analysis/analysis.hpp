@@ -4,14 +4,14 @@
 #include <cryptology/ciphers/sp_network/sp_network.hpp>
 #include <string>
 
-void AdditiveBruteForce(std::string ciphertext);
+void AdditiveBruteForce(const std::string &ciphertext);
 
-std::vector<std::string> AdditiveFrequencyBased(std::string ciphertext);
+std::vector<std::string> AdditiveFrequencyBased(const std::string &ciphertext);
 
-void HillFrequencyAttack(std::string ciphertext, int n);
+void HillFrequencyAttack(const std::string& ciphertext, int n);
 
 void VigenereAttack(std::string ciphertext);
 
-void LinearAttack(SpNetwork sp_network);
+void LinearAttack(const SpNetwork& sp_network);
 
-#endif  // CRYPTOLOGY_ANALYSIS_HPP
+#endif

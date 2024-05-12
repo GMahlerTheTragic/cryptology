@@ -69,14 +69,14 @@ TEST(UtilsTest, Tuples) {
 }
 
 TEST(UtilsTest, GenerateCombinations) {
-    std::vector<std::vector<DynamicBitset>> lists = {
+    const std::vector<std::vector<DynamicBitset>> lists = {
         {DynamicBitset("0101"), DynamicBitset("0011")},
         {DynamicBitset("1100"), DynamicBitset("1010")}};
 
-    std::vector<DynamicBitset> combinations = generateCombinations(lists);
+    const std::vector<DynamicBitset> combinations = generateCombinations(lists);
 
-    std::vector<DynamicBitset> result = {DynamicBitset("11000101"), DynamicBitset("10100101"),
-                                         DynamicBitset("11000011"), DynamicBitset("10100011")};
+    const std::vector result = {DynamicBitset("11000101"), DynamicBitset("10100101"),
+        DynamicBitset("11000011"), DynamicBitset("10100011")};
 
     EXPECT_EQ(combinations, result);
 }

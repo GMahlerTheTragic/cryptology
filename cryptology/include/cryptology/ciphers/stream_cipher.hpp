@@ -12,43 +12,44 @@ class StreamCipher {
     virtual u_int8_t get_next_shift(size_t round, string &plain_text, string &cipher_text) = 0;
 
    public:
-    StreamCipher(string keyword);
+    virtual ~StreamCipher() = default;
+    explicit StreamCipher(const string &keyword);
     virtual string encrypt(string plain_text);
     virtual string decrypt(string cipher_text);
 };
 
 class VigenereCipher : public StreamCipher {
    private:
-    u_int8_t get_next_shift(size_t round, string &plain_text, string &cipher_text);
+    u_int8_t get_next_shift(size_t round, string &plain_text, string &cipher_text) override;
 
    public:
-    VigenereCipher(string keyword) : StreamCipher(keyword){};
+    explicit VigenereCipher(const string &keyword) : StreamCipher(keyword){};
 };
 
 class BeaufortCipher : public StreamCipher {
    private:
-    u_int8_t get_next_shift(size_t round, string &plain_text, string &cipher_text);
+    u_int8_t get_next_shift(size_t round, string &plain_text, string &cipher_text) override;
 
    public:
-    BeaufortCipher(string keyword) : StreamCipher(keyword){};
-    string encrypt(string plain_text);
-    string decrypt(string cipher_text);
+    explicit BeaufortCipher(const string &keyword) : StreamCipher(keyword){};
+    string encrypt(string plain_text) override;
+    string decrypt(string cipher_text) override;
 };
 
 class AutoKeyPlainTextCipher : public StreamCipher {
    private:
-    u_int8_t get_next_shift(size_t round, string &plain_text, string &cipher_text);
+    u_int8_t get_next_shift(size_t round, string &plain_text, string &cipher_text) override;
 
    public:
-    AutoKeyPlainTextCipher(string keyword) : StreamCipher(keyword){};
+    explicit AutoKeyPlainTextCipher(const string &keyword) : StreamCipher(keyword){};
 };
 
 class AutoKeyCipherTextCipher : public StreamCipher {
    private:
-    u_int8_t get_next_shift(size_t round, string &plain_text, string &cipher_text);
+    u_int8_t get_next_shift(size_t round, string &plain_text, string &cipher_text) override;
 
    public:
-    AutoKeyCipherTextCipher(string keyword) : StreamCipher(keyword){};
+    explicit AutoKeyCipherTextCipher(const string &keyword) : StreamCipher(keyword){};
 };
 
 #endif

@@ -1,7 +1,5 @@
-
-
 #include <iostream>
-#include <stdint.h>
+#include <cstdint>
 
 #include "cryptology/utils/utils.hpp"
 
@@ -24,16 +22,16 @@ char pos_to_letter(uint8_t pos) {
     return 0x41 + pos;
 }
 
-bool word_from_latin_alphabet(string input) {
-    for (int i = 0; i < input.size(); ++i) {
-        if (!is_letter(input[i])) {
+bool word_from_latin_alphabet(const string &input) {
+    for (char i : input) {
+        if (!is_letter(i)) {
             return false;
         }
     }
     return true;
 }
 
-vector<int> word_to_vec(string input) {
+vector<int> word_to_vec(const string &input) {
     vector<int> result = vector<int>(input.length());
     for (int i = 0; i < input.length(); ++i) {
         result[i] = letter_to_pos(input[i]);

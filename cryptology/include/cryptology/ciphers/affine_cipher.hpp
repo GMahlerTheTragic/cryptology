@@ -12,16 +12,16 @@ class AffineCipher {
     const uint8_t slope;
     const uint8_t slope_inv;
 
-    char encrypt(char input) const;
+    [[nodiscard]] char encrypt(char input) const;
 
-    char decrypt(char input) const;
+    [[nodiscard]] char decrypt(char input) const;
 
    public:
     AffineCipher(int shift, int slope);
 
-    string encrypt(string plain_text) const;
+    [[nodiscard]] string encrypt(const string &plain_text) const;
 
-    string decrypt(string cipher_text) const;
+    [[nodiscard]] string decrypt(const string &cipher_text) const;
 };
 
 #endif

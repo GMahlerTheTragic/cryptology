@@ -7,13 +7,13 @@
 
 using namespace std;
 
-map<string, int> compute_letter_counts(string text);
+map<string, int> compute_letter_counts(const string& text);
 
-double index_of_coincidence(string text);
+double index_of_coincidence(const string& text);
 
-double index_of_similarity(string text);
+double index_of_similarity(const string& text);
 
-priority_queue<pair<int, string>> compute_ngramm_frequencies(string text, int n);
+priority_queue<pair<int, string>> compute_ngramm_frequencies(const string& text, int n);
 
 double expected_ioc(size_t key_word_period, size_t n);
 

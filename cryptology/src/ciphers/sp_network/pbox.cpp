@@ -1,6 +1,3 @@
-
-
-#include <stdint.h>
 #include <numeric>
 #include "cryptology/ciphers/sp_network/pbox.hpp"
 
@@ -13,7 +10,7 @@ bool PBox::is_permutation(std::vector<unsigned int> permutation) {
                                permutation.begin());
 }
 
-PBox::PBox(std::vector<unsigned int> permutation) {
+PBox::PBox(const std::vector<unsigned int> &permutation) {
     if (!is_permutation(permutation)) {
         throw runtime_error("The passed vector is not a permutation");
     }
@@ -25,7 +22,7 @@ PBox::PBox(std::vector<unsigned int> permutation) {
     this->inverse_permutation = inverse_permutation_values;
 }
 
-DynamicBitset PBox::forward(DynamicBitset input) {
+DynamicBitset PBox::forward(const DynamicBitset &input) const {
     if (input.size() != this->permutation.size()) {
         throw runtime_error(
             "the input size to the PBox does not match the "
@@ -41,7 +38,7 @@ DynamicBitset PBox::forward(DynamicBitset input) {
     return result;
 }
 
-DynamicBitset PBox::backward(DynamicBitset input) {
+DynamicBitset PBox::backward(const DynamicBitset &input) const {
     DynamicBitset result = DynamicBitset(input.size());
     for (size_t i = 0; i < input.size(); i++) {
         if (input.test(i)) {
@@ -51,4 +48,4 @@ DynamicBitset PBox::backward(DynamicBitset input) {
     return result;
 }
 
-size_t PBox::size() { return this->permutation.size(); }
+size_t PBox::size() const { return this->permutation.size(); }

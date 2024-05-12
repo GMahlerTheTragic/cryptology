@@ -32,11 +32,11 @@ Vector<modulus> Vector<modulus>::operator*(const Matrix<modulus> &rhs) const {
     Vector<modulus> result(rhs.cols());
 
     auto dot = [&](size_t col) -> int {
-        int result = 0;
+        int result_dot = 0;
         for (size_t i = 0; i < size(); ++i) {
-            result += (*this)(i)*rhs(i, col);
+            result_dot += (*this)(i)*rhs(i, col);
         }
-        return result;
+        return result_dot;
     };
 
     for (size_t col = 0; col < result.size(); ++col) {

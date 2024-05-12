@@ -13,13 +13,13 @@ class PBox {
   static bool is_permutation(std::vector<unsigned int> permutation);
 
  public:
-  PBox(std::vector<unsigned int> permutation);
+  explicit PBox(const std::vector<unsigned int> &permutation);
 
-  size_t size();
+  size_t size() const;
 
-  DynamicBitset forward(DynamicBitset);
+  DynamicBitset forward(const DynamicBitset&) const;
 
-  DynamicBitset backward(DynamicBitset);
+  DynamicBitset backward(const DynamicBitset&) const;
 
 };
 

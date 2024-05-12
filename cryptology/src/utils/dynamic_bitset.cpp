@@ -1,7 +1,5 @@
-
-
 #include <iostream>
-#include <stdint.h>
+#include <cstdint>
 
 #include "cryptology/utils/dynamic_bitset.hpp"
 
@@ -30,7 +28,6 @@ DynamicBitset::DynamicBitset(const std::string &binary_string) : size_(binary_st
 
 DynamicBitset::DynamicBitset(u_int64_t value, size_t size) : size_(size) {
     bits_.resize((size_ + kblock_size - 1) / kblock_size, 0);
-    uint64_t one = 1;
     for (size_t i = 0; i < this->size_; ++i) {
         if ((value & (1ULL << i)) != 0U) {
             set(i);
@@ -69,9 +66,9 @@ uint64_t DynamicBitset::to_uint64() const {
     }
 
     uint64_t result = 0;
-    uint64_t one = 1;
     for (size_t i = 0; i < size_; ++i) {
         if (test(i)) {
+            constexpr uint64_t one = 1;
             result |= (one << i);
         }
     }
@@ -140,7 +137,7 @@ bool DynamicBitset::operator*(const DynamicBitset &rhs) const {
     return result;
 }
 
-bool DynamicBitset::is_zero() {
+bool DynamicBitset::is_zero() const {
     for (size_t i = 0; i < this->size_; i++) {
         if (this->bits_[i] != 0) {
             return false;

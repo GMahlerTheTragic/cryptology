@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 #include <cryptology/algebra/matrix.hpp>
-#include <cryptology/algebra/vector.hpp>
 
 using namespace std;
 
@@ -13,12 +12,12 @@ class HillCipher {
   const Matrix<26> key_matrix;
   Matrix<26> key_matrix_inv;
   size_t block_size;
-  string encrypt_block(string plain_text);
-  string decrypt_block(string cipher_text);
+  string encrypt_block(const string &plain_text) const;
+  string decrypt_block(const string &cipher_text) const;
 
  public:
-  HillCipher(Matrix<26> key_matrix);
-  string encrypt(string plain_text);
-  string decrypt(string cipher_text);
+  explicit HillCipher(const Matrix<26> &key_matrix);
+  string encrypt(const string &plain_text) const;
+  string decrypt(const string &cipher_text) const;
 };
 #endif

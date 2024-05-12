@@ -1,15 +1,13 @@
-
-
 #include <cmath>
 #include <iostream>
-#include <stdint.h>
+
 #include "cryptology/analysis/linear_attack/linear_trace.hpp"
 #include "cryptology/analysis/linear_attack/linear_approximation.hpp"
 using std::cout;
 
-LinearTrace::LinearTrace(DynamicBitset input) : input(input) {}
+LinearTrace::LinearTrace(DynamicBitset input) : input(std::move(input)) {}
 
-void LinearTrace::add(RoundLinearApproximation round_approximation) {
+void LinearTrace::add(const RoundLinearApproximation &round_approximation) {
     this->data.push_back(round_approximation);
     for (auto linear_approximation : round_approximation.linear_approximations) {
         this->bias *= linear_approximation.bias;
@@ -34,7 +32,7 @@ void LinearTrace::print() const {
     cout << "   input vector: ";
     this->input.print();
     cout << "   active vectors: [" << endl;
-    for (auto round_data : this->data) {
+    for (const auto& round_data : this->data) {
         cout << "      {" << endl;
         cout << "          round: " << round_data.round << "," << endl;
         cout << "          active_output: ";

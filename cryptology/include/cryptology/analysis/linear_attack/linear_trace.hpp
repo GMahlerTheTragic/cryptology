@@ -13,21 +13,21 @@ class LinearTrace {
     DynamicBitset input;
 
    public:
-    LinearTrace(DynamicBitset input);
+    explicit LinearTrace(DynamicBitset input);
 
-    void add(RoundLinearApproximation round_linear_approximation);
+    void add(const RoundLinearApproximation &round_linear_approximation);
 
-    double GetBias() const;
+    [[nodiscard]] double GetBias() const;
 
-    double GetNecessaryPairs() const;
+    [[nodiscard]] double GetNecessaryPairs() const;
 
-    DynamicBitset GetActiveOuput(size_t round) const;
+    [[nodiscard]] DynamicBitset GetActiveOuput(size_t round) const;
 
     void print() const;
 
-    DynamicBitset GetInput() const;
+    [[nodiscard]] DynamicBitset GetInput() const;
 
     bool operator<(const LinearTrace &other) const { return this->bias < other.bias; }
 };
 
-#endif  // CRYPTOLOGY_LINEAR_TRACE_HPP
+#endif

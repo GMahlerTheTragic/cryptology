@@ -1,13 +1,11 @@
-
-
 #include <cmath>
-#include <stdint.h>
+#include <cstdint>
 #include "cryptology/ciphers/sp_network/sp_network.hpp"
 #include "cryptology/analysis/linear_attack/linear_approximation.hpp"
 #include "cryptology/analysis/linear_attack/linear_trace.hpp"
 
-SpNetwork::SpNetwork(PBox &p_box, SBox &s_box, size_t block_size, size_t n_rounds,
-                     std::vector<DynamicBitset> &round_keys)
+SpNetwork::SpNetwork(const PBox &p_box, const SBox &s_box, size_t block_size, size_t n_rounds,
+                     const std::vector<DynamicBitset> &round_keys)
     : p_box(p_box), s_box(s_box), round_keys(round_keys) {
     if (n_rounds <= 0) {
         throw std::runtime_error(
@@ -44,7 +42,7 @@ size_t SpNetwork::rounds() const { return this->n_rounds; }
 
 size_t SpNetwork::n_parallel_sboxes() const { return this->block_size_ / this->sbox_size(); }
 
-DynamicBitset SpNetwork::encrypt_block(DynamicBitset input) {
+DynamicBitset SpNetwork::encrypt_block(const DynamicBitset &input) {
     if (input.size() != this->block_size_) {
         throw std::runtime_error(
             "input lenght has to be the same as the "
@@ -62,7 +60,7 @@ DynamicBitset SpNetwork::encrypt_block(DynamicBitset input) {
     return result;
 }
 
-DynamicBitset SpNetwork::apply_sbox(DynamicBitset input) {
+DynamicBitset SpNetwork::apply_sbox(const DynamicBitset &input) {
     if (input.size() % this->sbox_size() != 0) {
         throw std::runtime_error(
             "input block length must be a multiple of "
@@ -78,7 +76,7 @@ DynamicBitset SpNetwork::apply_sbox(DynamicBitset input) {
     return result;
 }
 
-DynamicBitset SpNetwork::apply_sbox_inv(DynamicBitset input) {
+DynamicBitset SpNetwork::apply_sbox_inv(const DynamicBitset &input) {
     if (input.size() % this->sbox_size() != 0) {
         throw std::runtime_error(
             "input block length must be a multiple of "
@@ -94,7 +92,7 @@ DynamicBitset SpNetwork::apply_sbox_inv(DynamicBitset input) {
     return result;
 }
 
-DynamicBitset SpNetwork::apply_pbox(DynamicBitset input) {
+DynamicBitset SpNetwork::apply_pbox(const DynamicBitset &input) const {
     if (input.size() != this->p_box.size()) {
         throw std::runtime_error(
             "input block length must be equal to the "
@@ -103,7 +101,7 @@ DynamicBitset SpNetwork::apply_pbox(DynamicBitset input) {
     return this->p_box.forward(input);
 }
 
-DynamicBitset SpNetwork::apply_pbox_inv(DynamicBitset input) {
+DynamicBitset SpNetwork::apply_pbox_inv(const DynamicBitset &input) const {
     if (input.size() != this->p_box.size()) {
         throw std::runtime_error(
             "input block length must be equal to the "
@@ -112,7 +110,7 @@ DynamicBitset SpNetwork::apply_pbox_inv(DynamicBitset input) {
     return this->p_box.backward(input);
 }
 
-LinearTrace SpNetwork::generate_trace(DynamicBitset input_vector) {
+LinearTrace SpNetwork::generate_trace(DynamicBitset input_vector) const {
     LinearTrace linear_trace = LinearTrace(input_vector);
     for (size_t round = 0; round < this->n_rounds - 2; round++) {
         RoundLinearApproximation round_linear_approximation =
@@ -123,8 +121,9 @@ LinearTrace SpNetwork::generate_trace(DynamicBitset input_vector) {
     return linear_trace;
 }
 
-RoundLinearApproximation SpNetwork::compute_best_output_approximation(DynamicBitset input_vector,
-                                                                      size_t round) {
+RoundLinearApproximation SpNetwork::compute_best_output_approximation(
+    const DynamicBitset &input_vector,
+                                                                      size_t round) const {
     DynamicBitset active_outputs = DynamicBitset(0);
     std::vector<LinearApproximation> round_approximations;
     for (size_t i = 0; i < this->n_parallel_sboxes(); i++) {
@@ -143,7 +142,7 @@ RoundLinearApproximation SpNetwork::compute_best_output_approximation(DynamicBit
     return {round_approximations, round, this->apply_pbox(active_outputs)};
 }
 
-LinearApproximation SpNetwork::find_best_approximation(uint64_t active_i, size_t sbox_pos) {
+LinearApproximation SpNetwork::find_best_approximation(uint64_t active_i, size_t sbox_pos) const {
     double best_bias = 0;
     uint64_t best_active_o = 0;
     for (uint64_t active_o = 0; active_o < std::pow(2, this->s_box.ouput_size()); active_o++) {

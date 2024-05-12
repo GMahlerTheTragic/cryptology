@@ -17,4 +17,4 @@ struct RoundLinearApproximation {
     DynamicBitset active_outputs;
 };
 
-#endif  // CRYPTOLOGY_LINEAR_APPROXIMATION_HPP
+#endif
