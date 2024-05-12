@@ -106,7 +106,7 @@ TEST_F(DynamicBitsetTest, IsZero) {
 TEST_F(DynamicBitsetTest, EqulityI) {
     const auto bitset1 = DynamicBitset("1010101010");
     const auto bitset2 = DynamicBitset("1010101010");
-    EXPECT_EQ(bitset1, bitset2);
+    EXPECT_TRUE(bitset1 == bitset2);
 }
 
 TEST_F(DynamicBitsetTest, EqulityII) {
