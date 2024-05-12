@@ -1,3 +1,7 @@
+![example workflow](https://github.com/GMahlerTheTragic/cryptology/actions/workflows/cmake-multi-platform.yml/badge.svg)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=GMahlerTheTragic_cryptology&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=GMahlerTheTragic_cryptology)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=GMahlerTheTragic_cryptology&metric=coverage)](https://sonarcloud.io/summary/new_code?id=GMahlerTheTragic_cryptology)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=GMahlerTheTragic_cryptology&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=GMahlerTheTragic_cryptology)
 # Cryptology Learning Library
 
 Welcome to the Cryptology Learning Library! This resource is designed for educational purposes, allowing
