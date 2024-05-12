@@ -3,6 +3,17 @@
 Welcome to the Cryptology Learning Library! This resource is designed for educational purposes, allowing
 you to explore various ciphers and basic attacks on them. Please note that the ciphers provided here are not
 intended for production use but are meant to enhance understanding of cryptology concepts.
+---
+
+## Table of Contents
+1. [Prerequisites](#prerequisites)
+2. [Running the code](#running-the-code)
+3. [Running the tests](#running-the-tests)
+4. [Affine Cipher](#affine-cipher)
+5. [Vigenere Cipher & Other Stream Ciphers (Beaufort and Autokey)](#vigenere-cipher)
+6. [Hill Cipher](#hill-cipher)
+7. [Substitution Permutation Networks](#substitution-permutation-networks)
+---
 
 ## Prerequisites
 This library uses the c++20 standard.
@@ -17,6 +28,7 @@ You will need:
 
 The library has not been tested on Windows.
 The pipeline only checks the above two compilation approaches...
+---
 
 ## Running the Code
 
@@ -30,13 +42,13 @@ To build the Cryptology library and run the examples, follow these steps:
    1. On Linux
        ```bash
        mkdir build
-       cmake -S . -B build -DCMAKE_CXX_COMPILER=gcc -DCMAKE_C_COMPILER=g++ -DCMAKE_BUILD_TYPE=Release
+       cmake -S . -B build -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc -DCMAKE_BUILD_TYPE=Release
        cmake --build build/ --config Release
        ```
    2. On Mac
        ```bash
        mkdir build
-       cmake -S . -B build -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DCMAKE_BUILD_TYPE=Release
+       cmake -S . -B build -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_BUILD_TYPE=Release
        cmake --build build/ --config Release
        ```
 
@@ -44,13 +56,36 @@ To build the Cryptology library and run the examples, follow these steps:
    ```bash
     build/SPNExample
     ```
+---
 
-## Table of Contents
+## Running the Tests
 
-1. [Affine Cipher](#affine-cipher)
-2. [Vigenere Cipher & Other Stream Ciphers (Beaufort and Autokey)](#vigenere-cipher)
-3. [Hill Cipher](#hill-cipher)
-4. [Substitution Permutation Networks](#substitution-permutation-networks)
+To build the Cryptology library and run the examples, follow these steps:
+
+1. Clone or download the project repository.
+
+2. Open a terminal or command prompt and navigate to the project's root directory.
+
+3. Build the project using CMake by running the following commands:
+   1. On Linux
+       ```bash
+       mkdir build
+       cmake -S . -B build -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc -DCMAKE_BUILD_TYPE=Release
+       cmake --build build/ --config Release
+       ```
+   2. On Mac
+       ```bash
+       mkdir build
+       cmake -S . -B build -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_BUILD_TYPE=Release
+       cmake --build build/ --config Release
+       ```
+
+4. Run the tests using CMake's testing utilities:
+   ```bash
+   cd build
+   ctest --build-config Release --output-on-failure
+   ```
+---
 
 ### Affine Cipher
 
@@ -84,7 +119,6 @@ We implement linear cryptanalysis and demonstrate a successful linear attack on 
 The SPN works on 16 bit inputs and has insecure SBoxes (allowing for linear traces with high bias).
 In addition, we assume only 5 rounds with an easy key schedule...
 Example: `examples/spn_cipher_example.cpp`
-
 ---
 
 ## Disclaimer
