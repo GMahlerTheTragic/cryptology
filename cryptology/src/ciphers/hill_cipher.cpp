@@ -59,7 +59,6 @@ string HillCipher::encrypt(const string &plain_text) const {
             "Currently the plain text length has to be a multiple of the block size");
     }
     for (size_t i = 0; i < plain_text.length(); i += this->block_size) {
-        cout << plain_text.substr(i, i + block_size) << endl;
         output += this->encrypt_block(plain_text.substr(i, block_size));
     }
     return output;

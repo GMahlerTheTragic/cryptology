@@ -30,8 +30,7 @@ const string kline(kline_length, kfill_character);
 void AdditiveBruteForce(const string &ciphertext) {
     priority_queue<pair<double, string>> result_pq = priority_queue<pair<double, string>>();
     cout << endl;
-    cout << "Starting brute force attack against additive cipher" << endl;
-    cout << kline << endl;
+    cout << "Starting brute force attack against additive cipher..." << endl;
     map<string, int> result = compute_letter_counts(ciphertext);
     for (int i = 0; i < knumber_of_letters; ++i) {
         AffineCipher affine_cipher = AffineCipher(i, 1);
@@ -69,64 +68,12 @@ vector<string> AdditiveFrequencyBased(const string &ciphertext) {
     return result;
 }
 
-void HillFrequencyAttack(const string& ciphertext, int n) {
-    priority_queue<pair<int, string>> ngram_freqs = compute_ngramm_frequencies(ciphertext, n);
-
-    vector<vector<int>> y_vals = vector<vector<int>>(n);
-
-    for (int i = 0; i < n; i++) {
-        string ngram = ngram_freqs.top().second;
-        y_vals[i] = word_to_vec(ngram);
-        ngram_freqs.pop();
-    }
-    Matrix<knumber_of_letters> y_matrix = Matrix<knumber_of_letters>(y_vals);
-
-    priority_queue<pair<double, string>> ngram_freqs_language;
-
-    for (const auto& [key, val] : ENGLISH_BIGRAM_FREQUENCIES) {
-        ngram_freqs_language.emplace(val, key);
-    }
-
-    vector<string> ngram_freqs_language_vec = vector<string>(ENGLISH_BIGRAM_FREQUENCIES.size());
-    int idx = 0;
-    while (!ngram_freqs_language.empty()) {
-        string ngram = ngram_freqs_language.top().second;
-        ngram_freqs_language.pop();
-        ngram_freqs_language_vec[idx] = ngram;
-        idx++;
-    }
-    priority_queue<pair<double, string>> result = priority_queue<pair<double, string>>();
-    vector<vector<int>> x_vals = vector<vector<int>>(n);
-    for (int j = 0; j < 3; j++) {
-        x_vals[0] = word_to_vec(ngram_freqs_language_vec[j]);
-        for (int l = 0; l < 3; l++) {
-            x_vals[1] = word_to_vec(ngram_freqs_language_vec[l]);
-            Matrix<knumber_of_letters> x_matrix = Matrix<knumber_of_letters>(x_vals);
-            try {
-                Matrix<knumber_of_letters> x_matrix_inverse = Inverse(x_matrix);
-                Matrix<knumber_of_letters> key_matrix = x_matrix_inverse * y_matrix;
-                HillCipher hill_cipher = HillCipher(key_matrix);
-                string plain_text_candidate = hill_cipher.decrypt(ciphertext);
-                result.emplace(index_of_coincidence(plain_text_candidate), plain_text_candidate);
-                cout << j << l << "plain text candidate: " << plain_text_candidate << endl;
-            } catch (const runtime_error &e) {
-                continue;
-            }
-        }
-    }
-
-    while (!result.empty()) {
-        pair<double, string> result_pair = result.top();
-        cout << result_pair.second << " " << result_pair.first << endl;
-        result.pop();
-    }
-}
-
 void VigenereAttack(string ciphertext) {
+    cout << "Starting Index of Coincidence based attack on Vigenere cipher..." << endl;
     const size_t ct_len = ciphertext.length();
     double ioc = index_of_coincidence(ciphertext);
-    cout << "ioc is: " << ioc << endl;
-
+    cout << endl;
+    cout << "ioc of cipher text is: " << ioc << endl;
     priority_queue<pair<double, int>> possible_periods = priority_queue<pair<double, int>>();
     for (int assumed_period_length = 1; assumed_period_length <= ct_len; assumed_period_length++) {
         double delta = -abs(expected_ioc(assumed_period_length, ct_len) - ioc);
@@ -137,7 +84,7 @@ void VigenereAttack(string ciphertext) {
         double delta = possible_periods.top().first;
         int assumed_key_period = possible_periods.top().second;
         possible_periods.pop();
-        cout << assumed_key_period << ": " << delta << endl;
+        cout << "Guess for period (key word length): " << assumed_key_period << " Delta to expected ioc: " << delta << endl;
         vector<string> columns = vector<string>(assumed_key_period);
         for (int idx = 0; idx < assumed_key_period; idx++) {
             columns[idx] = "";
@@ -164,7 +111,8 @@ void VigenereAttack(string ciphertext) {
                                   plain_text_candidate + " key: " + key_candidate);
         }
     }
-
+    cout << endl;
+    cout << "Listing plain text guesses and key word in order of ioc: " << endl;
     for (size_t result_counter = 0; result_counter < ktop_results_to_disply; result_counter++) {
         if (result.empty()) {
             break;
@@ -194,12 +142,13 @@ void LinearAttack(const SpNetwork& sp_network) {
     DynamicBitset number_set = DynamicBitset(
         static_cast<uint64_t>(pow(2, sp_network.sbox_size()) - 1), sp_network.sbox_size());
 
+    cout << "Trying to find linear trace with either one or two active SBoxes." << endl;
     while (traces_iterator != linear_traces.rend() && !number_set.is_zero()) {
         LinearTrace best_trace = *traces_iterator;
         ++traces_iterator;
         bool contains_more = false;
         size_t n_act = 0;
-        cout << "Attacking SBoxes [";
+        cout << " Active Sboxes: [";
         for (size_t i = 0; i < sp_network.n_parallel_sboxes(); i++) {
             DynamicBitset slice = best_trace.GetActiveOuput(sp_network.rounds() - 3)
                                       .slice(i * sbox_size, (i + 1) * sbox_size);
@@ -222,9 +171,11 @@ void LinearAttack(const SpNetwork& sp_network) {
             continue;
         }
 
-        auto count = static_cast<size_t>(pow(best_trace.GetBias(), -3));
-
-        cout << "Generating " << count << " random pairs..." << endl;
+        auto count = static_cast<size_t>(5 * pow(best_trace.GetBias(), -2));
+        cout << "Success." << endl;
+        cout << "Bias of linear trace is: " << best_trace.GetBias() <<  endl;
+        cout << "Generating " << count << " random pairs according to linear trace bias..." << endl;
+        cout << "number of samples has to be approx. c * bias^{-2}. We choose c = 5" << endl;
 
         vector<pair<DynamicBitset, DynamicBitset>> pairs =
             attack_worker.generate_random_plain_cipher_pairs(count);
