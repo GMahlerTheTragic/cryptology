@@ -16,13 +16,6 @@ jobs:
         with:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
       - uses: actions/checkout@v4
-      - name: Set up Python 3.8 for gcovr
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.8
-      - name: install gcovr 5.0
-        run: |
-          pip install gcovr==5.0 # 5.1 is not supported
       - name: Install sonar-scanner and build-wrapper
         uses: SonarSource/sonarcloud-github-c-cpp@v2
       - name: Run build-wrapper
@@ -34,16 +27,10 @@ jobs:
         working-directory: build/
         run: |
           ctest --build-config ${{ matrix.build_type }}
-      - name: Collect coverage into one XML report
-        working-directory: build/
-        run: |
-          gcovr --sonarqube > coverage.xml
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} # Put the name of your token here
         run: |
-          cat build/coverage.xml
           sonar-scanner \
             --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}" \
-            --define sonar.coverageReportPaths=build/coverage.xml
