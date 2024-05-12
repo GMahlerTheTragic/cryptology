@@ -3,11 +3,9 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=GMahlerTheTragic_cryptology&metric=coverage)](https://sonarcloud.io/summary/new_code?id=GMahlerTheTragic_cryptology)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=GMahlerTheTragic_cryptology&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=GMahlerTheTragic_cryptology)
 # Cryptology Learning Library
-
 Welcome to the Cryptology Learning Library! This resource is designed for educational purposes, allowing
 you to explore various ciphers and basic attacks on them. Please note that the ciphers provided here are not
 intended for production use but are meant to enhance understanding of cryptology concepts.
----
 
 ## Table of Contents
 1. [Prerequisites](#prerequisites)
@@ -17,7 +15,6 @@ intended for production use but are meant to enhance understanding of cryptology
 5. [Vigenere Cipher & Other Stream Ciphers (Beaufort and Autokey)](#vigenere-cipher)
 6. [Hill Cipher](#hill-cipher)
 7. [Substitution Permutation Networks](#substitution-permutation-networks)
----
 
 ## Prerequisites
 This library uses the c++20 standard.
@@ -32,10 +29,8 @@ You will need:
 
 The library has not been tested on Windows.
 The pipeline only checks the above two compilation approaches...
----
 
 ## Running the Code
-
 To build the Cryptology library and run the examples, follow these steps:
 
 1. Clone or download the project repository.
@@ -60,10 +55,8 @@ To build the Cryptology library and run the examples, follow these steps:
    ```bash
     build/SPNExample
     ```
----
 
 ## Running the Tests
-
 To build the Cryptology library and run the examples, follow these steps:
 
 1. Clone or download the project repository.
@@ -89,10 +82,8 @@ To build the Cryptology library and run the examples, follow these steps:
    cd build
    ctest --build-config Release --output-on-failure
    ```
----
 
 ### Affine Cipher
-
 The Affine Cipher is a type of substitution cipher that combines the Caesar Cipher with modular arithmetic. Discover how
 the Affine Cipher works and how to perform encryption and decryption using its unique mathematical formula.
 We implement a Brute Force attack on the Affine cipher. See example below.
@@ -100,8 +91,7 @@ Example: `examples/affine_cipher_examples.cpp`
 ---
 
 ### Vigenere Cipher
-
-TThe Vigenère Cipher is a poly-alphabetic substitution cipher that builds upon the Caesar Cipher. Unlike the Caesar
+The Vigenère Cipher is a poly-alphabetic substitution cipher that builds upon the Caesar Cipher. Unlike the Caesar
 Cipher, which uses a fixed shift value for each character, the Vigenère Cipher employs a keyword or passphrase to
 determine the shift value for each character in the plaintext. This makes it significantly more secure than the simple
 Caesar Cipher. We implement an Index of Coincidence based attack on the Vigenere cipher. See example below.
@@ -109,7 +99,6 @@ Example: `examples/vigenere_cipher_examples.cpp`
 ---
 
 ### Hill Cipher
-
 The Hill Cipher is a holographic substitution cipher that operates on multiple letters at once. Explore the mathematical
 operations behind the Hill Cipher and practice encrypting and decrypting text.
 We are yet to implement the well-known n-gram frequency based attack on the Hill Cipher.
@@ -117,7 +106,6 @@ Example: `examples/hill_cipher_example.cpp`
 ---
 
 ### Substitution Permutation Networks
-
 Substitution Permutation Networks (SPN) represent a modern approach to block ciphers and symmetric-key encryption.
 We implement linear cryptanalysis and demonstrate a successful linear attack on the last round key of an example SPN.
 The SPN works on 16 bit inputs and has insecure SBoxes (allowing for linear traces with high bias).
@@ -126,7 +114,6 @@ Example: `examples/spn_cipher_example.cpp`
 ---
 
 ## Disclaimer
-
 This Cryptology Learning and Teaching Library is solely for educational purposes and is not intended for use in
 production or secure applications. The ciphers presented here may have vulnerabilities and should not be relied upon for
 secure communications.
