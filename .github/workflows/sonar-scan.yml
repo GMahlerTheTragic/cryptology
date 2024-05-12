@@ -35,6 +35,7 @@ jobs:
         run: |
           ctest --build-config ${{ matrix.build_type }}
       - name: Collect coverage into one XML report
+        working-directory: build/
         run: |
           gcovr --sonarqube > coverage.xml
       - name: Run sonar-scanner
